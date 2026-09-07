@@ -61,12 +61,13 @@ export function Navbar({ className }: NavbarProps) {
     };
 
     document.addEventListener("keydown", onKeyDown);
+    const menuButton = menuButtonRef.current;
 
     return () => {
       window.cancelAnimationFrame(frame);
       document.body.style.overflow = originalOverflow;
       document.removeEventListener("keydown", onKeyDown);
-      menuButtonRef.current?.focus();
+      menuButton?.focus();
     };
   }, [open, drawerId]);
 

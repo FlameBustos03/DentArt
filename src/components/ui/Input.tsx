@@ -7,20 +7,24 @@ export interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string;
   label: string;
   error?: string;
+  tone?: "light" | "dark";
 }
 
 export interface TextAreaFieldProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   id: string;
   label: string;
   error?: string;
+  tone?: "light" | "dark";
 }
 
-export function TextField({ id, label, error, className, ...props }: TextFieldProps) {
+export function TextField({ id, label, error, className, tone = "light", ...props }: TextFieldProps) {
   const errorId = `${id}-error`;
+  const labelClass = tone === "dark" ? "text-gold-300" : "text-stone-600";
+  const errorClass = tone === "dark" ? "text-red-300" : "text-red-700";
 
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={id} className="text-xs uppercase tracking-[0.16em] text-stone-600">
+      <label htmlFor={id} className={`text-xs uppercase tracking-[0.16em] ${labelClass}`}>
         {label}
       </label>
       <input
@@ -35,7 +39,7 @@ export function TextField({ id, label, error, className, ...props }: TextFieldPr
         {...props}
       />
       {error ? (
-        <p id={errorId} role="alert" className="text-sm text-red-700">
+        <p id={errorId} role="alert" className={`text-sm ${errorClass}`}>
           {error}
         </p>
       ) : null}
@@ -48,13 +52,16 @@ export function TextAreaField({
   label,
   error,
   className,
+  tone = "light",
   ...props
 }: TextAreaFieldProps) {
   const errorId = `${id}-error`;
+  const labelClass = tone === "dark" ? "text-gold-300" : "text-stone-600";
+  const errorClass = tone === "dark" ? "text-red-300" : "text-red-700";
 
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={id} className="text-xs uppercase tracking-[0.16em] text-stone-600">
+      <label htmlFor={id} className={`text-xs uppercase tracking-[0.16em] ${labelClass}`}>
         {label}
       </label>
       <textarea
@@ -69,7 +76,7 @@ export function TextAreaField({
         {...props}
       />
       {error ? (
-        <p id={errorId} role="alert" className="text-sm text-red-700">
+        <p id={errorId} role="alert" className={`text-sm ${errorClass}`}>
           {error}
         </p>
       ) : null}

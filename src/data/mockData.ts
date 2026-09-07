@@ -105,7 +105,7 @@ export const visualizerCases: VisualizerCase[] = [
       height: 933,
     },
     afterImage: {
-      src: "https://images.unsplash.com/photo-1581594693704-56c18096c116?auto=format&fit=crop&w=1400&q=80",
+      src: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1400&q=80",
       alt: "Patient smile after orthodontic alignment",
       width: 1400,
       height: 933,
@@ -119,13 +119,13 @@ export const visualizerCases: VisualizerCase[] = [
     description:
       "Hand-layered feldspathic veneers that restore translucency, length, and light-play while preserving healthy enamel.",
     beforeImage: {
-      src: "https://images.unsplash.com/photo-1600170311835-e5751efa2114?auto=format&fit=crop&w=1400&q=80",
+      src: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=1400&q=80",
       alt: "Close-up of teeth before porcelain veneers",
       width: 1400,
       height: 933,
     },
     afterImage: {
-      src: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=1400&q=80",
+      src: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1400&q=80",
       alt: "Confident smile after porcelain veneer placement",
       width: 1400,
       height: 933,

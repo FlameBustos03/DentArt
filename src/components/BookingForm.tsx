@@ -286,6 +286,7 @@ export function BookingForm() {
               <TextField
                 id="fullName"
                 label="Full name"
+                tone="dark"
                 autoComplete="name"
                 value={form.fullName}
                 error={errors.fullName}
@@ -295,6 +296,7 @@ export function BookingForm() {
                 id="email"
                 label="Email"
                 type="email"
+                tone="dark"
                 autoComplete="email"
                 value={form.email}
                 error={errors.email}
@@ -304,6 +306,7 @@ export function BookingForm() {
                 id="phone"
                 label="Phone"
                 type="tel"
+                tone="dark"
                 autoComplete="tel"
                 value={form.phone}
                 error={errors.phone}
@@ -342,6 +345,7 @@ export function BookingForm() {
                 <TextAreaField
                   id="notes"
                   label="Notes for the concierge (optional)"
+                  tone="dark"
                   value={form.notes}
                   onChange={(event) => setForm((prev) => ({ ...prev, notes: event.target.value }))}
                 />

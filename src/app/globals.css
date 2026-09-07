@@ -45,7 +45,7 @@ body {
 }
 
 .glass-nav {
-  background: rgba(253, 252, 250, 0.72);
+  background: rgba(253, 252, 250, 0.88);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border-bottom: 1px solid rgba(196, 164, 106, 0.28);
