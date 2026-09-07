@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, Phone, X } from "lucide-react";
 import { clinicInfo, navLinks } from "@/data/mockData";
 import { Button } from "@/components/ui/Button";
-import { cn } from "@/lib/utils";
+import { cn, scrollToId } from "@/lib/utils";
 
 export interface NavbarProps {
   className?: string;
@@ -74,25 +74,25 @@ export function Navbar({ className }: NavbarProps) {
   return (
     <header className={cn("sticky top-0 z-40", className)}>
       <div className="glass-nav">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-          <a href="#main-content" className="group flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-full border border-gold-500/50 bg-navy-900 font-serif text-lg text-gold-300">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
+          <a href="#main-content" className="group flex min-w-0 items-center gap-3">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gold-500/50 bg-navy-900 font-serif text-lg text-gold-300">
               D
             </span>
             <span className="leading-tight">
               <span className="block font-serif text-xl text-navy-900">DentArt</span>
-              <span className="block text-[10px] uppercase tracking-[0.22em] text-stone-500">
-                Elite Dental Atelier
+              <span className="block text-[10px] uppercase tracking-[0.22em] text-teal-600">
+                Celebrity VIP Edition
               </span>
             </span>
           </a>
 
-          <nav aria-label="Primary" className="hidden items-center gap-7 lg:flex">
+          <nav aria-label="Primary" className="hidden items-center gap-6 xl:flex">
             {navLinks.map((link) => (
               <a
                 key={link.id}
                 href={link.href}
-                className="text-sm tracking-wide text-navy-800 transition-colors hover:text-gold-600"
+                className="text-sm tracking-wide text-navy-800 transition-colors hover:text-teal-600"
               >
                 {link.label}
               </a>
@@ -102,13 +102,14 @@ export function Navbar({ className }: NavbarProps) {
           <div className="hidden items-center gap-3 lg:flex">
             <a
               href={`tel:${clinicInfo.phoneTel}`}
-              className="inline-flex items-center gap-2 text-sm text-navy-800 hover:text-gold-600"
+              className="inline-flex items-center gap-2 rounded-full border border-gold-500/40 bg-white/40 px-3.5 py-2 text-sm text-navy-900 backdrop-blur hover:border-teal-500 hover:text-teal-600"
             >
-              <Phone className="h-4 w-4" aria-hidden="true" />
-              <span>{clinicInfo.phoneDisplay}</span>
+              <Phone className="h-4 w-4 text-gold-600" aria-hidden="true" />
+              <span className="font-medium">VIP Concierge</span>
+              <span className="hidden text-stone-500 xl:inline">{clinicInfo.phoneDisplay}</span>
             </a>
             <Button variant="gold" size="sm" onClick={() => scrollToId("booking")}>
-              Elite Care Booking
+              Book VIP Consultation
             </Button>
           </div>
 
@@ -116,7 +117,7 @@ export function Navbar({ className }: NavbarProps) {
             ref={menuButtonRef}
             variant="ghost"
             size="sm"
-            className="!px-2.5 lg:hidden"
+            className="!px-2.5 xl:hidden"
             aria-expanded={open}
             aria-controls={drawerId}
             onClick={() => setOpen(true)}
@@ -129,7 +130,7 @@ export function Navbar({ className }: NavbarProps) {
 
       <AnimatePresence>
         {open ? (
-          <div className="fixed inset-0 z-50 lg:hidden">
+          <div className="fixed inset-0 z-50 xl:hidden">
             <motion.button
               type="button"
               aria-label="Close navigation overlay"
@@ -151,7 +152,7 @@ export function Navbar({ className }: NavbarProps) {
               transition={{ type: "tween", duration: 0.28 }}
             >
               <div className="mb-8 flex items-center justify-between">
-                <p className="font-serif text-2xl text-navy-900">Menu</p>
+                <p className="font-serif text-2xl text-navy-900">VIP Menu</p>
                 <Button
                   ref={closeButtonRef}
                   variant="ghost"
@@ -179,8 +180,8 @@ export function Navbar({ className }: NavbarProps) {
                 href={`tel:${clinicInfo.phoneTel}`}
                 className="mt-8 inline-flex items-center gap-2 text-navy-800"
               >
-                <Phone className="h-4 w-4" aria-hidden="true" />
-                {clinicInfo.phoneDisplay}
+                <Phone className="h-4 w-4 text-gold-600" aria-hidden="true" />
+                VIP Concierge · {clinicInfo.phoneDisplay}
               </a>
               <Button
                 variant="gold"
@@ -190,7 +191,7 @@ export function Navbar({ className }: NavbarProps) {
                   scrollToId("booking");
                 }}
               >
-                Elite Care Booking
+                Book VIP Consultation
               </Button>
             </motion.aside>
           </div>
@@ -198,8 +199,4 @@ export function Navbar({ className }: NavbarProps) {
       </AnimatePresence>
     </header>
   );
-}
-
-function scrollToId(id: string): void {
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
 }

@@ -2,6 +2,10 @@ export function cn(...classes: Array<string | false | null | undefined>): string
   return classes.filter(Boolean).join(" ");
 }
 
+export function scrollToId(id: string): void {
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 export function buildWhatsAppUrl(phoneDigits: string, message: string): string {
   const encoded = encodeURIComponent(message);
   return `https://wa.me/${phoneDigits}?text=${encoded}`;
