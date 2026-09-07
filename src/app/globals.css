@@ -45,8 +45,26 @@ body {
 }
 
 .glass-nav {
-  background: rgba(253, 252, 250, 0.88);
+  background: rgba(253, 252, 250, 0.82);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border-bottom: 1px solid rgba(196, 164, 106, 0.28);
+}
+
+.glass-card {
+  background: rgba(253, 252, 250, 0.62);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  border-bottom: 1px solid rgba(196, 164, 106, 0.28);
+  border: 1px solid rgba(196, 164, 106, 0.22);
+}
+
+.glass-dark {
+  background: rgba(18, 21, 28, 0.42);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.teal-hairline {
+  background: linear-gradient(90deg, transparent, #4ba8a0, #c4a46a, transparent);
 }

@@ -1,10 +1,6 @@
-# DentArt
+# DentArt Celebrity VIP Edition
 
-Premier dental clinic web platform for the patient journey—from discovery to appointment confirmation.
-
-## Elite platform
-
-Next.js App Router site with a luxury clinical aesthetic, interactive smile visualizer, multi-step booking, emergency triage, and accessible concierge UI.
+Premier dental clinic platform for the VIP patient journey—from media-grade discovery to concierge confirmation.
 
 ## Run locally
 

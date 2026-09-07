@@ -1,4 +1,5 @@
 import { BookingForm } from "@/components/BookingForm";
+import { DoctorAuthority } from "@/components/DoctorAuthority";
 import { EmergencyFab } from "@/components/EmergencyFab";
 import { EmergencySection } from "@/components/EmergencySection";
 import { FAQ } from "@/components/FAQ";
@@ -6,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { Navbar } from "@/components/Navbar";
 import { ServicesCatalog } from "@/components/ServicesCatalog";
+import { SmileQuiz } from "@/components/SmileQuiz";
 import { SmileVisualizer } from "@/components/SmileVisualizer";
 import { Testimonials } from "@/components/Testimonials";
 
@@ -16,10 +18,12 @@ export default function HomePage() {
       <main id="main-content">
         <Hero />
         <SmileVisualizer />
+        <SmileQuiz />
         <ServicesCatalog />
+        <Testimonials />
+        <DoctorAuthority />
         <EmergencySection />
         <BookingForm />
-        <Testimonials />
         <FAQ />
       </main>
       <Footer />

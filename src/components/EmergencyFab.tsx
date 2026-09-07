@@ -24,9 +24,10 @@ export function EmergencyFab() {
             exit={{ opacity: 0, y: 8 }}
             className="w-72 rounded-2xl border border-gold-500/30 bg-ivory-50 p-4 shadow-lift"
           >
-            <p className="font-serif text-xl text-navy-900">Emergency triage</p>
+            <p className="font-serif text-xl text-navy-900">VIP emergency</p>
             <p className="mt-1 text-sm text-stone-600">
-              A clinician reviews pain, trauma, and failed restorations around the clock.
+              A clinician reviews pain, trauma, and failed restorations around the clock. WhatsApp
+              opens with a pre-filled concierge message.
             </p>
             <a
               href={`tel:${clinicInfo.phoneTel}`}
@@ -54,8 +55,8 @@ export function EmergencyFab() {
         className="inline-flex h-14 items-center gap-2 rounded-full bg-navy-900 px-5 text-sm uppercase tracking-[0.14em] text-ivory-100 shadow-lift"
       >
         <Siren className="h-5 w-5 text-gold-400" aria-hidden="true" />
-        <span className="hidden sm:inline">Emergency</span>
-        <span className="sr-only sm:hidden">Open emergency triage</span>
+        <span className="hidden sm:inline">VIP Emergency</span>
+        <span className="sr-only sm:hidden">Open VIP emergency options</span>
       </button>
     </div>
   );
