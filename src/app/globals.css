@@ -70,3 +70,58 @@ body {
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(46, 204, 113, 0.28);
 }
+
+.hero-ambient {
+  position: absolute;
+  inset: 8% 12% auto auto;
+  width: min(28rem, 48vw);
+  height: min(22rem, 40vw);
+  background: radial-gradient(circle, rgba(46, 204, 113, 0.22), transparent 68%);
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.hero-depth-card {
+  background: rgba(17, 17, 17, 0.48);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(46, 204, 113, 0.38);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28), 0 0 24px rgba(46, 204, 113, 0.16);
+}
+
+.hero-depth-card--far {
+  transform: translate3d(calc(var(--hero-px, 0) * 18px), calc(var(--hero-py, 0) * -14px), 0);
+}
+
+.hero-depth-card--near {
+  transform: translate3d(calc(var(--hero-px, 0) * 28px), calc(var(--hero-py, 0) * -20px), 0);
+}
+
+.tilt-card--lit {
+  box-shadow:
+    0 0 0 1px rgba(46, 204, 113, 0.55),
+    0 18px 40px rgba(46, 204, 113, 0.2);
+}
+
+.service-glyph {
+  transform-style: preserve-3d;
+}
+
+.service-glyph-plate {
+  transform: translateZ(-10px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .hero-depth-card--far,
+  .hero-depth-card--near {
+    transform: none;
+  }
+
+  .tilt-card {
+    transform: none !important;
+  }
+}

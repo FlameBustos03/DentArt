@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Award, BookOpen, HeartHandshake } from "lucide-react";
 import { medicalDirector, philanthropyPrograms } from "@/data/mockData";
+import { TiltCard } from "@/components/ui/TiltCard";
 
 export function DoctorAuthority() {
   return (
@@ -89,12 +90,15 @@ export function DoctorAuthority() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ delay: index * 0.07 }}
-                className="glass-card rounded-3xl bg-white p-6"
               >
-                <p className="text-xs uppercase tracking-[0.16em] text-lime-700">{program.impact}</p>
-                <h4 className="mt-2 font-serif text-xl text-ink-900">{program.name}</h4>
-                <p className="mt-3 text-sm text-black/70">{program.description}</p>
-                <p className="mt-5 text-sm uppercase tracking-[0.14em] text-lime-700">{program.metric}</p>
+                <TiltCard className="glass-card rounded-3xl bg-white">
+                  <div className="p-6">
+                    <p className="text-xs uppercase tracking-[0.16em] text-lime-700">{program.impact}</p>
+                    <h4 className="mt-2 font-serif text-xl text-ink-900">{program.name}</h4>
+                    <p className="mt-3 text-sm text-black/70">{program.description}</p>
+                    <p className="mt-5 text-sm uppercase tracking-[0.14em] text-lime-700">{program.metric}</p>
+                  </div>
+                </TiltCard>
               </motion.li>
             ))}
           </ul>
