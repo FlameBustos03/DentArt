@@ -7,10 +7,13 @@ export type Hero3DMode = "pending" | "webgl" | "fallback";
 function supportsWebGL(): boolean {
   try {
     const canvas = document.createElement("canvas");
-    const context =
+    const hardware =
       canvas.getContext("webgl2", { failIfMajorPerformanceCaveat: true }) ??
       canvas.getContext("webgl", { failIfMajorPerformanceCaveat: true });
-    return Boolean(context);
+    if (hardware) {
+      return true;
+    }
+    return Boolean(canvas.getContext("webgl2") ?? canvas.getContext("webgl"));
   } catch {
     return false;
   }

@@ -21,7 +21,10 @@ export function HeroButterfly({ className, ...sceneProps }: HeroButterflyProps) 
   const showCanvas = mode === "webgl";
 
   return (
-    <div className={cn("relative h-full w-full", className)}>
+    <div
+      className={cn("relative h-full w-full", className)}
+      data-hero-3d={showCanvas ? "webgl" : "fallback"}
+    >
       {showCanvas ? (
         <WebGLBoundary fallback={<ButterflyFallback />}>
           <ButterflyScene {...sceneProps} />
