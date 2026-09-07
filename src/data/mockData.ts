@@ -21,17 +21,17 @@ import type {
 } from "@/types";
 
 export const clinicInfo: ClinicInfo = {
-  name: "DentArt",
-  tagline: "Celebrity VIP smile atelier on Fifth Avenue",
-  phoneDisplay: "+1 (212) 555-0184",
-  phoneTel: "+12125550184",
-  whatsappNumber: "12125550184",
-  email: "concierge@dentart.clinic",
-  addressLines: ["718 Fifth Avenue, Suite 1200", "New York, NY 10019"],
-  mapQuery: "718 Fifth Avenue, New York, NY 10019",
+  name: "Dent Art",
+  slogan: "Atrévete a Sonreír",
+  tagline: "VIP smile studio in Poza Rica, Veracruz",
+  phoneDisplay: "+52 782 210 8172",
+  phoneTel: "+527822108172",
+  whatsappNumber: "527822108172",
+  email: "concierge@dentart.mx",
+  addressLines: ["Cipres #204 Col. Chapultepec", "Poza Rica, Veracruz, México"],
+  mapQuery: "Cipres 204 Colonia Chapultepec, Poza Rica, Veracruz, Mexico",
   hours: [
-    { days: "Monday — Thursday", hours: "7:30 AM – 7:00 PM" },
-    { days: "Friday", hours: "8:00 AM – 5:00 PM" },
+    { days: "Monday — Friday", hours: "9:00 AM – 7:00 PM" },
     { days: "Saturday", hours: "9:00 AM – 2:00 PM · VIP by request" },
     { days: "Sunday", hours: "24/7 VIP emergency triage only" },
   ],
@@ -70,16 +70,16 @@ export const medicalDirector: Doctor = {
   name: "Dr. Elise Moreau, DMD, FAAID",
   title: "Medical Director & Smile Architect",
   credentials: "Harvard School of Dental Medicine · AACD Accredited Fellow",
-  bio: "Dr. Elise Moreau directs DentArt’s celebrity VIP atelier with a reconstructive-first philosophy: facial proportion, enamel conservation, and camera-ready light-play without theatrical dentistry. Her private suite hosts talent, founders, and families who expect Four Seasons hospitality with hospital-grade planning. She publishes, teaches digital smile design, and funds pro-bono reconstructions through the Moreau Smile Access Fund.",
+  bio: "Dr. Elise Moreau directs Dent Art’s VIP studio in Poza Rica with a reconstructive-first philosophy: facial proportion, enamel conservation, and camera-ready light-play without theatrical dentistry. Her private suite hosts talent, founders, and families who expect concierge hospitality with hospital-grade planning. She publishes, teaches digital smile design, and funds pro-bono reconstructions through the Moreau Smile Access Fund.",
   portrait: {
     src: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=1200&q=80",
-    alt: "Dr. Elise Moreau, DentArt medical director, in a white clinical coat",
+    alt: "Dr. Elise Moreau, Dent Art medical director, in a white clinical coat",
     width: 1200,
     height: 1500,
   },
   awards: [
     "International Academy of Aesthetic Dentistry Gold Medal",
-    "New York Magazine — Cosmetic Dentistry, eight consecutive years",
+    "Revista Odontología Estética — Cosmetic Dentistry, eight consecutive years",
     "American Academy of Cosmetic Dentistry Accredited Fellow",
     "Global Smile Foundation Humanitarian Laureate",
     "American Academy of Implant Dentistry Diplomate",
@@ -153,7 +153,7 @@ export const philanthropyPrograms: PhilanthropyProgram[] = [
     name: "Children’s Craniofacial Atelier",
     impact: "Pediatric partnership",
     description:
-      "Annual surgical-restorative weeks with a Manhattan craniofacial clinic, covering anesthesia, ceramics, and a year of follow-up for each child.",
+      "Annual surgical-restorative weeks with a Veracruz craniofacial clinic, covering anesthesia, ceramics, and a year of follow-up for each child.",
     metric: "180 families hosted yearly",
   },
   {
@@ -297,7 +297,7 @@ export const services: Service[] = [
   {
     id: "sedation",
     name: "VIP Sedation Dentistry",
-    tagline: "Gold-plated calm, medical control",
+    tagline: "Medically staffed calm, clinical control",
     description:
       "Oral, nitrous, and IV sedation with a dedicated anesthesia provider—designed for dental anxiety, long reconstructive visits, and private schedules.",
     icon: "sedation",
@@ -362,7 +362,7 @@ export const consultationModes: ConsultationModeOption[] = [
     id: "in-clinic",
     label: "In-Clinic VIP",
     description:
-      "Arrive at the Fifth Avenue suite for photography, imaging, and a private briefing with your attending clinician.",
+      "Arrive at the Poza Rica suite for photography, imaging, and a private briefing with your attending clinician.",
     durationNote: "90-minute atelier visit · discreet elevator available",
   },
   {
@@ -417,7 +417,7 @@ export const testimonials: Testimonial[] = [
       "I expected a cosmetic clinic. I received a medical brief, a shade story, and a smile that still looks like mine—just finished for camera.",
     rating: 5,
     verified: true,
-    location: "Upper East Side",
+    location: "Poza Rica, Veracruz",
     kind: "review",
     image: {
       src: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80",
@@ -431,10 +431,10 @@ export const testimonials: Testimonial[] = [
     name: "Confidential talent · film",
     treatment: "Full Mouth Rehabilitation",
     quote:
-      "Production could not see a temporary denture. DentArt staged All-on-4 provisionals between call times. The private screening of my testimonial is available at consultation.",
+      "Production could not see a temporary denture. Dent Art staged All-on-4 provisionals between call times. The private screening of my testimonial is available at consultation.",
     rating: 5,
     verified: true,
-    location: "Los Angeles / New York",
+    location: "Ciudad de México / Poza Rica",
     kind: "video",
     duration: "2:14",
     privacyNote: "Identity withheld by request. Full screening reserved for VIP consultation guests.",
@@ -453,7 +453,7 @@ export const testimonials: Testimonial[] = [
       "The guided surgery was quieter than my last filling. I left with teeth that day and a plan I could actually understand.",
     rating: 5,
     verified: true,
-    location: "Tribeca",
+    location: "Tampico, Tamaulipas",
     kind: "review",
     image: {
       src: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
@@ -489,7 +489,7 @@ export const testimonials: Testimonial[] = [
       "I have avoided dentists for twelve years. They wrote a comfort plan, named the anesthesiologist, and I woke up to a smile I recognized.",
     rating: 5,
     verified: true,
-    location: "Park Slope",
+    location: "Xalapa, Veracruz",
     kind: "review",
     image: {
       src: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80",
@@ -702,23 +702,23 @@ export function getQuizRecommendation(
 export const heroImages = {
   portrait: {
     src: "https://images.unsplash.com/photo-1629909615184-74f495363b67?auto=format&fit=crop&w=2000&q=80",
-    alt: "Sunlit DentArt VIP treatment suite with tailored cabinetry and clinical lighting",
+    alt: "Sunlit Dent Art VIP treatment suite with tailored cabinetry and clinical lighting",
     width: 2000,
     height: 1333,
   },
   editorial: {
     src: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1600&q=80",
-    alt: "Quiet reception lounge with ivory seating and champagne-gold stone finishes",
+    alt: "Quiet reception lounge with white seating and lime-accented clinical finishes",
     width: 1600,
     height: 1066,
   },
 };
 
 export const emergencyPrefillMessage =
-  "Hello DentArt VIP concierge, I need 24/7 emergency triage. Please advise the soonest clinical review.";
+  "Hola Dent Art, necesito atención de emergencia 24/7. Hello Dent Art, I need 24/7 emergency triage. Please advise the soonest clinical review.";
 
 export const bookingPrefillMessage =
-  "Hello DentArt, I would like to reserve a VIP consultation.";
+  "Hola Dent Art, me gustaría agendar una consulta VIP. Hello Dent Art, I would like to reserve a VIP consultation.";
 
 export const conciergePrefillMessage =
-  "Hello DentArt VIP concierge, I would like assistance with scheduling and arrival details.";
+  "Hola Dent Art, necesito ayuda con mi cita y llegada. Hello Dent Art, I would like assistance with scheduling and arrival details.";

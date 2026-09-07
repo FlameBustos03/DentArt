@@ -7,14 +7,14 @@ import { medicalDirector, philanthropyPrograms } from "@/data/mockData";
 
 export function DoctorAuthority() {
   return (
-    <section id="doctor" aria-labelledby="doctor-heading" className="scroll-mt-24 bg-ivory-50 py-20">
+    <section id="doctor" aria-labelledby="doctor-heading" className="scroll-mt-24 bg-mist py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <p className="text-xs uppercase tracking-[0.24em] text-teal-600">Authority & philanthropy</p>
-        <h2 id="doctor-heading" className="mt-3 font-serif text-3xl text-navy-900 sm:text-5xl">
-          The medical director behind the atelier
+        <p className="text-xs uppercase tracking-[0.24em] text-lime-700">Authority & philanthropy</p>
+        <h2 id="doctor-heading" className="mt-3 font-serif text-3xl text-ink-900 sm:text-5xl">
+          The medical director behind the studio
         </h2>
-        <p className="mt-4 max-w-2xl text-stone-600">
-          DentArt’s celebrity outcomes are directed by Dr. Elise Moreau—not a borrowed Hollywood
+        <p className="mt-4 max-w-2xl text-black/70">
+          Dent Art’s celebrity outcomes are directed by Dr. Elise Moreau—not a borrowed Hollywood
           name. Credentials, books, and community impact are published here because VIP guests
           deserve a dossier, not a slogan.
         </p>
@@ -24,7 +24,7 @@ export function DoctorAuthority() {
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
-            className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-ivory-300 shadow-lift"
+            className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-black/10 shadow-lift"
           >
             <Image
               src={medicalDirector.portrait.src}
@@ -36,39 +36,39 @@ export function DoctorAuthority() {
           </motion.figure>
 
           <div>
-            <p className="text-xs uppercase tracking-[0.18em] text-gold-600">{medicalDirector.title}</p>
-            <h3 className="mt-2 font-serif text-3xl text-navy-900">{medicalDirector.name}</h3>
-            <p className="mt-2 text-sm text-stone-500">{medicalDirector.credentials}</p>
-            <p className="mt-5 text-stone-600">{medicalDirector.bio}</p>
+            <p className="text-xs uppercase tracking-[0.18em] text-lime-700">{medicalDirector.title}</p>
+            <h3 className="mt-2 font-serif text-3xl text-ink-900">{medicalDirector.name}</h3>
+            <p className="mt-2 text-sm text-black/55">{medicalDirector.credentials}</p>
+            <p className="mt-5 text-black/70">{medicalDirector.bio}</p>
 
             <div className="mt-8 grid gap-6 sm:grid-cols-2">
               <div>
-                <h4 className="flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-teal-600">
+                <h4 className="flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-lime-700">
                   <Award className="h-4 w-4" aria-hidden="true" />
                   International awards
                 </h4>
-                <ul className="mt-3 space-y-2 text-sm text-navy-800">
+                <ul className="mt-3 space-y-2 text-sm text-ink-800">
                   {medicalDirector.awards.map((award) => (
                     <li key={award}>{award}</li>
                   ))}
                 </ul>
               </div>
               <div>
-                <h4 className="flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-teal-600">
+                <h4 className="flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-lime-700">
                   <BookOpen className="h-4 w-4" aria-hidden="true" />
                   Books published
                 </h4>
-                <ul className="mt-3 space-y-3 text-sm text-navy-800">
+                <ul className="mt-3 space-y-3 text-sm text-ink-800">
                   {medicalDirector.books.map((book) => (
                     <li key={book.title}>
                       <span className="font-medium">
                         {book.title} ({book.year})
                       </span>
-                      <span className="mt-1 block text-stone-500">{book.note}</span>
+                      <span className="mt-1 block text-black/55">{book.note}</span>
                     </li>
                   ))}
                 </ul>
-                <p className="mt-4 text-xs uppercase tracking-[0.14em] text-stone-500">
+                <p className="mt-4 text-xs uppercase tracking-[0.14em] text-black/55">
                   Fellowships · {medicalDirector.fellowships.join(" · ")}
                 </p>
               </div>
@@ -77,8 +77,8 @@ export function DoctorAuthority() {
         </div>
 
         <div className="mt-14">
-          <h3 className="flex items-center gap-2 font-serif text-2xl text-navy-900 sm:text-3xl">
-            <HeartHandshake className="h-6 w-6 text-gold-600" aria-hidden="true" />
+          <h3 className="flex items-center gap-2 font-serif text-2xl text-ink-900 sm:text-3xl">
+            <HeartHandshake className="h-6 w-6 text-lime-600" aria-hidden="true" />
             Community impact
           </h3>
           <ul className="mt-6 grid gap-5 md:grid-cols-3">
@@ -89,12 +89,12 @@ export function DoctorAuthority() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ delay: index * 0.07 }}
-                className="glass-card rounded-3xl p-6"
+                className="glass-card rounded-3xl bg-white p-6"
               >
-                <p className="text-xs uppercase tracking-[0.16em] text-gold-600">{program.impact}</p>
-                <h4 className="mt-2 font-serif text-xl text-navy-900">{program.name}</h4>
-                <p className="mt-3 text-sm text-stone-600">{program.description}</p>
-                <p className="mt-5 text-sm uppercase tracking-[0.14em] text-teal-600">{program.metric}</p>
+                <p className="text-xs uppercase tracking-[0.16em] text-lime-700">{program.impact}</p>
+                <h4 className="mt-2 font-serif text-xl text-ink-900">{program.name}</h4>
+                <p className="mt-3 text-sm text-black/70">{program.description}</p>
+                <p className="mt-5 text-sm uppercase tracking-[0.14em] text-lime-700">{program.metric}</p>
               </motion.li>
             ))}
           </ul>

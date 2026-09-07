@@ -16,18 +16,19 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "DentArt | Celebrity VIP Smile Atelier on Fifth Avenue",
+  title: "Dent Art | Atrévete a Sonreír",
   description:
-    "DentArt Celebrity VIP Edition — Hollywood-grade cosmetic dentistry in Manhattan. Porcelain veneers, Invisalign, All-on-4, Zoom! whitening, and 24/7 VIP concierge. Transforming Smiles, Redefining Confidence.",
+    "Dent Art VIP smile studio in Poza Rica, Veracruz. Porcelain veneers, Invisalign, All-on-4, Zoom! whitening, and 24/7 concierge care. Atrévete a Sonreír.",
   keywords: [
-    "DentArt",
-    "celebrity dentist New York",
+    "Dent Art",
+    "dentist Poza Rica",
     "VIP cosmetic dentistry",
     "porcelain veneers",
     "Invisalign",
     "All-on-4 dental implants",
     "Zoom whitening",
     "VIP sedation dentistry",
+    "Atrévete a Sonreír",
   ],
 };
 
@@ -38,13 +39,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${playfair.variable} ${dmSans.variable}`}>
-      <body className="min-h-screen font-sans text-ink-900">
+      <body className="min-h-screen bg-white font-sans text-ink-900">
         <a className="skip-link" href="#main-content">
           Skip to main content
         </a>
         {children}
         <p className="sr-only">
-          {clinicInfo.name} VIP concierge line {clinicInfo.phoneDisplay}
+          {clinicInfo.name} concierge line {clinicInfo.phoneDisplay}
         </p>
       </body>
     </html>

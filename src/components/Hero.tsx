@@ -17,7 +17,7 @@ export function Hero() {
   return (
     <section
       aria-labelledby="hero-heading"
-      className="relative isolate overflow-hidden bg-navy-950 text-ivory-100"
+      className="relative isolate overflow-hidden bg-ink-900 text-white"
     >
       <Image
         src={heroImages.portrait.src}
@@ -27,8 +27,8 @@ export function Hero() {
         className="object-cover"
         sizes="100vw"
       />
-      <div className="absolute inset-0 bg-navy-veil" />
-      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-ivory-100 to-transparent" />
+      <div className="absolute inset-0 bg-ink-veil" />
+      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white to-transparent" />
 
       <div className="relative mx-auto grid max-w-6xl gap-10 px-4 py-20 sm:px-6 lg:grid-cols-[1.15fr_0.85fr] lg:py-28">
         <motion.div
@@ -36,23 +36,26 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55 }}
         >
-          <p className="mb-4 inline-flex items-center gap-2 text-xs uppercase tracking-[0.28em] text-gold-300">
-            <Sparkles className="h-4 w-4 text-teal-300" aria-hidden="true" />
-            Fifth Avenue · Celebrity VIP Atelier
+          <p className="mb-4 inline-flex items-center gap-2 text-xs uppercase tracking-[0.28em] text-lime-400">
+            <Sparkles className="h-4 w-4 text-lime-500" aria-hidden="true" />
+            Poza Rica, Veracruz · VIP Smile Studio
+          </p>
+          <p className="font-serif text-3xl italic leading-tight text-lime-400 sm:text-4xl lg:text-5xl">
+            {clinicInfo.slogan}
           </p>
           <h1
             id="hero-heading"
-            className="max-w-2xl font-serif text-4xl leading-tight sm:text-5xl lg:text-6xl"
+            className="mt-4 max-w-2xl font-serif text-4xl leading-tight text-white sm:text-5xl lg:text-6xl"
           >
             Transforming Smiles, Redefining Confidence
           </h1>
-          <p className="mt-6 max-w-lg text-base text-ivory-200/90 sm:text-lg">
-            DentArt is Manhattan’s private dental atelier—Hollywood-grade ceramics, Four Seasons
-            hospitality, and reconstructive medicine under one concierge roof. Arrive as a guest.
-            Leave as a reference.
+          <p className="mt-6 max-w-lg text-base text-white/85 sm:text-lg">
+            Dent Art is Poza Rica’s private dental studio—Hollywood-grade ceramics, concierge
+            hospitality, and reconstructive medicine under one roof. Arrive as a guest. Leave as a
+            reference.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Button variant="gold" size="lg" onClick={() => scrollToId("booking")}>
+            <Button variant="primary" size="lg" onClick={() => scrollToId("booking")}>
               Schedule Virtual Consultation
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Button>
@@ -64,7 +67,7 @@ export function Hero() {
             {trustBadges.map((badge) => (
               <li
                 key={badge.id}
-                className="rounded-full border border-gold-400/40 bg-white/5 px-4 py-2 text-sm text-ivory-100 backdrop-blur"
+                className="rounded-full border border-lime-500/40 bg-white/5 px-4 py-2 text-sm text-white backdrop-blur"
               >
                 {badge.value}
               </li>
@@ -78,12 +81,12 @@ export function Hero() {
           transition={{ duration: 0.65, delay: 0.1 }}
           className="glass-dark self-end rounded-3xl p-6"
         >
-          <p className="text-xs uppercase tracking-[0.22em] text-gold-300">Clinical credentials</p>
-          <p className="mt-2 font-serif text-2xl">{clinicInfo.tagline}</p>
+          <p className="text-xs uppercase tracking-[0.22em] text-lime-400">Clinical credentials</p>
+          <p className="mt-2 font-serif text-2xl text-white">{clinicInfo.tagline}</p>
           <ul className="mt-5 space-y-3">
             {certifications.map((item) => (
-              <li key={item.id} className="flex items-center gap-3 text-sm text-ivory-100/90">
-                <Shield className="h-4 w-4 text-teal-300" aria-hidden="true" />
+              <li key={item.id} className="flex items-center gap-3 text-sm text-white/90">
+                <Shield className="h-4 w-4 text-lime-500" aria-hidden="true" />
                 {item.label}
               </li>
             ))}
@@ -91,9 +94,9 @@ export function Hero() {
         </motion.aside>
       </div>
 
-      <div className="relative border-t border-white/10 bg-navy-950/55 backdrop-blur-md">
+      <div className="relative border-t border-white/10 bg-ink-900/55 backdrop-blur-md">
         <div className="mx-auto max-w-6xl px-4 py-5 sm:px-6">
-          <p className="mb-3 text-center text-[10px] uppercase tracking-[0.32em] text-gold-300 sm:text-left">
+          <p className="mb-3 text-center text-[10px] uppercase tracking-[0.32em] text-lime-400 sm:text-left">
             Media trust bar
           </p>
           <ul
@@ -105,10 +108,10 @@ export function Hero() {
                 key={outlet.id}
                 className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-center"
               >
-                <span className="block font-serif text-lg tracking-wide text-ivory-100 sm:text-xl">
+                <span className="block font-serif text-lg tracking-wide text-white sm:text-xl">
                   {outlet.name}
                 </span>
-                <span className="mt-1 block text-[11px] uppercase tracking-[0.14em] text-ivory-200/70">
+                <span className="mt-1 block text-[11px] uppercase tracking-[0.14em] text-white/70">
                   {outlet.caption}
                 </span>
               </li>

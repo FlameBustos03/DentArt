@@ -19,7 +19,7 @@ export interface TextAreaFieldProps extends TextareaHTMLAttributes<HTMLTextAreaE
 
 export function TextField({ id, label, error, className, tone = "light", ...props }: TextFieldProps) {
   const errorId = `${id}-error`;
-  const labelClass = tone === "dark" ? "text-gold-300" : "text-stone-600";
+  const labelClass = tone === "dark" ? "text-lime-500" : "text-black/60";
   const errorClass = tone === "dark" ? "text-red-300" : "text-red-700";
 
   return (
@@ -32,8 +32,8 @@ export function TextField({ id, label, error, className, tone = "light", ...prop
         aria-invalid={Boolean(error)}
         aria-describedby={error ? errorId : undefined}
         className={cn(
-          "rounded-xl border bg-ivory-50 px-4 py-3 text-navy-900 shadow-sm transition-colors placeholder:text-stone-400",
-          error ? "border-red-500" : "border-ivory-300 focus:border-gold-500",
+          "rounded-xl border bg-white px-4 py-3 text-ink-900 shadow-sm transition-colors placeholder:text-black/40",
+          error ? "border-red-500" : "border-black/15 focus:border-lime-500",
           className,
         )}
         {...props}
@@ -56,7 +56,7 @@ export function TextAreaField({
   ...props
 }: TextAreaFieldProps) {
   const errorId = `${id}-error`;
-  const labelClass = tone === "dark" ? "text-gold-300" : "text-stone-600";
+  const labelClass = tone === "dark" ? "text-lime-500" : "text-black/60";
   const errorClass = tone === "dark" ? "text-red-300" : "text-red-700";
 
   return (
@@ -69,8 +69,8 @@ export function TextAreaField({
         aria-invalid={Boolean(error)}
         aria-describedby={error ? errorId : undefined}
         className={cn(
-          "min-h-[110px] rounded-xl border bg-ivory-50 px-4 py-3 text-navy-900 shadow-sm transition-colors placeholder:text-stone-400",
-          error ? "border-red-500" : "border-ivory-300 focus:border-gold-500",
+          "min-h-[110px] rounded-xl border bg-white px-4 py-3 text-ink-900 shadow-sm transition-colors placeholder:text-black/40",
+          error ? "border-red-500" : "border-black/15 focus:border-lime-500",
           className,
         )}
         {...props}

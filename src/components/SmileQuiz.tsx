@@ -86,13 +86,13 @@ export function SmileQuiz() {
   };
 
   return (
-    <section id="quiz" aria-labelledby="quiz-heading" className="scroll-mt-24 bg-ivory-50 py-20">
+    <section id="quiz" aria-labelledby="quiz-heading" className="scroll-mt-24 bg-mist py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <p className="text-xs uppercase tracking-[0.24em] text-teal-600">AI-assisted triage</p>
-        <h2 id="quiz-heading" className="mt-3 font-serif text-3xl text-navy-900 sm:text-5xl">
+        <p className="text-xs uppercase tracking-[0.24em] text-lime-700">AI-assisted triage</p>
+        <h2 id="quiz-heading" className="mt-3 font-serif text-3xl text-ink-900 sm:text-5xl">
           Interactive 3-step smile assessment
         </h2>
-        <p className="mt-4 max-w-2xl text-stone-600">
+        <p className="mt-4 max-w-2xl text-black/70">
           Three considered questions. An instant protocol recommendation. Then a VIP concierge hold
           so a clinician can refine the plan—never a generic chatbot.
         </p>
@@ -107,10 +107,10 @@ export function SmileQuiz() {
                 className={cn(
                   "rounded-full border px-4 py-2",
                   current
-                    ? "border-navy-900 bg-navy-900 text-ivory-100"
+                    ? "border-ink-900 bg-ink-900 text-white"
                     : value < step
-                      ? "border-teal-500/50 text-teal-600"
-                      : "border-ivory-300 text-stone-500",
+                      ? "border-lime-500/50 text-lime-700"
+                      : "border-black/15 text-black/50",
                 )}
                 aria-current={current ? "step" : undefined}
               >
@@ -134,19 +134,19 @@ export function SmileQuiz() {
                 exit={{ opacity: 0, y: -8 }}
                 className="space-y-4"
               >
-                <h3 ref={headingRef} tabIndex={-1} className="font-serif text-2xl text-navy-900 outline-none">
+                <h3 ref={headingRef} tabIndex={-1} className="font-serif text-2xl text-ink-900 outline-none">
                   Your concierge brief is reserved
                 </h3>
-                <p className="flex items-center gap-2 text-navy-800">
-                  <CheckCircle2 className="h-5 w-5 text-teal-600" aria-hidden="true" />
+                <p className="flex items-center gap-2 text-ink-800">
+                  <CheckCircle2 className="h-5 w-5 text-lime-600" aria-hidden="true" />
                   We will reach {lead.fullName} at {lead.email}
                 </p>
-                <p className="text-stone-600">
+                <p className="text-black/70">
                   Recommended protocol: {recommendation.title}. A coordinator confirms your VIP
                   consultation within one business hour.
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  <Button variant="gold" onClick={() => scrollToId("booking")}>
+                  <Button variant="primary" onClick={() => scrollToId("booking")}>
                     Continue to VIP booking
                   </Button>
                   <Button variant="outline" onClick={resetQuiz}>
@@ -165,7 +165,7 @@ export function SmileQuiz() {
                 <h3
                   ref={headingRef}
                   tabIndex={-1}
-                  className="font-serif text-2xl text-navy-900 outline-none"
+                  className="font-serif text-2xl text-ink-900 outline-none"
                 >
                   {step === 1 && "Step 1 · What would you like to improve?"}
                   {step === 2 && "Step 2 · What is your primary goal?"}
@@ -184,8 +184,8 @@ export function SmileQuiz() {
                             className={cn(
                               "cursor-pointer rounded-2xl border p-4 transition-colors",
                               selected
-                                ? "border-teal-500 bg-teal-200/30"
-                                : "border-ivory-300 bg-ivory-50 hover:border-gold-500",
+                                ? "border-lime-500 bg-lime-500/15"
+                                : "border-black/15 bg-mist hover:border-lime-500",
                             )}
                           >
                             <input
@@ -198,8 +198,8 @@ export function SmileQuiz() {
                                 setStepError(null);
                               }}
                             />
-                            <span className="block font-serif text-xl text-navy-900">{choice.label}</span>
-                            <span className="mt-2 block text-sm text-stone-600">{choice.description}</span>
+                            <span className="block font-serif text-xl text-ink-900">{choice.label}</span>
+                            <span className="mt-2 block text-sm text-black/70">{choice.description}</span>
                           </label>
                         );
                       })}
@@ -219,8 +219,8 @@ export function SmileQuiz() {
                             className={cn(
                               "cursor-pointer rounded-2xl border p-4 transition-colors",
                               selected
-                                ? "border-teal-500 bg-teal-200/30"
-                                : "border-ivory-300 bg-ivory-50 hover:border-gold-500",
+                                ? "border-lime-500 bg-lime-500/15"
+                                : "border-black/15 bg-mist hover:border-lime-500",
                             )}
                           >
                             <input
@@ -233,8 +233,8 @@ export function SmileQuiz() {
                                 setStepError(null);
                               }}
                             />
-                            <span className="block font-serif text-xl text-navy-900">{choice.label}</span>
-                            <span className="mt-2 block text-sm text-stone-600">{choice.description}</span>
+                            <span className="block font-serif text-xl text-ink-900">{choice.label}</span>
+                            <span className="mt-2 block text-sm text-black/70">{choice.description}</span>
                           </label>
                         );
                       })}
@@ -244,15 +244,15 @@ export function SmileQuiz() {
 
                 {step === 3 && recommendation ? (
                   <form className="mt-6 space-y-6" onSubmit={onSubmit} noValidate>
-                    <div className="rounded-2xl border border-gold-500/30 bg-navy-900 p-5 text-ivory-100">
-                      <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-gold-300">
+                    <div className="rounded-2xl border border-lime-500/30 bg-ink-900 p-5 text-white">
+                      <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-lime-400">
                         <Sparkles className="h-4 w-4" aria-hidden="true" />
                         Instant recommendation
                       </p>
                       <h4 className="mt-2 font-serif text-2xl">{recommendation.title}</h4>
-                      <p className="mt-3 text-ivory-200/90">{recommendation.summary}</p>
-                      <p className="mt-4 text-sm text-teal-200">{recommendation.protocol}</p>
-                      <p className="mt-3 text-xs uppercase tracking-[0.16em] text-gold-300">
+                      <p className="mt-3 text-white/90">{recommendation.summary}</p>
+                      <p className="mt-4 text-sm text-lime-400">{recommendation.protocol}</p>
+                      <p className="mt-3 text-xs uppercase tracking-[0.16em] text-lime-400">
                         Pathway · {recommendation.recommendedServiceName}
                       </p>
                     </div>
@@ -290,7 +290,7 @@ export function SmileQuiz() {
                         }
                       />
                     </div>
-                    <Button type="submit" variant="gold">
+                    <Button type="submit" variant="primary">
                       Reserve my VIP brief
                       <ChevronRight className="h-4 w-4" aria-hidden="true" />
                     </Button>
@@ -316,7 +316,7 @@ export function SmileQuiz() {
                       <ChevronLeft className="h-4 w-4" aria-hidden="true" />
                       Back
                     </Button>
-                    <Button variant="gold" onClick={goNext}>
+                    <Button variant="primary" onClick={goNext}>
                       Continue
                       <ChevronRight className="h-4 w-4" aria-hidden="true" />
                     </Button>

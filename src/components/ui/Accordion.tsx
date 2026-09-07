@@ -15,7 +15,7 @@ export function Accordion({ items }: AccordionProps) {
   const [openId, setOpenId] = useState<string | null>(items[0]?.id ?? null);
 
   return (
-    <div className="divide-y divide-ivory-300 rounded-3xl border border-ivory-300 bg-ivory-50">
+    <div className="divide-y divide-black/10 rounded-3xl border border-black/10 bg-mist">
       {items.map((item) => {
         const isOpen = openId === item.id;
         const panelId = `${baseId}-${item.id}-panel`;
@@ -32,10 +32,10 @@ export function Accordion({ items }: AccordionProps) {
                 className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left sm:px-6"
                 onClick={() => setOpenId(isOpen ? null : item.id)}
               >
-                <span className="font-serif text-lg text-navy-900 sm:text-xl">{item.question}</span>
+                <span className="font-serif text-lg text-ink-900 sm:text-xl">{item.question}</span>
                 <ChevronDown
                   className={cn(
-                    "h-5 w-5 shrink-0 text-gold-600 transition-transform duration-300",
+                    "h-5 w-5 shrink-0 text-lime-600 transition-transform duration-300",
                     isOpen && "rotate-180",
                   )}
                   aria-hidden="true"
@@ -54,7 +54,7 @@ export function Accordion({ items }: AccordionProps) {
                   transition={{ duration: 0.25 }}
                   className="overflow-hidden"
                 >
-                  <p className="px-5 pb-5 text-stone-600 sm:px-6">{item.answer}</p>
+                  <p className="px-5 pb-5 text-black/70 sm:px-6">{item.answer}</p>
                 </motion.div>
               ) : null}
             </AnimatePresence>

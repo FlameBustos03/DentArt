@@ -118,13 +118,13 @@ export function BookingForm() {
   };
 
   return (
-    <section id="booking" aria-labelledby="booking-heading" className="scroll-mt-24 bg-navy-900 py-20 text-ivory-100">
+    <section id="booking" aria-labelledby="booking-heading" className="scroll-mt-24 bg-ink-900 py-20 text-white">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <p className="text-xs uppercase tracking-[0.24em] text-gold-400">VIP booking concierge</p>
+        <p className="text-xs uppercase tracking-[0.24em] text-lime-400">VIP booking concierge</p>
         <h2 id="booking-heading" className="mt-3 font-serif text-3xl sm:text-5xl">
           Reserve your atelier visit
         </h2>
-        <p className="mt-4 max-w-2xl text-ivory-200/85">
+        <p className="mt-4 max-w-2xl text-white/85">
           Specialty, consultation mode, then calendar and contact. Your hold is confirmed instantly;
           a coordinator telephones to refine imaging, sedation, and arrival privacy.
         </p>
@@ -139,10 +139,10 @@ export function BookingForm() {
                 className={cn(
                   "rounded-full border px-4 py-2",
                   current
-                    ? "border-gold-400 bg-gold-500 text-navy-950"
+                    ? "border-lime-500 bg-lime-500 text-ink-900"
                     : value < step
-                      ? "border-gold-400/40 text-gold-300"
-                      : "border-white/15 text-ivory-200/70",
+                      ? "border-lime-500/40 text-lime-400"
+                      : "border-white/15 text-white/70",
                 )}
                 aria-current={current ? "step" : undefined}
               >
@@ -178,8 +178,8 @@ export function BookingForm() {
                       className={cn(
                         "cursor-pointer rounded-2xl border p-4 transition-colors",
                         selected
-                          ? "border-gold-400 bg-gold-500/15"
-                          : "border-white/10 hover:border-gold-400/50",
+                          ? "border-lime-500 bg-lime-500/15"
+                          : "border-white/10 hover:border-lime-500/50",
                       )}
                     >
                       <input
@@ -192,12 +192,12 @@ export function BookingForm() {
                           setErrors((prev) => ({ ...prev, treatmentId: undefined }));
                         }}
                       />
-                      <span className="block text-xs uppercase tracking-[0.16em] text-gold-300">
+                      <span className="block text-xs uppercase tracking-[0.16em] text-lime-400">
                         {option.specialty}
                       </span>
                       <span className="mt-1 block font-serif text-xl">{option.name}</span>
-                      <span className="mt-2 block text-sm text-ivory-200/80">{option.summary}</span>
-                      <span className="mt-3 block text-xs text-ivory-200/70">
+                      <span className="mt-2 block text-sm text-white/80">{option.summary}</span>
+                      <span className="mt-3 block text-xs text-white/70">
                         {option.durationMinutes} minutes
                       </span>
                     </label>
@@ -224,8 +224,8 @@ export function BookingForm() {
                       className={cn(
                         "cursor-pointer rounded-2xl border p-5 transition-colors",
                         selected
-                          ? "border-gold-400 bg-gold-500/15"
-                          : "border-white/10 hover:border-gold-400/50",
+                          ? "border-lime-500 bg-lime-500/15"
+                          : "border-white/10 hover:border-lime-500/50",
                       )}
                     >
                       <input
@@ -239,8 +239,8 @@ export function BookingForm() {
                         }}
                       />
                       <span className="block font-serif text-2xl">{option.label}</span>
-                      <span className="mt-3 block text-sm text-ivory-200/85">{option.description}</span>
-                      <span className="mt-4 block text-xs uppercase tracking-[0.16em] text-teal-200">
+                      <span className="mt-3 block text-sm text-white/85">{option.description}</span>
+                      <span className="mt-4 block text-xs uppercase tracking-[0.16em] text-lime-400">
                         {option.durationNote}
                       </span>
                     </label>
@@ -258,7 +258,7 @@ export function BookingForm() {
           {step === 3 ? (
             <div className="mt-6 space-y-6">
               <fieldset>
-                <legend className="text-xs uppercase tracking-[0.16em] text-gold-300">Date</legend>
+                <legend className="text-xs uppercase tracking-[0.16em] text-lime-400">Date</legend>
                 <div className="mt-3 flex gap-2 overflow-x-auto pb-2">
                   {dates.map((date) => {
                     const selected = form.dateIso === date.iso;
@@ -273,8 +273,8 @@ export function BookingForm() {
                         className={cn(
                           "min-w-[4.75rem] rounded-2xl border px-3 py-3 text-center",
                           selected
-                            ? "border-gold-400 bg-gold-500 text-navy-950"
-                            : "border-white/10 hover:border-gold-400/50",
+                            ? "border-lime-500 bg-lime-500 text-ink-900"
+                            : "border-white/10 hover:border-lime-500/50",
                         )}
                       >
                         <span className="block text-xs uppercase">{date.weekday}</span>
@@ -291,7 +291,7 @@ export function BookingForm() {
               </fieldset>
 
               <fieldset>
-                <legend className="text-xs uppercase tracking-[0.16em] text-gold-300">Time</legend>
+                <legend className="text-xs uppercase tracking-[0.16em] text-lime-400">Time</legend>
                 <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
                   {(selectedDate?.slots ?? []).map((slot) => (
                     <button
@@ -305,8 +305,8 @@ export function BookingForm() {
                       className={cn(
                         "rounded-xl border px-3 py-3 text-sm disabled:cursor-not-allowed disabled:opacity-35",
                         form.slotId === slot.id
-                          ? "border-gold-400 bg-gold-500 text-navy-950"
-                          : "border-white/10 hover:border-gold-400/50",
+                          ? "border-lime-500 bg-lime-500 text-ink-900"
+                          : "border-white/10 hover:border-lime-500/50",
                       )}
                     >
                       {slot.time}
@@ -315,7 +315,7 @@ export function BookingForm() {
                   ))}
                 </div>
                 {!selectedDate ? (
-                  <p className="mt-3 text-sm text-ivory-200/70">Select a date to view open chairs.</p>
+                  <p className="mt-3 text-sm text-white/70">Select a date to view open chairs.</p>
                 ) : null}
                 {errors.slotId ? (
                   <p role="alert" className="mt-2 text-sm text-red-300">
@@ -355,7 +355,7 @@ export function BookingForm() {
                   onChange={(event) => setForm((prev) => ({ ...prev, phone: event.target.value }))}
                 />
                 <fieldset className="flex flex-col gap-1.5">
-                  <legend className="text-xs uppercase tracking-[0.16em] text-gold-300">
+                  <legend className="text-xs uppercase tracking-[0.16em] text-lime-400">
                     Contact preference
                   </legend>
                   <div className="flex flex-wrap gap-2 pt-2">
@@ -365,7 +365,7 @@ export function BookingForm() {
                         className={cn(
                           "cursor-pointer rounded-full border px-4 py-2 text-sm",
                           form.contactPreference === option.value
-                            ? "border-gold-400 bg-gold-500 text-navy-950"
+                            ? "border-lime-500 bg-lime-500 text-ink-900"
                             : "border-white/15",
                         )}
                       >
@@ -406,12 +406,12 @@ export function BookingForm() {
               Back
             </Button>
             {step < 3 ? (
-              <Button variant="gold" onClick={goNext}>
+              <Button variant="primary" onClick={goNext}>
                 Continue
                 <ChevronRight className="h-4 w-4" aria-hidden="true" />
               </Button>
             ) : (
-              <Button type="submit" variant="gold">
+              <Button type="submit" variant="primary">
                 Confirm VIP reservation
               </Button>
             )}
@@ -420,9 +420,9 @@ export function BookingForm() {
       </div>
 
       <Modal open={successOpen} title="Your VIP chair is reserved" onClose={resetBooking}>
-        <div className="space-y-4 text-stone-600">
-          <p className="flex items-center gap-2 text-navy-900">
-            <CheckCircle2 className="h-5 w-5 text-teal-600" aria-hidden="true" />
+        <div className="space-y-4 text-black/70">
+          <p className="flex items-center gap-2 text-ink-900">
+            <CheckCircle2 className="h-5 w-5 text-lime-600" aria-hidden="true" />
             Confirmation sent to {form.email || "your inbox"}
           </p>
           <ul className="space-y-1 text-sm">
@@ -446,7 +446,7 @@ export function BookingForm() {
             If you need same-day triage instead, call {clinicInfo.phoneDisplay} or use the
             emergency button.
           </p>
-          <Button variant="gold" onClick={resetBooking}>
+          <Button variant="primary" onClick={resetBooking}>
             Book another visit
           </Button>
         </div>

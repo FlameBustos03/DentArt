@@ -50,17 +50,17 @@ export function SmileVisualizer() {
   };
 
   return (
-    <section id="before-after" aria-labelledby="visualizer-heading" className="scroll-mt-24 bg-ivory-100 py-20">
+    <section id="before-after" aria-labelledby="visualizer-heading" className="scroll-mt-24 bg-mist py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <p className="text-xs uppercase tracking-[0.24em] text-teal-600">Interactive makeover gallery</p>
+        <p className="text-xs uppercase tracking-[0.24em] text-lime-700">Interactive makeover gallery</p>
         <h2
           id="visualizer-heading"
-          className="mt-3 max-w-3xl font-serif text-3xl text-navy-900 sm:text-5xl"
+          className="mt-3 max-w-3xl font-serif text-3xl text-ink-900 sm:text-5xl"
         >
           Before & after smile makeovers
         </h2>
-        <p className="mt-4 max-w-2xl text-stone-600">
-          Drag or use arrow keys to reveal the finished composition. Cases represent typical DentArt
+        <p className="mt-4 max-w-2xl text-black/70">
+          Drag or use arrow keys to reveal the finished composition. Cases represent typical Dent Art
           outcomes in porcelain veneers, Invisalign, and full mouth rehabilitation—not static grids.
         </p>
 
@@ -83,7 +83,7 @@ export function SmileVisualizer() {
             key={activeCase.id}
             initial={{ opacity: 0.4 }}
             animate={{ opacity: 1 }}
-            className="relative aspect-[16/11] touch-none overflow-hidden rounded-3xl border border-ivory-300 bg-navy-900 shadow-lift"
+            className="relative aspect-[16/11] touch-none overflow-hidden rounded-3xl border border-black/10 bg-ink-900 shadow-lift"
           >
             <div
               role="slider"
@@ -93,7 +93,7 @@ export function SmileVisualizer() {
               aria-valuemax={96}
               aria-valuenow={Math.round(position)}
               aria-valuetext={`${Math.round(position)} percent after revealed`}
-              className="absolute inset-0 cursor-ew-resize focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-500"
+              className="absolute inset-0 cursor-ew-resize focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime-500"
               onPointerDown={onPointerDown}
               onPointerMove={onPointerMove}
               onKeyDown={onKeyDown}
@@ -118,28 +118,28 @@ export function SmileVisualizer() {
                 />
               </div>
               <div
-                className="absolute inset-y-0 z-10 w-px bg-gold-300"
+                className="absolute inset-y-0 z-10 w-px bg-lime-500"
                 style={{ left: `${position}%` }}
                 aria-hidden="true"
               >
-                <span className="absolute left-1/2 top-1/2 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-gold-300 bg-navy-900 text-xs uppercase tracking-widest text-ivory-100">
+                <span className="absolute left-1/2 top-1/2 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-lime-500 bg-ink-900 text-xs uppercase tracking-widest text-white">
                   Drag
                 </span>
               </div>
-              <span className="absolute left-4 top-4 rounded-full bg-navy-950/70 px-3 py-1 text-xs uppercase tracking-[0.18em] text-ivory-100">
+              <span className="absolute left-4 top-4 rounded-full bg-ink-900/70 px-3 py-1 text-xs uppercase tracking-[0.18em] text-white">
                 Before
               </span>
-              <span className="absolute right-4 top-4 rounded-full bg-gold-500/90 px-3 py-1 text-xs uppercase tracking-[0.18em] text-navy-950">
+              <span className="absolute right-4 top-4 rounded-full bg-lime-500 px-3 py-1 text-xs uppercase tracking-[0.18em] text-ink-900">
                 After
               </span>
             </div>
           </motion.div>
 
           <div>
-            <p className="text-xs uppercase tracking-[0.2em] text-teal-600">{activeCase.category}</p>
-            <h3 className="mt-2 font-serif text-3xl text-navy-900">{activeCase.title}</h3>
-            <p className="mt-4 text-stone-600">{activeCase.description}</p>
-            <p className="mt-6 text-sm uppercase tracking-[0.16em] text-navy-800">
+            <p className="text-xs uppercase tracking-[0.2em] text-lime-700">{activeCase.category}</p>
+            <h3 className="mt-2 font-serif text-3xl text-ink-900">{activeCase.title}</h3>
+            <p className="mt-4 text-black/70">{activeCase.description}</p>
+            <p className="mt-6 text-sm uppercase tracking-[0.16em] text-ink-800">
               Typical course · {activeCase.treatmentDuration}
             </p>
           </div>
@@ -164,8 +164,8 @@ function CaseTab({ item, selected, onSelect }: CaseTabProps) {
       className={cn(
         "rounded-full border px-4 py-2 text-sm transition-colors",
         selected
-          ? "border-navy-900 bg-navy-900 text-ivory-100"
-          : "border-ivory-300 bg-ivory-50 text-navy-800 hover:border-teal-500",
+          ? "border-ink-900 bg-ink-900 text-white"
+          : "border-black/15 bg-white text-ink-800 hover:border-lime-500",
       )}
       onClick={onSelect}
     >

@@ -3,7 +3,7 @@
 import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-export type ButtonVariant = "primary" | "secondary" | "ghost" | "gold" | "outline";
+export type ButtonVariant = "primary" | "secondary" | "ghost" | "outline";
 export type ButtonSize = "sm" | "md" | "lg";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -14,14 +14,13 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    "bg-navy-900 text-ivory-100 hover:bg-navy-800 shadow-glass border border-navy-900",
+    "bg-lime-500 text-ink-900 hover:bg-lime-600 shadow-lime border border-lime-600/30",
   secondary:
-    "bg-transparent text-ivory-100 border border-gold-400/80 hover:bg-white/10",
+    "bg-transparent text-white border border-lime-500/80 hover:bg-white/10",
   ghost:
-    "bg-transparent text-navy-900 border border-navy-900/15 hover:border-gold-500 hover:text-navy-800",
-  gold: "bg-gold-500 text-navy-950 hover:bg-gold-400 shadow-gold border border-gold-600/30",
+    "bg-transparent text-ink-900 border border-black/15 hover:border-lime-500 hover:bg-mist",
   outline:
-    "bg-transparent text-navy-900 border border-navy-900/20 hover:border-teal-500 hover:text-teal-600",
+    "bg-transparent text-ink-900 border border-black/20 hover:border-lime-500",
 };
 
 const sizeClasses: Record<ButtonSize, string> = {

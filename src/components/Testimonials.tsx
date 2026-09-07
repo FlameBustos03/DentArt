@@ -33,20 +33,20 @@ export function Testimonials() {
     <section
       id="celebrity-smiles"
       aria-labelledby="reviews-heading"
-      className="scroll-mt-24 bg-navy-900 py-20 text-ivory-100"
+      className="scroll-mt-24 bg-ink-900 py-20 text-white"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <p className="text-xs uppercase tracking-[0.24em] text-gold-300">Celebrity & patient voices</p>
+        <p className="text-xs uppercase tracking-[0.24em] text-lime-400">Celebrity & patient voices</p>
         <h2 id="reviews-heading" className="mt-3 font-serif text-3xl sm:text-5xl">
           Verified smiles, private screenings
         </h2>
-        <p className="mt-4 max-w-2xl text-ivory-200/85">
+        <p className="mt-4 max-w-2xl text-white/85">
           Star reviews from named patients sit beside confidential talent testimonials. Identities
           stay withheld unless a guest authorizes a private viewing at consultation.
         </p>
 
         <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
-          <p id={statusId} className="text-sm text-ivory-200/80" aria-live="polite">
+          <p id={statusId} className="text-sm text-white/80" aria-live="polite">
             Story {index + 1} of {testimonials.length}
           </p>
           <div className="flex gap-2">
@@ -81,7 +81,7 @@ export function Testimonials() {
             className="glass-dark mt-6 grid gap-6 rounded-3xl p-5 sm:p-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center"
             aria-labelledby={`testimonial-${active.id}`}
           >
-            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-navy-800 sm:aspect-[16/11] lg:aspect-[4/5]">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-ink-800 sm:aspect-[16/11] lg:aspect-[4/5]">
               <Image
                 src={active.image.src}
                 alt={active.image.alt}
@@ -92,11 +92,11 @@ export function Testimonials() {
               {active.kind === "video" ? (
                 <button
                   type="button"
-                  className="absolute inset-0 flex items-center justify-center bg-navy-950/25"
+                  className="absolute inset-0 flex items-center justify-center bg-ink-900/25"
                   onClick={() => setVideoItem(active)}
                 >
-                  <span className="flex h-16 w-16 items-center justify-center rounded-full border border-gold-400 bg-navy-950/80">
-                    <Play className="h-6 w-6 text-gold-300" aria-hidden="true" />
+                  <span className="flex h-16 w-16 items-center justify-center rounded-full border border-lime-500 bg-ink-900/80">
+                    <Play className="h-6 w-6 text-lime-400" aria-hidden="true" />
                   </span>
                   <span className="sr-only">
                     Open private video testimonial for {active.name}
@@ -105,19 +105,19 @@ export function Testimonials() {
                 </button>
               ) : null}
               {active.kind === "video" && active.duration ? (
-                <span className="absolute bottom-3 right-3 rounded-full bg-navy-950/80 px-3 py-1 text-xs uppercase tracking-[0.14em] text-ivory-100">
+                <span className="absolute bottom-3 right-3 rounded-full bg-ink-900/80 px-3 py-1 text-xs uppercase tracking-[0.14em] text-white">
                   {active.duration}
                 </span>
               ) : null}
             </div>
             <div>
-              <p className="text-xs uppercase tracking-[0.18em] text-teal-300">
+              <p className="text-xs uppercase tracking-[0.18em] text-lime-400">
                 {active.kind === "video" ? "Video testimonial" : "Verified patient review"}
               </p>
               <h3 id={`testimonial-${active.id}`} className="mt-2 font-serif text-3xl">
                 {active.name}
               </h3>
-              <p className="mt-1 text-sm text-ivory-200/75">
+              <p className="mt-1 text-sm text-white/75">
                 {active.treatment} · {active.location}
               </p>
               <div
@@ -127,22 +127,22 @@ export function Testimonials() {
                 {Array.from({ length: active.rating }).map((_, starIndex) => (
                   <Star
                     key={`${active.id}-star-${starIndex}`}
-                    className="h-4 w-4 fill-gold-500 text-gold-500"
+                    className="h-4 w-4 fill-lime-500 text-lime-500"
                     aria-hidden="true"
                   />
                 ))}
                 {active.verified ? (
-                  <span className="ml-2 text-xs uppercase tracking-[0.14em] text-gold-300">
+                  <span className="ml-2 text-xs uppercase tracking-[0.14em] text-lime-400">
                     Verified
                   </span>
                 ) : null}
               </div>
-              <blockquote className="mt-5 text-lg leading-relaxed text-ivory-100/95">
+              <blockquote className="mt-5 text-lg leading-relaxed text-white/95">
                 “{active.quote}”
               </blockquote>
               {active.kind === "video" ? (
                 <Button
-                  variant="gold"
+                  variant="primary"
                   size="sm"
                   className="mt-6"
                   onClick={() => setVideoItem(active)}
@@ -164,7 +164,7 @@ export function Testimonials() {
               aria-label={`Show testimonial ${itemIndex + 1}: ${item.name}`}
               className={cn(
                 "h-2.5 rounded-full transition-all",
-                itemIndex === index ? "w-8 bg-gold-400" : "w-2.5 bg-white/30 hover:bg-white/60",
+                itemIndex === index ? "w-8 bg-lime-500" : "w-2.5 bg-white/30 hover:bg-white/60",
               )}
               onClick={() => setIndex(itemIndex)}
             />
@@ -178,19 +178,19 @@ export function Testimonials() {
         onClose={() => setVideoItem(null)}
       >
         {videoItem ? (
-          <div className="space-y-4 text-stone-600">
-            <div className="flex aspect-video items-center justify-center rounded-2xl bg-navy-900 text-ivory-100">
+          <div className="space-y-4 text-black/70">
+            <div className="flex aspect-video items-center justify-center rounded-2xl bg-ink-900 text-white">
               <div className="px-6 text-center">
-                <Play className="mx-auto h-10 w-10 text-gold-300" aria-hidden="true" />
+                <Play className="mx-auto h-10 w-10 text-lime-400" aria-hidden="true" />
                 <p className="mt-3 font-serif text-2xl">Screening reserved</p>
-                <p className="mt-2 text-sm text-ivory-200/80">
+                <p className="mt-2 text-sm text-white/80">
                   {videoItem.duration ? `Runtime ${videoItem.duration}` : "Private runtime"}
                 </p>
               </div>
             </div>
             <p>{videoItem.privacyNote}</p>
             <p>
-              DentArt does not stream talent identities on a public page. Book a VIP consultation to
+              Dent Art does not stream talent identities on a public page. Book a VIP consultation to
               request a confidential viewing in-suite or over encrypted video.
             </p>
           </div>

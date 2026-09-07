@@ -135,6 +135,7 @@ export interface ClinicHours {
 
 export interface ClinicInfo {
   name: string;
+  slogan: string;
   tagline: string;
   phoneDisplay: string;
   phoneTel: string;

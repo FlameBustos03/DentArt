@@ -1,6 +1,6 @@
-# DentArt Celebrity VIP Edition
+# Dent Art | Atrévete a Sonreír
 
-Premier dental clinic platform for the VIP patient journey—from media-grade discovery to concierge confirmation.
+VIP smile studio platform for Dent Art in Poza Rica, Veracruz—lime green brand identity, concierge booking, and 24/7 emergency care.
 
 ## Run locally
 
