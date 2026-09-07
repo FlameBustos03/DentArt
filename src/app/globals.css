@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-ivory-100 text-navy-900 antialiased;
+}
+
+::selection {
+  background: #c4a46a;
+  color: #061018;
+}
+
+:focus-visible {
+  outline: 2px solid #c4a46a;
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  z-index: 80;
+  border-radius: 999px;
+  background: #0b1c2c;
+  color: #f7f3eb;
+  padding: 0.6rem 1rem;
+  font-size: 0.875rem;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+.gold-hairline {
+  background: linear-gradient(90deg, transparent, #c4a46a, transparent);
+}
+
+.glass-nav {
+  background: rgba(253, 252, 250, 0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(196, 164, 106, 0.28);
+}
