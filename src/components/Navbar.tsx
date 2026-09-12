@@ -98,7 +98,7 @@ export function Navbar({ className }: NavbarProps) {
               <a
                 key={link.id}
                 href={link.href}
-                className="text-sm tracking-wide text-ink-900 underline-offset-4 transition-colors hover:text-lime-700 hover:underline"
+                className="text-sm tracking-wide text-ink-900 underline-offset-4 transition-colors hover:text-lime-800 hover:underline"
               >
                 {link.label}
               </a>
@@ -108,9 +108,9 @@ export function Navbar({ className }: NavbarProps) {
           <div className="hidden items-center gap-3 lg:flex">
             <a
               href={`tel:${clinicInfo.phoneTel}`}
-              className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-3.5 py-2 text-sm text-ink-900 hover:border-lime-500"
+              className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-3.5 py-2 text-sm text-ink-900 hover:border-lime-800"
             >
-              <Phone className="h-4 w-4 text-lime-600" aria-hidden="true" />
+              <Phone className="h-4 w-4 text-lime-800" aria-hidden="true" />
               <span className="font-medium">Concierge</span>
               <span className="hidden text-black/60 xl:inline">{clinicInfo.phoneDisplay}</span>
             </a>
@@ -185,9 +185,9 @@ export function Navbar({ className }: NavbarProps) {
               <p className="mt-6 italic text-black/70">{clinicInfo.slogan}</p>
               <a
                 href={`tel:${clinicInfo.phoneTel}`}
-                className="mt-4 inline-flex items-center gap-2 text-ink-900 hover:text-lime-700"
+                className="mt-4 inline-flex items-center gap-2 text-ink-900 hover:text-lime-800"
               >
-                <Phone className="h-4 w-4 text-lime-600" aria-hidden="true" />
+                <Phone className="h-4 w-4 text-lime-800" aria-hidden="true" />
                 Concierge · {clinicInfo.phoneDisplay}
               </a>
               <Button

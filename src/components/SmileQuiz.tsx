@@ -88,7 +88,7 @@ export function SmileQuiz() {
   return (
     <section id="quiz" aria-labelledby="quiz-heading" className="scroll-mt-24 bg-mist py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <p className="text-xs uppercase tracking-[0.24em] text-lime-700">AI-assisted triage</p>
+        <p className="text-xs uppercase tracking-[0.24em] text-lime-800">AI-assisted triage</p>
         <h2 id="quiz-heading" className="mt-3 font-serif text-3xl text-ink-900 sm:text-5xl">
           Interactive 3-step smile assessment
         </h2>
@@ -109,7 +109,7 @@ export function SmileQuiz() {
                   current
                     ? "border-ink-900 bg-ink-900 text-white"
                     : value < step
-                      ? "border-lime-500/50 text-lime-700"
+                      ? "border-lime-800/50 text-lime-800"
                       : "border-black/15 text-black/50",
                 )}
                 aria-current={current ? "step" : undefined}
@@ -138,7 +138,7 @@ export function SmileQuiz() {
                   Your concierge brief is reserved
                 </h3>
                 <p className="flex items-center gap-2 text-ink-800">
-                  <CheckCircle2 className="h-5 w-5 text-lime-600" aria-hidden="true" />
+                  <CheckCircle2 className="h-5 w-5 text-lime-800" aria-hidden="true" />
                   We will reach {lead.fullName} at {lead.email}
                 </p>
                 <p className="text-black/70">
@@ -184,8 +184,8 @@ export function SmileQuiz() {
                             className={cn(
                               "cursor-pointer rounded-2xl border p-4 transition-colors",
                               selected
-                                ? "border-lime-500 bg-lime-500/15"
-                                : "border-black/15 bg-mist hover:border-lime-500",
+                                ? "border-lime-800 bg-lime-500/15"
+                                : "border-black/15 bg-mist hover:border-lime-800",
                             )}
                           >
                             <input
@@ -219,8 +219,8 @@ export function SmileQuiz() {
                             className={cn(
                               "cursor-pointer rounded-2xl border p-4 transition-colors",
                               selected
-                                ? "border-lime-500 bg-lime-500/15"
-                                : "border-black/15 bg-mist hover:border-lime-500",
+                                ? "border-lime-800 bg-lime-500/15"
+                                : "border-black/15 bg-mist hover:border-lime-800",
                             )}
                           >
                             <input

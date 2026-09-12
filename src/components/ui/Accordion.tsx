@@ -35,7 +35,7 @@ export function Accordion({ items }: AccordionProps) {
                 <span className="font-serif text-lg text-ink-900 sm:text-xl">{item.question}</span>
                 <ChevronDown
                   className={cn(
-                    "h-5 w-5 shrink-0 text-lime-600 transition-transform duration-300",
+                    "h-5 w-5 shrink-0 text-lime-800 transition-transform duration-300",
                     isOpen && "rotate-180",
                   )}
                   aria-hidden="true"

@@ -422,7 +422,7 @@ export function BookingForm() {
       <Modal open={successOpen} title="Your VIP chair is reserved" onClose={resetBooking}>
         <div className="space-y-4 text-black/70">
           <p className="flex items-center gap-2 text-ink-900">
-            <CheckCircle2 className="h-5 w-5 text-lime-600" aria-hidden="true" />
+            <CheckCircle2 className="h-5 w-5 text-lime-800" aria-hidden="true" />
             Confirmation sent to {form.email || "your inbox"}
           </p>
           <ul className="space-y-1 text-sm">

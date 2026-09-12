@@ -36,7 +36,7 @@ export function ServicesCatalog() {
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-xs uppercase tracking-[0.24em] text-lime-700"
+          className="text-xs uppercase tracking-[0.24em] text-lime-800"
         >
           Concierge catalog
         </motion.p>
@@ -89,7 +89,7 @@ export function ServicesCatalog() {
                   <div className="p-6">
                     <div className="flex items-start justify-between gap-4">
                       <div>
-                        <p className="text-xs uppercase tracking-[0.18em] text-lime-700">{service.tagline}</p>
+                        <p className="text-xs uppercase tracking-[0.18em] text-lime-800">{service.tagline}</p>
                         <h3 className="mt-2 font-serif text-2xl text-ink-900">{service.name}</h3>
                       </div>
                       <ServiceGlyph icon={Icon} />
@@ -98,7 +98,7 @@ export function ServicesCatalog() {
                     <ul className="mt-5 space-y-2">
                       {service.benefits.map((benefit) => (
                         <li key={benefit} className="flex items-start gap-2 text-sm text-ink-800">
-                          <Check className="mt-0.5 h-4 w-4 shrink-0 text-lime-600" aria-hidden="true" />
+                          <Check className="mt-0.5 h-4 w-4 shrink-0 text-lime-800" aria-hidden="true" />
                           {benefit}
                         </li>
                       ))}

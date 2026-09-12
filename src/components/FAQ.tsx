@@ -5,7 +5,7 @@ export function FAQ() {
   return (
     <section id="faq" aria-labelledby="faq-heading" className="scroll-mt-24 bg-mist py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <p className="text-xs uppercase tracking-[0.24em] text-lime-700">Quiet answers</p>
+        <p className="text-xs uppercase tracking-[0.24em] text-lime-800">Quiet answers</p>
         <h2 id="faq-heading" className="mt-3 font-serif text-3xl text-ink-900 sm:text-5xl">
           Financing, procedures, and insurance
         </h2>

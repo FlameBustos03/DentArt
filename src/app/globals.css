@@ -6,6 +6,7 @@
   color-scheme: light;
   --brand-lime: #2ecc71;
   --brand-lime-hover: #27ae60;
+  --brand-lime-text: #1b7a45;
   --brand-ink: #000000;
   --brand-ink-soft: #111111;
   --brand-white: #ffffff;
@@ -26,8 +27,11 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid #2ecc71;
+  outline: 2px solid #111111;
   outline-offset: 3px;
+  box-shadow:
+    0 0 0 5px #ffffff,
+    0 0 0 7px #2ecc71;
 }
 
 .skip-link {

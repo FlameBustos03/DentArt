@@ -52,7 +52,7 @@ export function SmileVisualizer() {
   return (
     <section id="before-after" aria-labelledby="visualizer-heading" className="scroll-mt-24 bg-mist py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <p className="text-xs uppercase tracking-[0.24em] text-lime-700">Interactive makeover gallery</p>
+        <p className="text-xs uppercase tracking-[0.24em] text-lime-800">Interactive makeover gallery</p>
         <h2
           id="visualizer-heading"
           className="mt-3 max-w-3xl font-serif text-3xl text-ink-900 sm:text-5xl"
@@ -93,7 +93,7 @@ export function SmileVisualizer() {
               aria-valuemax={96}
               aria-valuenow={Math.round(position)}
               aria-valuetext={`${Math.round(position)} percent after revealed`}
-              className="absolute inset-0 cursor-ew-resize focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime-500"
+              className="absolute inset-0 cursor-ew-resize"
               onPointerDown={onPointerDown}
               onPointerMove={onPointerMove}
               onKeyDown={onKeyDown}
@@ -136,7 +136,7 @@ export function SmileVisualizer() {
           </motion.div>
 
           <div>
-            <p className="text-xs uppercase tracking-[0.2em] text-lime-700">{activeCase.category}</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-lime-800">{activeCase.category}</p>
             <h3 className="mt-2 font-serif text-3xl text-ink-900">{activeCase.title}</h3>
             <p className="mt-4 text-black/70">{activeCase.description}</p>
             <p className="mt-6 text-sm uppercase tracking-[0.16em] text-ink-800">
@@ -165,7 +165,7 @@ function CaseTab({ item, selected, onSelect }: CaseTabProps) {
         "rounded-full border px-4 py-2 text-sm transition-colors",
         selected
           ? "border-ink-900 bg-ink-900 text-white"
-          : "border-black/15 bg-white text-ink-800 hover:border-lime-500",
+          : "border-black/15 bg-white text-ink-800 hover:border-lime-800",
       )}
       onClick={onSelect}
     >

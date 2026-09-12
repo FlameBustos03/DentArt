@@ -10,6 +10,9 @@ const config: Config = {
           500: "#2ECC71",
           600: "#27AE60",
           700: "#219150",
+          // Accessible text/icon lime on white and mist (≥4.5:1). Do not use 400–700 for small text on light surfaces.
+          800: "#1B7A45",
+          text: "#1B7A45",
         },
         ink: {
           800: "#111111",

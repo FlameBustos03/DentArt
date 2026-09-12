@@ -10,7 +10,7 @@ export function DoctorAuthority() {
   return (
     <section id="doctor" aria-labelledby="doctor-heading" className="scroll-mt-24 bg-mist py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <p className="text-xs uppercase tracking-[0.24em] text-lime-700">Authority & philanthropy</p>
+        <p className="text-xs uppercase tracking-[0.24em] text-lime-800">Authority & philanthropy</p>
         <h2 id="doctor-heading" className="mt-3 font-serif text-3xl text-ink-900 sm:text-5xl">
           The medical director behind the studio
         </h2>
@@ -37,14 +37,14 @@ export function DoctorAuthority() {
           </motion.figure>
 
           <div>
-            <p className="text-xs uppercase tracking-[0.18em] text-lime-700">{medicalDirector.title}</p>
+            <p className="text-xs uppercase tracking-[0.18em] text-lime-800">{medicalDirector.title}</p>
             <h3 className="mt-2 font-serif text-3xl text-ink-900">{medicalDirector.name}</h3>
             <p className="mt-2 text-sm text-black/55">{medicalDirector.credentials}</p>
             <p className="mt-5 text-black/70">{medicalDirector.bio}</p>
 
             <div className="mt-8 grid gap-6 sm:grid-cols-2">
               <div>
-                <h4 className="flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-lime-700">
+                <h4 className="flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-lime-800">
                   <Award className="h-4 w-4" aria-hidden="true" />
                   International awards
                 </h4>
@@ -55,7 +55,7 @@ export function DoctorAuthority() {
                 </ul>
               </div>
               <div>
-                <h4 className="flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-lime-700">
+                <h4 className="flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-lime-800">
                   <BookOpen className="h-4 w-4" aria-hidden="true" />
                   Books published
                 </h4>
@@ -79,7 +79,7 @@ export function DoctorAuthority() {
 
         <div className="mt-14">
           <h3 className="flex items-center gap-2 font-serif text-2xl text-ink-900 sm:text-3xl">
-            <HeartHandshake className="h-6 w-6 text-lime-600" aria-hidden="true" />
+            <HeartHandshake className="h-6 w-6 text-lime-800" aria-hidden="true" />
             Community impact
           </h3>
           <ul className="mt-6 grid gap-5 md:grid-cols-3">
@@ -93,10 +93,10 @@ export function DoctorAuthority() {
               >
                 <TiltCard className="glass-card rounded-3xl bg-white">
                   <div className="p-6">
-                    <p className="text-xs uppercase tracking-[0.16em] text-lime-700">{program.impact}</p>
+                    <p className="text-xs uppercase tracking-[0.16em] text-lime-800">{program.impact}</p>
                     <h4 className="mt-2 font-serif text-xl text-ink-900">{program.name}</h4>
                     <p className="mt-3 text-sm text-black/70">{program.description}</p>
-                    <p className="mt-5 text-sm uppercase tracking-[0.14em] text-lime-700">{program.metric}</p>
+                    <p className="mt-5 text-sm uppercase tracking-[0.14em] text-lime-800">{program.metric}</p>
                   </div>
                 </TiltCard>
               </motion.li>
