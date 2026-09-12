@@ -110,7 +110,7 @@ export function SmileQuiz() {
                     ? "border-ink-900 bg-ink-900 text-white"
                     : value < step
                       ? "border-lime-800/50 text-lime-800"
-                      : "border-black/15 text-black/50",
+                      : "border-black/15 text-black/60",
                 )}
                 aria-current={current ? "step" : undefined}
               >
