@@ -10,8 +10,9 @@ export function EmergencySection() {
   return (
     <section
       id="emergency"
+      tabIndex={-1}
       aria-labelledby="emergency-heading"
-      className="scroll-mt-24 border-y border-lime-500/25 bg-ink-800 py-16 text-white"
+      className="scroll-mt-24 border-y border-lime-500/25 bg-ink-800 py-16 text-white focus-visible:shadow-none focus-visible:outline-none"
     >
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <div>
