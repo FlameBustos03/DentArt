@@ -66,7 +66,7 @@ export function TiltCard({ children, className, maxTilt = 8 }: TiltCardProps) {
           glow.active && "opacity-100",
         )}
         style={{
-          background: `radial-gradient(circle at ${glow.x}% ${glow.y}%, rgba(46, 204, 113, 0.2), transparent 58%)`,
+          background: `radial-gradient(circle at ${glow.x}% ${glow.y}%, rgba(46, 204, 113, 0.08), transparent 58%)`,
         }}
       />
       <div className="relative h-full">{children}</div>

@@ -22,6 +22,8 @@ export function Hero() {
   const pointerRef = useRef<PointerNorm>({ x: 0, y: 0 });
   const scrollRef = useRef(0);
   const [visible, setVisible] = useState(true);
+  const [awake, setAwake] = useState(true);
+  const idleTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   useEffect(() => {
     const node = sectionRef.current;
@@ -46,9 +48,13 @@ export function Hero() {
     observer.observe(node);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
+    idleTimerRef.current = setTimeout(() => setAwake(false), 1800);
     return () => {
       observer.disconnect();
       window.removeEventListener("scroll", onScroll);
+      if (idleTimerRef.current) {
+        clearTimeout(idleTimerRef.current);
+      }
     };
   }, []);
 
@@ -63,6 +69,11 @@ export function Hero() {
     pointerRef.current = { x, y };
     node.style.setProperty("--hero-px", x.toFixed(3));
     node.style.setProperty("--hero-py", y.toFixed(3));
+    setAwake((current) => (current ? current : true));
+    if (idleTimerRef.current) {
+      clearTimeout(idleTimerRef.current);
+    }
+    idleTimerRef.current = setTimeout(() => setAwake(false), 1800);
   };
 
   return (
@@ -84,6 +95,7 @@ export function Hero() {
       <div className="hero-ambient" aria-hidden="true" />
       <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white to-transparent" />
       <HeroDepthCards />
+      <HeroButterfly pointerRef={pointerRef} scrollRef={scrollRef} visible={visible} awake={awake} />
 
       <div className="relative mx-auto grid max-w-6xl gap-10 px-4 py-20 sm:px-6 lg:grid-cols-[1.15fr_0.85fr] lg:py-28">
         <motion.div
@@ -96,26 +108,25 @@ export function Hero() {
             <Sparkles className="h-4 w-4 text-lime-500" aria-hidden="true" />
             Poza Rica, Veracruz · VIP Smile Studio
           </p>
-          <div className="relative">
-            <h1
-              id="hero-heading"
-              className="max-w-[16ch] pr-28 font-serif text-4xl italic leading-tight text-lime-400 sm:max-w-2xl sm:pr-40 sm:text-5xl lg:text-7xl"
-            >
-              {clinicInfo.slogan}
-            </h1>
-            <div className="pointer-events-none absolute -right-2 -top-10 h-40 w-40 sm:-right-4 sm:-top-16 sm:h-60 sm:w-60 lg:-right-6 lg:-top-20 lg:h-72 lg:w-72">
-              <HeroButterfly pointerRef={pointerRef} scrollRef={scrollRef} visible={visible} />
-            </div>
-          </div>
-          <p className="mt-5 max-w-2xl font-serif text-3xl leading-tight text-white sm:text-4xl lg:text-5xl">
+          <h1
+            id="hero-heading"
+            data-hero-exclude
+            className="max-w-[16ch] font-serif text-4xl italic leading-tight text-lime-400 sm:max-w-2xl sm:text-5xl lg:text-7xl"
+          >
+            {clinicInfo.slogan}
+          </h1>
+          <p
+            data-hero-exclude
+            className="mt-5 max-w-2xl font-serif text-3xl leading-tight text-white sm:text-4xl lg:text-5xl"
+          >
             Transforming Smiles, Redefining Confidence
           </p>
-          <p className="mt-6 max-w-lg text-base text-white/85 sm:text-lg">
+          <p data-hero-exclude className="mt-6 max-w-lg text-base text-white/85 sm:text-lg">
             Dent Art is Poza Rica’s private dental studio—Hollywood-grade ceramics, concierge
             hospitality, and reconstructive medicine under one roof. Arrive as a guest. Leave as a
             reference.
           </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <div data-hero-exclude className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button variant="primary" size="lg" onClick={() => scrollToId("booking")}>
               Schedule Virtual Consultation
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -140,6 +151,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65, delay: 0.1 }}
+          data-hero-exclude
           className="glass-dark relative z-10 self-end rounded-3xl p-6"
         >
           <p className="text-xs uppercase tracking-[0.22em] text-lime-400">Clinical credentials</p>

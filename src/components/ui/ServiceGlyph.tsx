@@ -13,13 +13,13 @@ export function ServiceGlyph({ icon: Icon, className }: ServiceGlyphProps) {
     <span className={cn("service-glyph relative isolate flex h-12 w-12 shrink-0", className)}>
       <span
         aria-hidden="true"
-        className="service-glyph-plate absolute inset-0 rotate-6 rounded-2xl bg-lime-500/25"
+        className="service-glyph-plate absolute inset-0 rotate-6 rounded-2xl bg-lime-500/10"
       />
       <span
         aria-hidden="true"
-        className="service-glyph-plate absolute inset-0 -rotate-3 rounded-2xl border border-lime-500/30 bg-ink-900/5"
+        className="service-glyph-plate absolute inset-0 -rotate-3 rounded-2xl border border-lime-500/20 bg-ink-900/5"
       />
-      <span className="relative flex h-12 w-12 items-center justify-center rounded-2xl border border-lime-500/55 bg-white shadow-lime">
+      <span className="relative flex h-12 w-12 items-center justify-center rounded-2xl border border-lime-500/30 bg-white shadow-sm">
         <Icon className="h-5 w-5 text-lime-800" aria-hidden="true" />
       </span>
     </span>

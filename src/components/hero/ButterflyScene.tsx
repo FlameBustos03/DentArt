@@ -67,7 +67,7 @@ function WingMesh({
   );
 }
 
-function LimeButterfly({ pointerRef, scrollRef }: Omit<HeroSceneProps, "visible">) {
+function LimeButterfly({ pointerRef, scrollRef }: Omit<HeroSceneProps, "visible" | "awake">) {
   const group = useRef<THREE.Group>(null);
   const left = useRef<THREE.Group>(null);
   const right = useRef<THREE.Group>(null);
@@ -76,7 +76,7 @@ function LimeButterfly({ pointerRef, scrollRef }: Omit<HeroSceneProps, "visible"
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
-    const flap = 0.55 + Math.sin(t * 6.4) * 0.7;
+    const flap = 0.42 + Math.sin(t * 2.6) * 0.38;
     if (left.current) {
       left.current.rotation.y = -flap;
     }
@@ -148,12 +148,12 @@ function LimeButterfly({ pointerRef, scrollRef }: Omit<HeroSceneProps, "visible"
   );
 }
 
-export function ButterflyScene({ pointerRef, scrollRef, visible }: HeroSceneProps) {
+export function ButterflyScene({ pointerRef, scrollRef, visible, awake }: HeroSceneProps) {
   return (
     <div className="pointer-events-none absolute inset-0" aria-hidden="true">
       <Canvas
         dpr={[1, 1.5]}
-        frameloop={visible ? "always" : "never"}
+        frameloop={visible && awake ? "always" : "never"}
         gl={{
           antialias: true,
           alpha: true,

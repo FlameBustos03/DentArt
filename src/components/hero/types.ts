@@ -9,4 +9,5 @@ export interface HeroSceneProps {
   pointerRef: MutableRefObject<PointerNorm>;
   scrollRef: MutableRefObject<number>;
   visible: boolean;
+  awake: boolean;
 }

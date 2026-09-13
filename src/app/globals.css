@@ -103,8 +103,8 @@ body {
 
 .tilt-card--lit {
   box-shadow:
-    0 0 0 1px rgba(46, 204, 113, 0.55),
-    0 18px 40px rgba(46, 204, 113, 0.2);
+    0 0 0 1px rgba(46, 204, 113, 0.28),
+    0 12px 28px rgba(0, 0, 0, 0.08);
 }
 
 .service-glyph {

@@ -24,10 +24,10 @@ export function useHero3DEnabled(): Hero3DMode {
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const mobile = window.matchMedia("(max-width: 767px)");
+    const desktop = window.matchMedia("(min-width: 1024px)");
 
     const resolve = () => {
-      if (reduced.matches || mobile.matches || !supportsWebGL()) {
+      if (reduced.matches || !desktop.matches || !supportsWebGL()) {
         setMode("fallback");
         return;
       }
@@ -36,10 +36,10 @@ export function useHero3DEnabled(): Hero3DMode {
 
     resolve();
     reduced.addEventListener("change", resolve);
-    mobile.addEventListener("change", resolve);
+    desktop.addEventListener("change", resolve);
     return () => {
       reduced.removeEventListener("change", resolve);
-      mobile.removeEventListener("change", resolve);
+      desktop.removeEventListener("change", resolve);
     };
   }, []);
 
