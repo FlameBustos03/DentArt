@@ -104,7 +104,10 @@ export function Hero() {
           transition={{ duration: 0.55 }}
           className="relative z-10"
         >
-          <p className="mb-4 inline-flex items-center gap-2 text-xs uppercase tracking-[0.28em] text-lime-400">
+          <p
+            data-hero-exclude
+            className="mb-4 inline-flex items-center gap-2 text-xs uppercase tracking-[0.28em] text-lime-400"
+          >
             <Sparkles className="h-4 w-4 text-lime-500" aria-hidden="true" />
             Poza Rica, Veracruz · VIP Smile Studio
           </p>
