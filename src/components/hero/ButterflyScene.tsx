@@ -73,9 +73,13 @@ function LimeButterfly({ pointerRef, scrollRef }: Omit<HeroSceneProps, "visible"
   const right = useRef<THREE.Group>(null);
   const upper = useMemo(() => createUpperWing(), []);
   const lower = useMemo(() => createLowerWing(), []);
+  // Own accumulator: R3F resets the clock every time `frameloop` toggles, which
+  // would snap the wing pose each time the butterfly wakes from idle.
+  const elapsed = useRef(0);
 
-  useFrame(({ clock }) => {
-    const t = clock.getElapsedTime();
+  useFrame((_, delta) => {
+    elapsed.current += Math.min(delta, 0.1);
+    const t = elapsed.current;
     const flap = 0.42 + Math.sin(t * 2.6) * 0.38;
     if (left.current) {
       left.current.rotation.y = -flap;
@@ -153,7 +157,10 @@ export function ButterflyScene({ pointerRef, scrollRef, visible, awake }: HeroSc
     <div className="pointer-events-none absolute inset-0" aria-hidden="true">
       <Canvas
         dpr={[1, 1.5]}
-        frameloop={visible && awake ? "always" : "never"}
+        // "demand" (not "never") while idle: R3F ignores invalidate() in "never"
+        // mode, so a canvas that mounts after the idle timer fires would stay blank
+        // until the pointer moves. "demand" still paints the mount/resize frames.
+        frameloop={visible && awake ? "always" : "demand"}
         gl={{
           antialias: true,
           alpha: true,
