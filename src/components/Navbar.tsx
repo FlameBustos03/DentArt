@@ -81,12 +81,13 @@ export function Navbar({ className }: NavbarProps) {
       <div className="glass-nav">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
           <a href="#main-content" className="group flex min-w-0 items-center gap-2">
-            <span className="relative h-10 w-10 shrink-0 sm:h-11 sm:w-11 lg:h-12 lg:w-12">
+            <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full sm:h-11 sm:w-11 lg:h-12 lg:w-12">
+              {/* The mark PNG is an opaque square with charcoal corners; the round mask + zoom shows only the badge. */}
               <Image
                 src="/dent-art-mark.png"
                 alt=""
                 fill
-                className="object-contain"
+                className="scale-110 object-cover"
                 sizes="(min-width: 1024px) 48px, (min-width: 640px) 44px, 40px"
                 priority
               />
