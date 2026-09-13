@@ -28,7 +28,7 @@ export function HeroButterfly({ className, ...sceneProps }: HeroButterflyProps) 
     <div
       ref={slotRef}
       className={cn(
-        "pointer-events-none absolute z-[1] right-4 top-5 lg:right-6 lg:top-24",
+        "pointer-events-none absolute z-[1] right-4 top-8 lg:right-6 lg:top-24",
         showCanvas ? "h-40 w-40 opacity-[0.62]" : "h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20",
         className,
       )}

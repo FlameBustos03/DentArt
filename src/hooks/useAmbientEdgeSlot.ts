@@ -44,7 +44,8 @@ export function useAmbientEdgeSlot(
       const height = slot.offsetHeight || 80;
       const desktop = window.matchMedia("(min-width: 1024px)").matches;
       const edge = desktop ? 24 : 16;
-      const preferredTop = desktop ? 88 : 20;
+      const minY = 16;
+      const preferredTop = desktop ? 88 : 32;
 
       let x = Math.max(edge, sectionRect.width - width - edge);
       let y = preferredTop;
@@ -70,20 +71,20 @@ export function useAmbientEdgeSlot(
           break;
         }
 
-        const above = hit.top - height;
-        if (above >= 8 && !resolve(boxAt(x, above, width, height))) {
-          y = above;
-          continue;
-        }
-
         const rightOf = hit.right;
         if (rightOf + width <= sectionRect.width - 8 && !resolve(boxAt(rightOf, y, width, height))) {
           x = rightOf;
           continue;
         }
 
-        x = Math.max(8, sectionRect.width - width - 8);
-        y = 8;
+        const above = hit.top - height;
+        if (above >= minY && !resolve(boxAt(x, above, width, height))) {
+          y = above;
+          continue;
+        }
+
+        x = Math.max(edge, sectionRect.width - width - edge);
+        y = Math.max(minY, preferredTop);
       }
 
       slot.style.right = "auto";
