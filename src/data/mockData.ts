@@ -155,8 +155,8 @@ export const leadClinician: LeadClinician = {
   photo: {
     src: "/team/dra-claudia-solis.webp",
     alt: "Dra. Claudia Solis, odontóloga de Dent Art, enfoque en estética dental y diseño de sonrisa.",
-    width: 360,
-    height: 420,
+    width: 508,
+    height: 444,
   },
 };
 
