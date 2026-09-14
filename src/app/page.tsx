@@ -4,6 +4,7 @@ import { EmergencyFab } from "@/components/EmergencyFab";
 import { FAQ } from "@/components/FAQ";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
+import { Hours } from "@/components/Hours";
 import { Insurers } from "@/components/Insurers";
 import { Locations } from "@/components/Locations";
 import { Navbar } from "@/components/Navbar";
@@ -21,6 +22,7 @@ export default function HomePage() {
         <Team />
         <Insurers />
         <Locations />
+        <Hours />
         <FAQ />
         <BookingForm />
       </main>

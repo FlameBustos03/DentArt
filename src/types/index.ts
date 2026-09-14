@@ -103,13 +103,32 @@ export interface ServiceGroup {
 export interface Insurer {
   id: string;
   name: string;
+  caption: string;
+  logoSrc?: string;
+}
+
+export interface CorporatePlan {
+  id: string;
+  name: string;
   note: string;
+  variant: "placeholder" | "badge";
+}
+
+export interface ClinicalTeam {
+  locationId: LocationId;
+  city: string;
+  summary: string;
+  address: string;
+  unnamedCount: number;
+  unnamedLabel: string;
 }
 
 export interface LeadClinician {
   name: string;
-  focus: string;
-  blurb: string;
+  eyebrow: string;
+  role: string;
+  blurb: string[];
+  photo: ImageAsset;
 }
 
 export interface BookingFormData {
