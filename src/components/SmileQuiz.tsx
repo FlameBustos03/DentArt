@@ -2,8 +2,9 @@
 
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { CheckCircle2, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { AlertTriangle, ChevronLeft, ChevronRight, MessageCircle, Phone, Sparkles } from "lucide-react";
 import {
+  clinicInfo,
   getQuizRecommendation,
   quizGoals,
   quizImprovements,
@@ -11,7 +12,7 @@ import {
 import type { QuizGoal, QuizImprovement, QuizLead, QuizLeadErrors } from "@/types";
 import { Button } from "@/components/ui/Button";
 import { TextField } from "@/components/ui/Input";
-import { cn, isValidEmail, isValidPhone, scrollToId } from "@/lib/utils";
+import { buildWhatsAppUrl, cn, isValidEmail, isValidPhone, scrollToId } from "@/lib/utils";
 
 const INITIAL_LEAD: QuizLead = { fullName: "", email: "", phone: "" };
 
@@ -122,7 +123,7 @@ export function SmileQuiz() {
 
         <div className="glass-card mt-8 rounded-3xl p-5 shadow-glass sm:p-8">
           <p id={statusId} className="sr-only" aria-live="polite">
-            Step {step} of 3{submitted ? ". Recommendation captured." : ""}
+            Step {step} of 3{submitted ? ". Recommendation shown locally; not sent to the clinic." : ""}
           </p>
 
           <AnimatePresence mode="wait">
@@ -135,21 +136,49 @@ export function SmileQuiz() {
                 className="space-y-4"
               >
                 <h3 ref={headingRef} tabIndex={-1} className="font-serif text-2xl text-ink-900 outline-none">
-                  Your concierge brief is reserved
+                  This request was not sent to the clinic
                 </h3>
-                <p className="flex items-center gap-2 text-ink-800">
-                  <CheckCircle2 className="h-5 w-5 text-lime-800" aria-hidden="true" />
-                  We will reach {lead.fullName} at {lead.email}
+                <p className="flex items-start gap-2 text-ink-800">
+                  <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-lime-800" aria-hidden="true" />
+                  There is no backend yet. Dent Art did not receive {lead.fullName}&apos;s details
+                  at {lead.email}.
                 </p>
                 <p className="text-black/70">
-                  Recommended protocol: {recommendation.title}. A coordinator confirms your VIP
-                  consultation within one business hour.
+                  Recommended protocol: {recommendation.title}. To continue, WhatsApp or call{" "}
+                  <a className="font-medium text-lime-800 hover:underline" href={`tel:${clinicInfo.phoneTel}`}>
+                    {clinicInfo.phoneDisplay}
+                  </a>
+                  .
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  <Button variant="primary" onClick={() => scrollToId("booking")}>
-                    Continue to VIP booking
+                  <a
+                    href={buildWhatsAppUrl(
+                      clinicInfo.whatsappNumber,
+                      [
+                        "Hola Dent Art, completé el quiz de sonrisa en el sitio. Esta solicitud NO se envió a la clínica; te la mando por WhatsApp.",
+                        `Paciente: ${lead.fullName}`,
+                        `Protocolo sugerido: ${recommendation.title}`,
+                        `Servicio: ${recommendation.recommendedServiceName}`,
+                      ].join("\n"),
+                    )}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-lime-600/30 bg-lime-500 px-5 py-2.5 text-sm uppercase tracking-[0.12em] text-ink-900 shadow-lime hover:bg-lime-600"
+                  >
+                    <MessageCircle className="h-4 w-4" aria-hidden="true" />
+                    WhatsApp {clinicInfo.phoneDisplay}
+                  </a>
+                  <a
+                    href={`tel:${clinicInfo.phoneTel}`}
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-black/20 px-5 py-2.5 text-sm uppercase tracking-[0.12em] text-ink-900 hover:border-lime-800"
+                  >
+                    <Phone className="h-4 w-4" aria-hidden="true" />
+                    Call {clinicInfo.phoneDisplay}
+                  </a>
+                  <Button variant="outline" onClick={() => scrollToId("booking")}>
+                    Review booking form
                   </Button>
-                  <Button variant="outline" onClick={resetQuiz}>
+                  <Button variant="ghost" onClick={resetQuiz}>
                     Retake assessment
                   </Button>
                 </div>

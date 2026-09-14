@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useId, useMemo, useRef, useState, type FormEvent } from "react";
-import { CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
+import { AlertTriangle, ChevronLeft, ChevronRight, MessageCircle, Phone } from "lucide-react";
 import {
   clinicHoursLabel,
   clinicHoursNote,
@@ -17,7 +17,7 @@ import type { BookingFieldErrors, BookingFormData, ContactPreference } from "@/t
 import { Button } from "@/components/ui/Button";
 import { TextAreaField, TextField } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
-import { cn, isValidEmail, isValidPhone } from "@/lib/utils";
+import { buildWhatsAppUrl, cn, isValidEmail, isValidPhone } from "@/lib/utils";
 
 const INITIAL_FORM: BookingFormData = {
   treatmentId: "",
@@ -53,6 +53,33 @@ export function BookingForm() {
   const selectedTreatment = treatmentOptions.find((item) => item.id === form.treatmentId);
   const selectedSlot = selectedDate?.slots.find((slot) => slot.id === form.slotId);
   const selectedMode = consultationModes.find((item) => item.id === form.consultationMode);
+  const bookingWhatsAppHref = useMemo(() => {
+    const when = selectedDate
+      ? `${selectedDate.weekday} ${selectedDate.label}${selectedSlot ? ` · ${selectedSlot.time}` : ""}`
+      : form.dateIso;
+    const message = [
+      "Hola Dent Art, quiero agendar una cita. El formulario del sitio NO envió esta solicitud a la clínica; te la mando por WhatsApp.",
+      selectedTreatment ? `Servicio: ${selectedTreatment.name}` : null,
+      `Sede: ${location.city} · ${location.addressLines[0]}`,
+      selectedMode ? `Modalidad: ${selectedMode.label}` : null,
+      when ? `Cuándo: ${when}` : null,
+      form.fullName ? `Paciente: ${form.fullName}` : null,
+      form.phone ? `Tel: ${form.phone}` : null,
+    ]
+      .filter(Boolean)
+      .join("\n");
+    return buildWhatsAppUrl(clinicInfo.whatsappNumber, message);
+  }, [
+    form.dateIso,
+    form.fullName,
+    form.phone,
+    location.addressLines,
+    location.city,
+    selectedDate,
+    selectedMode,
+    selectedSlot,
+    selectedTreatment,
+  ]);
 
   useEffect(() => {
     setForm((prev) => (prev.locationId === locationId ? prev : { ...prev, locationId }));
@@ -440,11 +467,19 @@ export function BookingForm() {
         </form>
       </div>
 
-      <Modal open={successOpen} title="Solicitud enviada" onClose={resetBooking}>
+      <Modal open={successOpen} title="Esta solicitud no se envió a la clínica" onClose={resetBooking}>
         <div className="space-y-4 text-black/70">
-          <p className="flex items-center gap-2 text-ink-900">
-            <CheckCircle2 className="h-5 w-5 text-lime-800" aria-hidden="true" />
-            Confirmaremos a {form.email || "tu correo"}
+          <p className="flex items-start gap-2 text-ink-900">
+            <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-lime-800" aria-hidden="true" />
+            Todavía no hay un sistema que envíe este formulario a Dent Art. Nada de lo que
+            acabas de llenar llegó a recepción.
+          </p>
+          <p>
+            Para agendar de verdad, manda WhatsApp o llama al{" "}
+            <a className="font-medium text-lime-800 hover:underline" href={`tel:${clinicInfo.phoneTel}`}>
+              {clinicInfo.phoneDisplay}
+            </a>
+            . Usa el resumen de abajo para que el equipo sepa qué pediste.
           </p>
           <ul className="space-y-1 text-sm">
             <li>
@@ -465,12 +500,27 @@ export function BookingForm() {
               <strong>Paciente:</strong> {form.fullName}
             </li>
           </ul>
-          <p>
-            Si es una urgencia, llama o manda WhatsApp al {clinicInfo.phoneDisplay}.
-          </p>
-          <Button variant="primary" onClick={resetBooking}>
-            Agendar otra cita
-          </Button>
+          <div className="flex flex-wrap gap-3">
+            <a
+              href={bookingWhatsAppHref}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-lime-600/30 bg-lime-500 px-5 py-2.5 text-sm uppercase tracking-[0.12em] text-ink-900 shadow-lime hover:bg-lime-600"
+            >
+              <MessageCircle className="h-4 w-4" aria-hidden="true" />
+              WhatsApp {clinicInfo.phoneDisplay}
+            </a>
+            <a
+              href={`tel:${clinicInfo.phoneTel}`}
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-black/20 px-5 py-2.5 text-sm uppercase tracking-[0.12em] text-ink-900 hover:border-lime-800"
+            >
+              <Phone className="h-4 w-4" aria-hidden="true" />
+              Llamar
+            </a>
+            <Button variant="outline" onClick={resetBooking}>
+              Cerrar
+            </Button>
+          </div>
         </div>
       </Modal>
     </section>
