@@ -13,20 +13,16 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary:
-    "bg-lime-500 text-ink-900 hover:bg-lime-600 shadow-lime border border-lime-600/30",
-  secondary:
-    "bg-transparent text-white border border-lime-500/80 hover:bg-white/10",
-  ghost:
-    "bg-transparent text-ink-900 border border-black/15 hover:border-lime-800 hover:bg-mist",
-  outline:
-    "bg-transparent text-ink-900 border border-black/20 hover:border-lime-800",
+  primary: "bg-lime-500 text-ink-900 hover:bg-lime-600 border border-lime-600/30",
+  secondary: "bg-transparent text-white border border-lime-500/80 hover:bg-white/10",
+  ghost: "bg-transparent text-ink-900 border border-black/15 hover:border-lime-800 hover:bg-mist",
+  outline: "bg-transparent text-ink-900 border border-black/20 hover:border-lime-800",
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
-  sm: "px-3.5 py-2 text-xs tracking-[0.14em]",
-  md: "px-5 py-2.5 text-sm tracking-[0.12em]",
-  lg: "px-7 py-3.5 text-sm tracking-[0.16em]",
+  sm: "min-h-11 px-3.5 py-2 text-xs tracking-[0.12em]",
+  md: "min-h-11 px-5 py-2.5 text-sm tracking-[0.12em]",
+  lg: "min-h-11 px-7 py-3.5 text-sm tracking-[0.12em]",
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
@@ -38,7 +34,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       ref={ref}
       type={type}
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-full font-sans uppercase transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-50",
+        "inline-flex items-center justify-center gap-2 rounded-full font-sans uppercase motion-safe:transition-colors motion-safe:duration-180 motion-reduce:transition-colors disabled:cursor-not-allowed disabled:opacity-50",
         variantClasses[variant],
         sizeClasses[size],
         className,

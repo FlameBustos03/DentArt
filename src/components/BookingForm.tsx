@@ -132,18 +132,18 @@ export function BookingForm() {
   };
 
   return (
-    <section id="booking" aria-labelledby="booking-heading" className="bg-ink-900 py-20 text-white">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <p className="text-xs uppercase tracking-[0.24em] text-lime-400">Agenda</p>
-        <h2 id="booking-heading" className="mt-3 font-serif text-3xl sm:text-5xl">
+    <section id="booking" aria-labelledby="booking-heading" className="bg-white py-16 text-ink-900 md:py-20">
+      <div className="section-x">
+        <p className="type-eyebrow">Agenda</p>
+        <h2 id="booking-heading" className="type-section mt-3">
           Agendar cita
         </h2>
-        <p className="mt-4 max-w-2xl text-white/85">
+        <p className="type-body mt-4 max-w-2xl">
           Elige servicio, sede y horario. {clinicHoursLabel}. {clinicHoursNote}
         </p>
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <LocationSwitch tone="dark" />
-          <p className="text-sm text-white/80">
+          <LocationSwitch />
+          <p className="text-sm text-black/70">
             {location.city} · {location.addressLines[0]}
           </p>
         </div>
@@ -160,8 +160,8 @@ export function BookingForm() {
                   current
                     ? "border-lime-500 bg-lime-500 text-ink-900"
                     : value < step
-                      ? "border-lime-500/40 text-lime-400"
-                      : "border-white/15 text-white/70",
+                      ? "border-lime-800/40 text-lime-800"
+                      : "border-black/15 text-black/70",
                 )}
                 aria-current={current ? "step" : undefined}
               >
@@ -172,11 +172,11 @@ export function BookingForm() {
         </ol>
 
         <form
-          className="mt-8 rounded-3xl border border-white/10 bg-white/5 p-5 sm:p-8"
+          className="mt-8 rounded-2xl border border-black/10 bg-mist p-5 sm:p-8"
           onSubmit={onSubmit}
           noValidate
         >
-          <h3 ref={headingRef} tabIndex={-1} className="font-serif text-2xl outline-none">
+          <h3 ref={headingRef} tabIndex={-1} className="type-card outline-none">
             {step === 1 && "Paso 1 · Servicio"}
             {step === 2 && "Paso 2 · Modalidad"}
             {step === 3 && "Paso 3 · Fecha, hora y contacto"}
@@ -197,8 +197,8 @@ export function BookingForm() {
                       className={cn(
                         "cursor-pointer rounded-2xl border p-4 transition-colors",
                         selected
-                          ? "border-lime-500 bg-lime-500/15"
-                          : "border-white/10 hover:border-lime-500/50",
+                          ? "border-lime-800 bg-white shadow-sm"
+                          : "border-black/10 bg-white hover:border-black/20",
                       )}
                     >
                       <input
@@ -211,12 +211,12 @@ export function BookingForm() {
                           setErrors((prev) => ({ ...prev, treatmentId: undefined }));
                         }}
                       />
-                      <span className="block text-xs uppercase tracking-[0.16em] text-lime-400">
+                      <span className="type-eyebrow">
                         {option.specialty}
                       </span>
-                      <span className="mt-1 block font-serif text-xl">{option.name}</span>
-                      <span className="mt-2 block text-sm text-white/80">{option.summary}</span>
-                      <span className="mt-3 block text-xs text-white/70">
+                      <span className="type-card mt-1 block">{option.name}</span>
+                      <span className="type-body mt-2 block text-sm">{option.summary}</span>
+                      <span className="type-caption mt-3 block">
                         {option.durationMinutes} minutos
                       </span>
                     </label>
@@ -224,7 +224,7 @@ export function BookingForm() {
                 })}
               </div>
               {errors.treatmentId ? (
-                <p role="alert" className="mt-3 text-sm text-red-300">
+                <p role="alert" className="mt-3 text-sm text-red-700">
                   {errors.treatmentId}
                 </p>
               ) : null}
@@ -243,8 +243,8 @@ export function BookingForm() {
                       className={cn(
                         "cursor-pointer rounded-2xl border p-5 transition-colors",
                         selected
-                          ? "border-lime-500 bg-lime-500/15"
-                          : "border-white/10 hover:border-lime-500/50",
+                          ? "border-lime-800 bg-white shadow-sm"
+                          : "border-black/10 bg-white hover:border-black/20",
                       )}
                     >
                       <input
@@ -257,9 +257,9 @@ export function BookingForm() {
                           setErrors((prev) => ({ ...prev, consultationMode: undefined }));
                         }}
                       />
-                      <span className="block font-serif text-2xl">{option.label}</span>
-                      <span className="mt-3 block text-sm text-white/85">{option.description}</span>
-                      <span className="mt-4 block text-xs uppercase tracking-[0.16em] text-lime-400">
+                      <span className="type-card block">{option.label}</span>
+                      <span className="type-body mt-3 block">{option.description}</span>
+                      <span className="type-eyebrow mt-4 block">
                         {option.durationNote}
                       </span>
                     </label>
@@ -267,7 +267,7 @@ export function BookingForm() {
                 })}
               </div>
               {errors.consultationMode ? (
-                <p role="alert" className="mt-3 text-sm text-red-300">
+                <p role="alert" className="mt-3 text-sm text-red-700">
                   {errors.consultationMode}
                 </p>
               ) : null}
@@ -277,7 +277,7 @@ export function BookingForm() {
           {step === 3 ? (
             <div className="mt-6 space-y-6">
               <fieldset>
-                <legend className="text-xs uppercase tracking-[0.16em] text-lime-400">Fecha</legend>
+                <legend className="type-eyebrow">Fecha</legend>
                 <div className="mt-3 flex gap-2 overflow-x-auto pb-2">
                   {dates.map((date) => {
                     const selected = form.dateIso === date.iso;
@@ -291,10 +291,10 @@ export function BookingForm() {
                           setErrors((prev) => ({ ...prev, dateIso: undefined, slotId: undefined }));
                         }}
                         className={cn(
-                          "min-w-[4.75rem] rounded-2xl border px-3 py-3 text-center",
+                          "min-h-11 min-w-[4.75rem] rounded-2xl border px-3 py-3 text-center",
                           selected
                             ? "border-lime-500 bg-lime-500 text-ink-900"
-                            : "border-white/10 hover:border-lime-500/50",
+                            : "border-black/10 bg-white hover:border-black/20",
                         )}
                       >
                         <span className="block text-xs uppercase">{date.weekday}</span>
@@ -304,14 +304,14 @@ export function BookingForm() {
                   })}
                 </div>
                 {errors.dateIso ? (
-                  <p role="alert" className="mt-2 text-sm text-red-300">
+                  <p role="alert" className="mt-2 text-sm text-red-700">
                     {errors.dateIso}
                   </p>
                 ) : null}
               </fieldset>
 
               <fieldset>
-                <legend className="text-xs uppercase tracking-[0.16em] text-lime-400">Hora</legend>
+                <legend className="type-eyebrow">Hora</legend>
                 <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
                   {(selectedDate?.slots ?? []).map((slot) => (
                     <button
@@ -324,10 +324,10 @@ export function BookingForm() {
                         setErrors((prev) => ({ ...prev, slotId: undefined }));
                       }}
                       className={cn(
-                        "rounded-xl border px-3 py-3 text-sm disabled:cursor-not-allowed disabled:opacity-35",
+                        "min-h-11 rounded-xl border px-3 py-3 text-sm disabled:cursor-not-allowed disabled:opacity-35",
                         form.slotId === slot.id
                           ? "border-lime-500 bg-lime-500 text-ink-900"
-                          : "border-white/10 hover:border-lime-500/50",
+                          : "border-black/10 bg-white hover:border-black/20",
                       )}
                     >
                       {slot.time}
@@ -336,10 +336,10 @@ export function BookingForm() {
                   ))}
                 </div>
                 {!selectedDate ? (
-                  <p className="mt-3 text-sm text-white/70">Elige una fecha para ver horarios.</p>
+                  <p className="mt-3 text-sm text-black/70">Elige una fecha para ver horarios.</p>
                 ) : null}
                 {errors.slotId ? (
-                  <p role="alert" className="mt-2 text-sm text-red-300">
+                  <p role="alert" className="mt-2 text-sm text-red-700">
                     {errors.slotId}
                   </p>
                 ) : null}
@@ -349,7 +349,6 @@ export function BookingForm() {
                 <TextField
                   id="fullName"
                   label="Nombre completo"
-                  tone="dark"
                   autoComplete="name"
                   value={form.fullName}
                   error={errors.fullName}
@@ -359,7 +358,6 @@ export function BookingForm() {
                   id="email"
                   label="Correo"
                   type="email"
-                  tone="dark"
                   autoComplete="email"
                   value={form.email}
                   error={errors.email}
@@ -369,14 +367,13 @@ export function BookingForm() {
                   id="phone"
                   label="Teléfono"
                   type="tel"
-                  tone="dark"
                   autoComplete="tel"
                   value={form.phone}
                   error={errors.phone}
                   onChange={(event) => setForm((prev) => ({ ...prev, phone: event.target.value }))}
                 />
                 <fieldset className="flex flex-col gap-1.5">
-                  <legend className="text-xs uppercase tracking-[0.16em] text-lime-400">
+                  <legend className="type-eyebrow">
                     Cómo te contactamos
                   </legend>
                   <div className="flex flex-wrap gap-2 pt-2">
@@ -384,10 +381,10 @@ export function BookingForm() {
                       <label
                         key={option.value}
                         className={cn(
-                          "cursor-pointer rounded-full border px-4 py-2 text-sm",
+                          "cursor-pointer rounded-full border px-4 py-2 text-sm min-h-11 inline-flex items-center",
                           form.contactPreference === option.value
                             ? "border-lime-500 bg-lime-500 text-ink-900"
-                            : "border-white/15",
+                            : "border-black/15 bg-white",
                         )}
                       >
                         <input
@@ -408,7 +405,6 @@ export function BookingForm() {
                   <TextAreaField
                     id="notes"
                     label="Notas (opcional)"
-                    tone="dark"
                     value={form.notes}
                     onChange={(event) => setForm((prev) => ({ ...prev, notes: event.target.value }))}
                   />
@@ -419,7 +415,7 @@ export function BookingForm() {
 
           <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
             <Button
-              variant="secondary"
+              variant="ghost"
               disabled={step === 1}
               onClick={() => setStep((value) => Math.max(1, value - 1))}
             >

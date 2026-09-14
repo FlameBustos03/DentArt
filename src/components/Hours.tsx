@@ -14,32 +14,32 @@ export function Hours() {
     <section
       id="horarios"
       aria-labelledby="hours-heading"
-      className="stack-surface bg-mist py-20"
+      className="stack-surface bg-mist py-16 md:py-20"
     >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <p className="text-xs uppercase tracking-[0.24em] text-lime-800">Horarios</p>
-        <h2 id="hours-heading" className="mt-3 font-serif text-3xl text-ink-900 sm:text-5xl">
+      <div className="section-x">
+        <p className="type-eyebrow">Horarios</p>
+        <h2 id="hours-heading" className="type-section mt-3">
           Horarios y urgencias
         </h2>
-        <p className="mt-4 max-w-2xl text-black/70">{locationsIntro}</p>
+        <p className="type-body mt-4 max-w-2xl">{locationsIntro}</p>
 
         <div className="mt-8 grid gap-6 lg:grid-cols-2">
-          <article className="rounded-3xl border border-black/10 bg-white p-6">
+          <article className="card-lift rounded-2xl border border-black/10 bg-white p-6">
             <p className="flex items-start gap-2 text-ink-900">
               <Clock className="mt-0.5 h-4 w-4 shrink-0 text-lime-800" aria-hidden="true" />
-              <span className="font-serif text-2xl">{clinicHoursLabel}</span>
+              <span className="type-card">{clinicHoursLabel}</span>
             </p>
           </article>
-          <article className="rounded-3xl border border-black/10 bg-white p-6">
+          <article className="card-lift rounded-2xl border border-black/10 bg-white p-6">
             <p className="flex items-start gap-2 text-sm text-ink-800">
               <Phone className="mt-0.5 h-4 w-4 shrink-0 text-lime-800" aria-hidden="true" />
               <span>
                 Tel/WA:{" "}
-                <a href={`tel:${clinicInfo.phoneTel}`} className="hover:text-lime-800">
+                <a href={`tel:${clinicInfo.phoneTel}`} className="text-link">
                   {clinicInfo.phoneDisplay}
                 </a>
                 {" · "}
-                <a href={`mailto:${clinicInfo.email}`} className="hover:text-lime-800">
+                <a href={`mailto:${clinicInfo.email}`} className="text-link">
                   {clinicInfo.email}
                 </a>
               </span>
@@ -49,7 +49,7 @@ export function Hours() {
                 href={whatsappHref}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 text-sm text-lime-800 hover:underline"
+                className="text-link inline-flex min-h-11 items-center gap-2 text-sm"
               >
                 <MessageCircle className="h-4 w-4" aria-hidden="true" />
                 WhatsApp {clinicInfo.phoneDisplay}

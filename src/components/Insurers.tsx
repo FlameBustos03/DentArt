@@ -19,7 +19,7 @@ function LogoTile({ image }: { image: StaticImageData }) {
       aria-hidden="true"
       className={cn(
         "relative h-20 w-40 overflow-hidden rounded-2xl border border-black/10 bg-white",
-        "motion-safe:transition-transform motion-safe:duration-300 motion-safe:hover:scale-[1.03]",
+        "logo-tile",
         "motion-reduce:transform-none",
       )}
     >
@@ -37,11 +37,11 @@ function LogoTile({ image }: { image: StaticImageData }) {
 export function InsurerGrid() {
   return (
     <div>
-      <p className="text-xs uppercase tracking-[0.24em] text-lime-800">Seguros</p>
-      <h2 id="insurers-heading" className="mt-3 font-serif text-3xl text-ink-900 sm:text-5xl">
+      <p className="type-eyebrow">Seguros</p>
+      <h2 id="insurers-heading" className="type-section mt-3">
         Seguros dentales
       </h2>
-      <p className="mt-4 max-w-2xl text-black/70">{insurersIntro}</p>
+      <p className="type-body mt-4 max-w-2xl">{insurersIntro}</p>
       <ul className="mt-10 flex flex-wrap gap-6">
         {insurers.map((insurer) => {
           const logo = partnerLogoById[insurer.id];
@@ -62,19 +62,19 @@ export function InsurerGrid() {
           );
         })}
       </ul>
-      <p className="mt-6 max-w-2xl text-sm text-black/70">{insurersMicrocopy}</p>
-      <p className="mt-2 max-w-2xl text-sm text-black/55">{insurersHelper}</p>
+      <p className="type-body mt-6 max-w-2xl">{insurersMicrocopy}</p>
+      <p className="type-caption mt-2 max-w-2xl">{insurersHelper}</p>
     </div>
   );
 }
 
 export function PartnerRow() {
   return (
-    <div className="mt-16">
-      <h3 id="planes-heading" className="font-serif text-3xl text-ink-900 sm:text-4xl">
+    <div className="pt-8">
+      <h3 id="planes-heading" className="type-section">
         Planes empresariales
       </h3>
-      <p className="mt-3 max-w-2xl text-black/70">{plansIntro}</p>
+      <p className="type-body mt-3 max-w-2xl">{plansIntro}</p>
       <ul className="mt-8 flex flex-wrap items-stretch gap-6">
         {corporatePlans.map((plan) => {
           const logo = plan.variant === "logo" ? partnerLogoById[plan.id] : undefined;
@@ -101,15 +101,15 @@ export function PartnerRow() {
           );
         })}
       </ul>
-      <p className="mt-6 max-w-2xl text-sm text-black/70">{plansFooter}</p>
+      <p className="type-body mt-6 max-w-2xl">{plansFooter}</p>
     </div>
   );
 }
 
 export function Insurers() {
   return (
-    <section id="seguros" aria-labelledby="insurers-heading" className="bg-mist py-20">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+    <section id="seguros" aria-labelledby="insurers-heading" className="bg-mist pb-16 pt-8 md:pb-20">
+      <div className="section-x">
         <InsurerGrid />
         <PartnerRow />
       </div>

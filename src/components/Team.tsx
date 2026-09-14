@@ -17,12 +17,12 @@ export function ClinicianProfile() {
           />
         </div>
         <div className="min-w-0">
-          <p className="text-xs uppercase tracking-[0.18em] text-lime-800">{leadClinician.eyebrow}</p>
-          <h2 id="team-heading" className="mt-2 font-serif text-3xl text-ink-900 sm:text-4xl">
+          <p className="type-eyebrow">{leadClinician.eyebrow}</p>
+          <h2 id="team-heading" className="type-section mt-2">
             {leadClinician.name}
           </h2>
           <p className="mt-2 text-sm text-ink-800">{leadClinician.role}</p>
-          <div className="mt-5 space-y-4 text-black/70">
+          <div className="type-body mt-5 space-y-4">
             {leadClinician.blurb.map((paragraph, index) => (
               <p key={index}>{paragraph}</p>
             ))}
@@ -35,17 +35,17 @@ export function ClinicianProfile() {
 
 export function TeamBySede() {
   return (
-    <div className="mt-14">
-      <h3 id="clinical-team-heading" className="font-serif text-3xl text-ink-900 sm:text-4xl">
+    <div className="mt-8">
+      <h3 id="clinical-team-heading" className="type-section">
         Equipo clínico
       </h3>
-      <p className="mt-3 max-w-2xl text-black/70">
+      <p className="type-body mt-3 max-w-2xl">
         Atención en dos sedes, con el mismo compromiso de cuidado cercano y profesional.
       </p>
       <ul className="mt-8 grid gap-6 lg:grid-cols-2">
         {clinicalTeams.map((team) => (
-          <li key={team.locationId} className="rounded-3xl border border-black/10 bg-white p-6">
-            <h4 className="font-serif text-2xl text-ink-900">{team.city}</h4>
+          <li key={team.locationId} className="card-lift rounded-2xl border border-black/10 bg-white p-6">
+            <h4 className="type-card">{team.city}</h4>
             <p className="mt-2 text-sm text-ink-800">{team.summary}</p>
             <p className="mt-1 text-sm text-black/65">{team.address}</p>
             <ul className="mt-5 grid gap-3">
@@ -59,7 +59,7 @@ export function TeamBySede() {
                   </span>
                   <span>
                     <span className="block font-serif text-lg text-ink-900">{team.unnamedLabel}</span>
-                    <span className="text-sm text-black/55">Equipo clínico · {team.city}</span>
+                    <span className="type-caption">Equipo clínico · {team.city}</span>
                   </span>
                 </li>
               ))}
@@ -73,8 +73,8 @@ export function TeamBySede() {
 
 export function Team() {
   return (
-    <section id="equipo" aria-labelledby="team-heading" className="bg-white py-20">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+    <section id="equipo" aria-labelledby="team-heading" className="bg-white pb-16 pt-16 md:pt-20">
+      <div className="section-x">
         <ClinicianProfile />
         <TeamBySede />
       </div>

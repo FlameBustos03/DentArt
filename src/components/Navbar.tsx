@@ -78,7 +78,7 @@ export function Navbar({ className }: NavbarProps) {
       <UtilityBar />
 
       <div className="glass-nav">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
+        <div className="section-x flex h-16 items-center justify-between gap-3">
           <a href="#main-content" className="group min-w-0">
             <BrandLockup size="nav" />
           </a>
@@ -88,7 +88,7 @@ export function Navbar({ className }: NavbarProps) {
               <a
                 key={link.id}
                 href={link.href}
-                className="text-sm tracking-wide text-ink-900 underline-offset-4 transition-colors hover:text-lime-800 hover:underline"
+                className="type-nav underline-offset-4 hover:text-lime-800 motion-safe:hover:underline"
               >
                 {link.label}
               </a>
@@ -161,7 +161,7 @@ export function Navbar({ className }: NavbarProps) {
                   <a
                     key={link.id}
                     href={link.href}
-                    className="border-b border-black/10 pb-3 font-serif text-2xl text-ink-900"
+                    className="flex min-h-11 items-center border-b border-black/10 pb-3 font-serif text-2xl text-ink-900 hover:text-lime-800"
                     onClick={() => setOpen(false)}
                   >
                     {link.label}

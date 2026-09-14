@@ -15,39 +15,39 @@ export function Footer() {
   const whatsappHref = buildWhatsAppUrl(clinicInfo.whatsappNumber, conciergePrefillMessage);
 
   return (
-    <footer id="contact" className="bg-ink-900 text-white">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-4">
+    <footer id="contact" className="bg-ink-900 pb-24 text-white">
+      <div className="section-x grid gap-10 py-16 lg:grid-cols-4">
         <div>
           <BrandLockup size="nav" />
           <p className="mt-3 max-w-sm text-white/80">{clinicInfo.tagline}</p>
           <ul className="mt-6 space-y-3 text-sm">
             <li className="flex items-start gap-2">
               <Phone className="mt-0.5 h-4 w-4 text-lime-500" aria-hidden="true" />
-              <a href={`tel:${clinicInfo.phoneTel}`} className="hover:text-lime-400">
+              <a href={`tel:${clinicInfo.phoneTel}`} className="text-link-dark">
                 {clinicInfo.phoneDisplay}
               </a>
             </li>
             <li className="flex items-start gap-2">
               <MessageCircle className="mt-0.5 h-4 w-4 text-lime-500" aria-hidden="true" />
-              <a href={whatsappHref} className="hover:text-lime-400" target="_blank" rel="noreferrer">
+              <a href={whatsappHref} className="text-link-dark" target="_blank" rel="noreferrer">
                 WhatsApp {clinicInfo.phoneDisplay}
               </a>
             </li>
             <li className="flex items-start gap-2">
               <Mail className="mt-0.5 h-4 w-4 text-lime-500" aria-hidden="true" />
-              <a href={`mailto:${clinicInfo.email}`} className="hover:text-lime-400">
+              <a href={`mailto:${clinicInfo.email}`} className="text-link-dark">
                 {clinicInfo.email}
               </a>
             </li>
           </ul>
           <div className="mt-6">
-            <p className="text-xs uppercase tracking-[0.22em] text-lime-400">Redes</p>
+            <p className="type-eyebrow-dark">Redes</p>
             <SocialLinks className="mt-3" tone="dark" />
           </div>
         </div>
 
         <div>
-          <h2 className="text-xs uppercase tracking-[0.22em] text-lime-400">Horario</h2>
+          <h2 className="type-eyebrow-dark">Horario</h2>
           <ul className="mt-4 space-y-3 text-sm">
             {clinicInfo.hours.map((row) => (
               <li key={row.days} className="flex items-start gap-2 text-white/80">
@@ -63,11 +63,11 @@ export function Footer() {
         </div>
 
         <div>
-          <h2 className="text-xs uppercase tracking-[0.22em] text-lime-400">Mapa del sitio</h2>
+          <h2 className="type-eyebrow-dark">Mapa del sitio</h2>
           <ul className="mt-4 space-y-3 text-sm">
             {footerSitemap.map((link) => (
               <li key={link.id}>
-                <a href={link.href} className="hover:text-lime-400">
+                <a href={link.href} className="text-link-dark inline-flex min-h-11 items-center">
                   {link.label}
                 </a>
               </li>
@@ -76,7 +76,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h2 className="text-xs uppercase tracking-[0.22em] text-lime-400">Sedes</h2>
+          <h2 className="type-eyebrow-dark">Sedes</h2>
           <ul className="mt-4 space-y-5 text-sm">
             {locations.map((location) => (
               <li key={location.id} className="flex items-start gap-2">
@@ -95,13 +95,13 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-6 text-xs text-white/70 sm:px-6">
+        <div className="section-x flex flex-col gap-3 py-6 text-xs text-white/70">
           <p>
-            <a href={`tel:${clinicInfo.phoneTel}`} className="hover:text-lime-400">
+            <a href={`tel:${clinicInfo.phoneTel}`} className="text-link-dark">
               {clinicInfo.phoneDisplay}
             </a>
             {" · "}
-            <a href={`mailto:${clinicInfo.email}`} className="hover:text-lime-400">
+            <a href={`mailto:${clinicInfo.email}`} className="text-link-dark">
               {clinicInfo.email}
             </a>
           </p>

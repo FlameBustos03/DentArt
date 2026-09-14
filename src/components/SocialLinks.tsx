@@ -9,8 +9,7 @@ export interface SocialLinksProps {
 }
 
 export function SocialLinks({ className, tone = "dark", compact = false }: SocialLinksProps) {
-  const linkClass =
-    tone === "dark" ? "text-white/85 hover:text-lime-400" : "text-ink-800 hover:text-lime-800";
+  const linkClass = tone === "dark" ? "text-link-dark" : "text-link";
 
   return (
     <ul

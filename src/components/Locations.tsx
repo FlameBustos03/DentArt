@@ -11,7 +11,7 @@ export function SedeMap({ location }: { location: ClinicLocation }) {
   const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(location.mapQuery)}&z=15&hl=es&output=embed`;
 
   return (
-    <div className="sede-map mt-5 h-52 rounded-2xl border border-black/10 bg-mist">
+    <div className="sede-map mt-5 h-56 rounded-2xl border border-black/10 bg-mist">
       <iframe
         title={`Mapa Dent Art ${location.city}`}
         src={mapSrc}
@@ -29,16 +29,16 @@ export function Locations() {
     <section
       id="sedes"
       aria-labelledby="locations-heading"
-      className="relative z-0 isolate overflow-x-clip bg-white py-20"
+      className="relative z-0 isolate overflow-x-clip bg-white py-16 md:py-20"
     >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="section-x">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-xs uppercase tracking-[0.24em] text-lime-800">Sedes</p>
-            <h2 id="locations-heading" className="mt-3 font-serif text-3xl text-ink-900 sm:text-5xl">
+            <p className="type-eyebrow">Sedes</p>
+            <h2 id="locations-heading" className="type-section mt-3">
               Poza Rica y Villahermosa
             </h2>
-            <p className="mt-4 max-w-2xl text-black/70">{locationsIntro}</p>
+            <p className="type-body mt-4 max-w-2xl">{locationsIntro}</p>
           </div>
           <LocationSwitch />
         </div>
@@ -66,7 +66,7 @@ export function Locations() {
                       aria-pressed={selected}
                       onClick={() => setLocationId(location.id)}
                       className={cn(
-                        "shrink-0 whitespace-nowrap rounded-full border px-3 py-1 text-xs uppercase tracking-[0.14em] transition-colors",
+                        "shrink-0 whitespace-nowrap rounded-full border px-3 py-1 text-xs uppercase tracking-[0.12em] min-h-11 transition-colors",
                         selected
                           ? "border-lime-500 bg-lime-500 text-ink-900"
                           : "border-black/15 text-ink-800 hover:border-lime-800 hover:text-lime-800",
@@ -75,7 +75,7 @@ export function Locations() {
                       Elegir {location.city}
                     </button>
                   </div>
-                  <h3 id={`location-${location.id}`} className="mt-2 font-serif text-3xl text-ink-900">
+                  <h3 id={`location-${location.id}`} className="type-card mt-2">
                     {location.city}
                   </h3>
                   <p className="mt-3 flex items-start gap-2 text-black/75">
