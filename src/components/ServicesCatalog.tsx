@@ -2,35 +2,18 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Check, Gem, HeartPulse, Layers, Scan, Sparkles, Sun } from "lucide-react";
-import { services } from "@/data/mockData";
-import type { Service, ServiceIconName } from "@/types";
+import { Check, Sparkles } from "lucide-react";
+import { serviceGroups, serviceModalRows } from "@/data/mockData";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
-import { ServiceGlyph } from "@/components/ui/ServiceGlyph";
 import { TiltCard } from "@/components/ui/TiltCard";
 import { scrollToId } from "@/lib/utils";
 
-const ICONS: Record<ServiceIconName, typeof Gem> = {
-  "smile-design": Sparkles,
-  veneers: Gem,
-  whitening: Sun,
-  implants: Layers,
-  sedation: HeartPulse,
-};
-
-const SPECIALTIES = [
-  { id: "orthodontics", label: "Orthodontics", icon: Scan },
-  { id: "aesthetic", label: "Aesthetic Dentistry", icon: Sparkles },
-  { id: "whitening", label: "Whitening", icon: Sun },
-  { id: "implants", label: "Implants", icon: Layers },
-] as const;
-
 export function ServicesCatalog() {
-  const [active, setActive] = useState<Service | null>(null);
+  const [open, setOpen] = useState(false);
 
   return (
-    <section id="services" aria-labelledby="services-heading" className="scroll-mt-24 bg-mist py-20">
+    <section id="servicios" aria-labelledby="services-heading" className="scroll-mt-24 bg-mist py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <motion.p
           initial={{ opacity: 0, y: 10 }}
@@ -38,7 +21,7 @@ export function ServicesCatalog() {
           viewport={{ once: true }}
           className="text-xs uppercase tracking-[0.24em] text-lime-800"
         >
-          Concierge catalog
+          Servicios
         </motion.p>
         <motion.h2
           id="services-heading"
@@ -47,105 +30,78 @@ export function ServicesCatalog() {
           viewport={{ once: true }}
           className="mt-3 font-serif text-3xl text-ink-900 sm:text-5xl"
         >
-          Studio treatments, written as medicine
+          Estética, general, prótesis y láser
         </motion.h2>
         <p className="mt-4 max-w-2xl text-black/70">
-          Five VIP pathways: smile architecture, porcelain, Zoom! luminosity, All-on-4 reconstruction,
-          and medically staffed sedation—never a menu of upsells.
+          Tratamientos agrupados para que elijas con claridad. El láser apoya el tratamiento; no
+          sustituye el diagnóstico.
         </p>
 
-        <ul className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          {SPECIALTIES.map((item, index) => (
+        <ul className="mt-10 grid gap-5 md:grid-cols-2">
+          {serviceGroups.map((group, index) => (
             <motion.li
-              key={item.id}
-              initial={{ opacity: 0, y: 12 }}
+              key={group.id}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ delay: index * 0.05 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ delay: index * 0.06 }}
             >
-              <TiltCard className="rounded-2xl">
-                <div className="flex items-center gap-3 rounded-2xl border border-lime-500/25 bg-white px-3 py-3">
-                  <ServiceGlyph icon={item.icon} />
-                  <p className="font-serif text-sm text-ink-900 sm:text-base">{item.label}</p>
+              <TiltCard className="glass-card h-full rounded-3xl bg-white shadow-sm">
+                <div className="p-6">
+                  <div className="flex items-center gap-3">
+                    <Sparkles className="h-5 w-5 text-lime-800" aria-hidden="true" />
+                    <h3 className="font-serif text-2xl text-ink-900">{group.name}</h3>
+                  </div>
+                  <ul className="mt-5 space-y-2">
+                    {group.items.map((item) => (
+                      <li key={item} className="flex items-start gap-2 text-sm text-ink-800">
+                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-lime-800" aria-hidden="true" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                  {group.note ? <p className="mt-5 text-sm text-black/65">{group.note}</p> : null}
                 </div>
               </TiltCard>
             </motion.li>
           ))}
         </ul>
 
-        <ul className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {services.map((service, index) => {
-            const Icon = ICONS[service.icon];
-            return (
-              <motion.li
-                key={service.id}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ delay: index * 0.06 }}
-                className={index === 0 ? "md:col-span-2 xl:col-span-1" : undefined}
-              >
-                <TiltCard className="glass-card rounded-3xl bg-white shadow-sm">
-                  <div className="p-6">
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <p className="text-xs uppercase tracking-[0.18em] text-lime-800">{service.tagline}</p>
-                        <h3 className="mt-2 font-serif text-2xl text-ink-900">{service.name}</h3>
-                      </div>
-                      <ServiceGlyph icon={Icon} />
-                    </div>
-                    <p className="mt-4 text-black/70">{service.description}</p>
-                    <ul className="mt-5 space-y-2">
-                      {service.benefits.map((benefit) => (
-                        <li key={benefit} className="flex items-start gap-2 text-sm text-ink-800">
-                          <Check className="mt-0.5 h-4 w-4 shrink-0 text-lime-800" aria-hidden="true" />
-                          {benefit}
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="mt-6 flex items-center justify-between gap-3">
-                      <p className="text-sm text-black/55">From {service.startingAt}</p>
-                      <Button variant="ghost" size="sm" onClick={() => setActive(service)}>
-                        Learn Treatment Details
-                      </Button>
-                    </div>
-                  </div>
-                </TiltCard>
-              </motion.li>
-            );
-          })}
-        </ul>
+        <div className="mt-10 flex flex-wrap gap-3">
+          <Button variant="primary" onClick={() => setOpen(true)}>
+            Ver catálogo
+          </Button>
+          <Button variant="ghost" onClick={() => scrollToId("booking")}>
+            Agendar cita
+          </Button>
+        </div>
       </div>
 
-      <Modal
-        open={Boolean(active)}
-        title={active?.name ?? "Service details"}
-        onClose={() => setActive(null)}
-      >
-        {active ? (
-          <div className="space-y-4 text-black/70">
-            <p>{active.description}</p>
-            <p className="text-sm uppercase tracking-[0.16em] text-ink-800">
-              Visit length · {active.duration}
-            </p>
-            <ul className="space-y-3">
-              {active.details.map((detail) => (
-                <li key={detail} className="leading-relaxed">
-                  {detail}
-                </li>
-              ))}
-            </ul>
-            <Button
-              variant="primary"
-              onClick={() => {
-                setActive(null);
-                scrollToId("booking");
-              }}
-            >
-              Reserve this specialty
-            </Button>
-          </div>
-        ) : null}
+      <Modal open={open} title="Catálogo de servicios" onClose={() => setOpen(false)}>
+        <ol className="divide-y divide-black/10 text-sm">
+          {serviceModalRows.map((row, index) => (
+            <li key={`${row.group}-${row.name}`} className="flex items-baseline gap-3 py-2.5">
+              <span className="w-6 shrink-0 text-black/40">{index + 1}</span>
+              <span className="w-40 shrink-0 text-xs uppercase tracking-[0.14em] text-lime-800">
+                {row.group}
+              </span>
+              <span className="text-ink-900">{row.name}</span>
+            </li>
+          ))}
+        </ol>
+        <p className="mt-4 text-sm text-black/65">
+          El láser no sustituye el diagnóstico clínico.
+        </p>
+        <Button
+          variant="primary"
+          className="mt-6"
+          onClick={() => {
+            setOpen(false);
+            scrollToId("booking");
+          }}
+        >
+          Agendar cita
+        </Button>
       </Modal>
     </section>
   );

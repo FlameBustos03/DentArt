@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, Phone, X } from "lucide-react";
-import { clinicInfo, navLinks } from "@/data/mockData";
+import { Menu, X } from "lucide-react";
+import { BrandLockup } from "@/components/BrandLockup";
+import { UtilityBar } from "@/components/UtilityBar";
+import { navLinks } from "@/data/mockData";
 import { Button } from "@/components/ui/Button";
 import { cn, scrollToId } from "@/lib/utils";
 
@@ -74,26 +75,15 @@ export function Navbar({ className }: NavbarProps) {
 
   return (
     <header className={cn("sticky top-0 z-40", className)}>
+      <UtilityBar />
+
       <div className="glass-nav">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
-          <a href="#main-content" className="group flex min-w-0 items-center gap-2">
-            <span className="relative h-10 w-10 shrink-0 sm:h-11 sm:w-11 lg:h-12 lg:w-12">
-              <Image
-                src="/dent-art-mark.png"
-                alt=""
-                fill
-                className="object-contain"
-                sizes="(min-width: 1024px) 48px, (min-width: 640px) 44px, 40px"
-                priority
-              />
-            </span>
-            <span className="leading-tight">
-              <span className="block text-xl font-semibold tracking-tight text-ink-900">Dent Art</span>
-              <span className="hidden text-[11px] italic text-black/70 sm:block">{clinicInfo.slogan}</span>
-            </span>
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
+          <a href="#main-content" className="group min-w-0">
+            <BrandLockup size="nav" />
           </a>
 
-          <nav aria-label="Primary" className="hidden items-center gap-6 xl:flex">
+          <nav aria-label="Primary" className="hidden items-center gap-8 xl:flex">
             {navLinks.map((link) => (
               <a
                 key={link.id}
@@ -105,32 +95,23 @@ export function Navbar({ className }: NavbarProps) {
             ))}
           </nav>
 
-          <div className="hidden items-center gap-3 lg:flex">
-            <a
-              href={`tel:${clinicInfo.phoneTel}`}
-              className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-3.5 py-2 text-sm text-ink-900 hover:border-lime-800"
-            >
-              <Phone className="h-4 w-4 text-lime-800" aria-hidden="true" />
-              <span className="font-medium">Concierge</span>
-              <span className="hidden text-black/60 xl:inline">{clinicInfo.phoneDisplay}</span>
-            </a>
+          <div className="flex items-center gap-2">
             <Button variant="primary" size="sm" onClick={() => scrollToId("booking")}>
-              Book VIP Consultation
+              Agendar cita
+            </Button>
+            <Button
+              ref={menuButtonRef}
+              variant="ghost"
+              size="sm"
+              className="!px-2.5 xl:hidden"
+              aria-expanded={open}
+              aria-controls={drawerId}
+              onClick={() => setOpen(true)}
+            >
+              <Menu className="h-5 w-5" aria-hidden="true" />
+              <span className="sr-only">Abrir menú</span>
             </Button>
           </div>
-
-          <Button
-            ref={menuButtonRef}
-            variant="ghost"
-            size="sm"
-            className="!px-2.5 xl:hidden"
-            aria-expanded={open}
-            aria-controls={drawerId}
-            onClick={() => setOpen(true)}
-          >
-            <Menu className="h-5 w-5" aria-hidden="true" />
-            <span className="sr-only">Open navigation menu</span>
-          </Button>
         </div>
       </div>
 
@@ -139,7 +120,7 @@ export function Navbar({ className }: NavbarProps) {
           <div className="fixed inset-0 z-50 xl:hidden">
             <motion.button
               type="button"
-              aria-label="Close navigation overlay"
+              aria-label="Cerrar menú"
               className="absolute inset-0 bg-ink-900/50"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -150,15 +131,15 @@ export function Navbar({ className }: NavbarProps) {
               id={drawerId}
               role="dialog"
               aria-modal="true"
-              aria-label="Mobile navigation"
-              className="absolute right-0 top-0 flex h-full w-[min(22rem,92vw)] flex-col bg-white px-6 py-5 shadow-lift"
+              aria-label="Navegación"
+              className="absolute right-0 top-0 flex h-full w-[min(22rem,92vw)] flex-col bg-mist px-6 py-5 shadow-lift"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "tween", duration: 0.28 }}
             >
               <div className="mb-8 flex items-center justify-between">
-                <p className="text-2xl font-semibold text-ink-900">Menu</p>
+                <p className="text-2xl font-semibold text-ink-900">Menú</p>
                 <Button
                   ref={closeButtonRef}
                   variant="ghost"
@@ -167,10 +148,10 @@ export function Navbar({ className }: NavbarProps) {
                   onClick={() => setOpen(false)}
                 >
                   <X className="h-5 w-5" aria-hidden="true" />
-                  <span className="sr-only">Close navigation menu</span>
+                  <span className="sr-only">Cerrar menú</span>
                 </Button>
               </div>
-              <nav aria-label="Mobile primary" className="flex flex-col gap-4">
+              <nav aria-label="Navegación móvil" className="flex flex-col gap-4">
                 {navLinks.map((link) => (
                   <a
                     key={link.id}
@@ -182,23 +163,15 @@ export function Navbar({ className }: NavbarProps) {
                   </a>
                 ))}
               </nav>
-              <p className="mt-6 italic text-black/70">{clinicInfo.slogan}</p>
-              <a
-                href={`tel:${clinicInfo.phoneTel}`}
-                className="mt-4 inline-flex items-center gap-2 text-ink-900 hover:text-lime-800"
-              >
-                <Phone className="h-4 w-4 text-lime-800" aria-hidden="true" />
-                Concierge · {clinicInfo.phoneDisplay}
-              </a>
               <Button
                 variant="primary"
-                className="mt-4"
+                className="mt-6"
                 onClick={() => {
                   setOpen(false);
                   scrollToId("booking");
                 }}
               >
-                Book VIP Consultation
+                Agendar cita
               </Button>
             </motion.aside>
           </div>

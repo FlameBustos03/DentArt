@@ -82,8 +82,39 @@ export type ContactPreference = "phone" | "email" | "whatsapp";
 
 export type ConsultationMode = "in-clinic" | "virtual";
 
+export type LocationId = "poza-rica" | "villahermosa";
+
+export interface ClinicLocation {
+  id: LocationId;
+  city: string;
+  region: string;
+  addressLines: string[];
+  mapQuery: string;
+  teamCapacity: string;
+}
+
+export interface ServiceGroup {
+  id: string;
+  name: string;
+  items: string[];
+  note?: string;
+}
+
+export interface Insurer {
+  id: string;
+  name: string;
+  note: string;
+}
+
+export interface LeadClinician {
+  name: string;
+  focus: string;
+  blurb: string;
+}
+
 export interface BookingFormData {
   treatmentId: string;
+  locationId: LocationId;
   consultationMode: ConsultationMode | "";
   dateIso: string;
   slotId: string;
@@ -96,6 +127,7 @@ export interface BookingFormData {
 
 export interface BookingFieldErrors {
   treatmentId?: string;
+  locationId?: string;
   consultationMode?: string;
   dateIso?: string;
   slotId?: string;

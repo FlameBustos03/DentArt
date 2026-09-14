@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, Playfair_Display } from "next/font/google";
+import { LocationProvider } from "@/components/LocationProvider";
 import { clinicInfo } from "@/data/mockData";
 import "./globals.css";
 
@@ -18,17 +19,14 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: "Dent Art | Atrévete a Sonreír",
   description:
-    "Dent Art VIP smile studio in Poza Rica, Veracruz. Porcelain veneers, Invisalign, All-on-4, Zoom! whitening, and 24/7 concierge care. Atrévete a Sonreír.",
+    "Atención dental cercana y profesional en Poza Rica y Villahermosa. Más de 16 años acompañando sonrisas con estética, prevención y tratamientos personalizados.",
   keywords: [
     "Dent Art",
-    "dentist Poza Rica",
-    "VIP cosmetic dentistry",
-    "porcelain veneers",
-    "Invisalign",
-    "All-on-4 dental implants",
-    "Zoom whitening",
-    "VIP sedation dentistry",
+    "dentista Poza Rica",
+    "dentista Villahermosa",
     "Atrévete a Sonreír",
+    "Dentegra",
+    "Dentalia",
   ],
 };
 
@@ -38,15 +36,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${playfair.variable} ${dmSans.variable}`}>
+    <html lang="es-MX" className={`${playfair.variable} ${dmSans.variable}`}>
       <body className="min-h-screen bg-white font-sans text-ink-900">
         <a className="skip-link" href="#main-content">
-          Skip to main content
+          Ir al contenido principal
         </a>
-        {children}
-        <p className="sr-only">
-          {clinicInfo.name} concierge line {clinicInfo.phoneDisplay}
-        </p>
+        <LocationProvider>
+          {children}
+          <p className="sr-only">
+            {clinicInfo.name} · {clinicInfo.phoneDisplay}
+          </p>
+        </LocationProvider>
       </body>
     </html>
   );
