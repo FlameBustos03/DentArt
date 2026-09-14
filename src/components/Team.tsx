@@ -4,7 +4,7 @@ import { clinicalTeams, leadClinician } from "@/data/mockData";
 
 export function ClinicianProfile() {
   return (
-    <article className="mt-10 overflow-hidden rounded-3xl border border-black/10 bg-mist">
+    <article className="overflow-hidden rounded-3xl border border-black/10 bg-mist">
       <div className="grid items-start gap-8 p-6 sm:p-8 lg:grid-cols-[360px_minmax(0,1fr)]">
         <div className="relative h-[420px] w-full max-w-[360px] overflow-hidden rounded-2xl bg-white">
           <Image
