@@ -13,6 +13,7 @@ import type {
   LocationId,
   MediaOutlet,
   NavLink,
+  OpeningHours,
   PhilanthropyProgram,
   QuizChoice,
   QuizGoal,
@@ -33,6 +34,15 @@ export const clinicHoursLabel =
   "Lun–Vie 10:00–13:00 y 16:00–19:00 · Sáb 10:00–13:00";
 
 export const clinicHoursNote = "Mismo horario en ambas sedes.";
+
+const weekdays: OpeningHours["days"] = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+
+/** Same schedule as clinicHoursLabel / clinicInfo.hours, in machine-readable form. */
+export const clinicOpeningHours: OpeningHours[] = [
+  { days: weekdays, opens: "10:00", closes: "13:00" },
+  { days: weekdays, opens: "16:00", closes: "19:00" },
+  { days: ["Saturday"], opens: "10:00", closes: "13:00" },
+];
 
 export const locationsIntro =
   "Encuéntranos en Poza Rica y Villahermosa — mismo horario en ambas sedes.";
@@ -145,8 +155,8 @@ export const leadClinician: LeadClinician = {
   photo: {
     src: "/team/dra-claudia-solis.webp",
     alt: "Dra. Claudia Solis, odontóloga de Dent Art, enfoque en estética dental y diseño de sonrisa.",
-    width: 360,
-    height: 420,
+    width: 508,
+    height: 444,
   },
 };
 
@@ -561,14 +571,18 @@ const WEEKDAY_SLOT_TIMES = ["10:00", "11:00", "12:00", "16:00", "17:00", "18:00"
 const SATURDAY_SLOT_TIMES = ["10:00", "11:00", "12:00"] as const;
 
 function buildSlots(seed: number, times: readonly string[], notBeforeHour: number): TimeSlot[] {
-  return times.map((time, index) => ({
-    id: `slot-${seed}-${index}`,
-    time,
-    available: (seed + index) % 5 !== 0 && Number(time.slice(0, 2)) > notBeforeHour,
-  }));
+  // Slots that already passed today are dropped, not flagged `available: false`:
+  // the form renders unavailable slots as "Ocupado", which is the wrong story
+  // for a time that has simply gone by.
+  return times.flatMap((time, index) => {
+    if (Number(time.slice(0, 2)) <= notBeforeHour) {
+      return [];
+    }
+    return [{ id: `slot-${seed}-${index}`, time, available: (seed + index) % 5 !== 0 }];
+  });
 }
 
-/** `notBeforeHour` hides slots that already passed when the date is today. */
+/** `notBeforeHour` drops slots that already passed when the date is today. */
 function formatBookingDate(date: Date, times: readonly string[], notBeforeHour: number): BookingDate {
   const iso = date.toISOString().slice(0, 10);
   const weekday = date.toLocaleDateString("es-MX", { weekday: "short" });

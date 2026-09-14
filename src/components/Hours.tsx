@@ -14,7 +14,7 @@ export function Hours() {
     <section
       id="horarios"
       aria-labelledby="hours-heading"
-      className="stack-surface bg-mist pt-16 pb-20"
+      className="stack-surface bg-mist py-20"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <p className="text-xs uppercase tracking-[0.24em] text-lime-800">Horarios</p>

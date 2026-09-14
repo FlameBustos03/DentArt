@@ -1,100 +1,88 @@
-const SITE_ORIGIN = (
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  "https://dentart-git-cursor-dental-clinic-web-platform-7ce1-julian-b1.vercel.app"
-).replace(/\/$/, "");
+import {
+  clinicInfo,
+  clinicOpeningHours,
+  leadClinician,
+  locations,
+  socialLinks,
+} from "@/data/mockData";
+import { brandLockupImage } from "@/lib/brandAssets";
+import { siteOrigin } from "@/lib/siteOrigin";
+import type { ClinicLocation } from "@/types";
 
-const LOCKUP = `${SITE_ORIGIN}/brand/dent-art-lockup.png`;
-const CLAUDIA_PHOTO = `${SITE_ORIGIN}/team/dra-claudia-solis.webp`;
-const ORG_ID = `${SITE_ORIGIN}/#organization`;
-const POZA_RICA_ID = `${SITE_ORIGIN}/#poza-rica`;
-const VILLAHERMOSA_ID = `${SITE_ORIGIN}/#villahermosa`;
-const CLAUDIA_ID = `${SITE_ORIGIN}/#claudia`;
+const LOCKUP = `${siteOrigin}${brandLockupImage.src}`;
+const CLAUDIA_PHOTO = `${siteOrigin}${leadClinician.photo.src}`;
+const ORG_ID = `${siteOrigin}/#organization`;
+const CLAUDIA_ID = `${siteOrigin}/#claudia`;
+const DENTISTRY = "https://schema.org/Dentistry";
 
-const TELEPHONE = "+52-782-210-8172";
-const EMAIL = "DentArt@gmail.com";
+const openingHoursSpecification = clinicOpeningHours.map((entry) => ({
+  "@type": "OpeningHoursSpecification",
+  dayOfWeek: entry.days,
+  opens: entry.opens,
+  closes: entry.closes,
+}));
 
-const openingHoursSpecification = [
-  {
-    "@type": "OpeningHoursSpecification",
-    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-    opens: "10:00",
-    closes: "13:00",
-  },
-  {
-    "@type": "OpeningHoursSpecification",
-    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-    opens: "16:00",
-    closes: "19:00",
-  },
-  {
-    "@type": "OpeningHoursSpecification",
-    dayOfWeek: "Saturday",
-    opens: "10:00",
-    closes: "13:00",
-  },
-];
+function sedeId(location: ClinicLocation): string {
+  return `${siteOrigin}/#${location.id}`;
+}
+
+// schema.org has no DentalClinic type: a dental practice is `Dentist`, a
+// LocalBusiness (Place + Organization), which is where address, hours and
+// hasMap belong. Dentist/Physician are business types, so the clinician is a
+// Person. The brand node has no single address, so it is a MedicalOrganization
+// (not a LocalBusiness, for which Google requires an address).
+function sedeNode(location: ClinicLocation) {
+  return {
+    "@type": "Dentist",
+    "@id": sedeId(location),
+    name: `${clinicInfo.name} ${location.city}`,
+    parentOrganization: { "@id": ORG_ID },
+    medicalSpecialty: DENTISTRY,
+    url: `${siteOrigin}/#sedes`,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: location.addressLines[0],
+      addressLocality: location.city,
+      addressRegion: location.region,
+      addressCountry: "MX",
+    },
+    hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location.mapQuery)}`,
+    telephone: clinicInfo.phoneTel,
+    email: clinicInfo.email,
+    openingHoursSpecification,
+    image: LOCKUP,
+  };
+}
 
 const graph = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "DentalClinic",
+      "@type": "MedicalOrganization",
       "@id": ORG_ID,
-      name: "Dent Art",
-      alternateName: "Dent Art — Atrévete a Sonreír",
-      url: `${SITE_ORIGIN}/`,
+      name: clinicInfo.name,
+      alternateName: `${clinicInfo.name} — ${clinicInfo.slogan}`,
+      url: `${siteOrigin}/`,
       logo: LOCKUP,
       image: LOCKUP,
-      telephone: TELEPHONE,
-      email: EMAIL,
-      slogan: "Atrévete a Sonreír",
-      openingHoursSpecification,
-      department: [{ "@id": POZA_RICA_ID }, { "@id": VILLAHERMOSA_ID }],
-      location: [{ "@id": POZA_RICA_ID }, { "@id": VILLAHERMOSA_ID }],
+      telephone: clinicInfo.phoneTel,
+      email: clinicInfo.email,
+      slogan: clinicInfo.slogan,
+      medicalSpecialty: DENTISTRY,
+      sameAs: socialLinks.map((link) => link.href),
+      department: locations.map((location) => ({ "@id": sedeId(location) })),
+      location: locations.map((location) => ({ "@id": sedeId(location) })),
       employee: [{ "@id": CLAUDIA_ID }],
     },
+    ...locations.map(sedeNode),
     {
-      "@type": "DentalClinic",
-      "@id": POZA_RICA_ID,
-      name: "Dent Art Poza Rica",
-      parentOrganization: { "@id": ORG_ID },
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "Cipres #204, Col. Chapultepec",
-        addressLocality: "Poza Rica",
-        addressRegion: "Veracruz",
-        addressCountry: "MX",
-      },
-      telephone: TELEPHONE,
-      email: EMAIL,
-      openingHoursSpecification,
-      image: LOCKUP,
-    },
-    {
-      "@type": "DentalClinic",
-      "@id": VILLAHERMOSA_ID,
-      name: "Dent Art Villahermosa",
-      parentOrganization: { "@id": ORG_ID },
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "Ermitaño 9, mz 22, Valle del Jaguar",
-        addressLocality: "Villahermosa",
-        addressRegion: "Tabasco",
-        addressCountry: "MX",
-      },
-      telephone: TELEPHONE,
-      email: EMAIL,
-      openingHoursSpecification,
-      image: LOCKUP,
-    },
-    {
-      "@type": ["Dentist", "Physician"],
+      "@type": "Person",
       "@id": CLAUDIA_ID,
-      name: "Dra. Claudia Solis",
-      jobTitle: "Estética dental y diseño de sonrisa",
+      name: leadClinician.name,
+      jobTitle: leadClinician.role.split(" · ")[0],
       worksFor: { "@id": ORG_ID },
       image: CLAUDIA_PHOTO,
-      url: `${SITE_ORIGIN}/#equipo`,
+      url: `${siteOrigin}/#equipo`,
     },
   ],
 };
