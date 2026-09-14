@@ -14,11 +14,12 @@ export function Footer() {
           {/* TODO: Dental Box — reserve a footer column/link when merch IA lands. No product mocks or shop routes yet. */}
           <div className="flex items-center gap-3">
             <span className="relative h-16 w-16 overflow-hidden rounded-full border border-lime-500/40 bg-white">
+              {/* Same badge crop as the navbar: the PNG's charcoal rim would otherwise peek through the circle edge. */}
               <Image
                 src="/dent-art-mark.png"
                 alt="Dent Art butterfly logo"
                 fill
-                className="object-cover"
+                className="scale-110 object-cover"
                 sizes="64px"
               />
             </span>
