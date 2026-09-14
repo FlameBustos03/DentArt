@@ -48,7 +48,10 @@ export function BrandLockup({
         fill
         className={cn(
           "bg-transparent object-contain object-left motion-safe:transition-opacity motion-safe:duration-300",
-          showLockup ? "opacity-100" : "opacity-0",
+          // The flight only plays at lg+ with motion allowed (CinematicButterfly
+          // settles immediately otherwise), so below lg and under reduced motion
+          // the server-rendered lockup must not wait for hydration to show up.
+          showLockup ? "opacity-100" : "opacity-0 max-lg:opacity-100 motion-reduce:opacity-100",
         )}
         sizes={size === "hero" ? "(min-width: 640px) 256px, 192px" : "107px"}
         priority
