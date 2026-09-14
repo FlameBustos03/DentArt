@@ -124,11 +124,14 @@ export function Testimonials() {
           </div>
         </div>
 
+        {/* `initial={false}`: the server HTML must not ship the cards at
+            opacity 0 / translateX(24px) waiting for hydration to fade them in
+            (no-JS readers saw an empty section). Only page changes animate. */}
         <div className="mt-6" aria-describedby={statusId}>
           {reducedMotion ? (
             cards
           ) : (
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={safePage}
                 initial={{ opacity: 0, x: 24 }}
@@ -142,20 +145,27 @@ export function Testimonials() {
           )}
         </div>
 
-        <div className="mt-6 flex justify-center gap-2" role="tablist" aria-label="Páginas de reseñas">
+        {/* Pager dots, not tabs: there is no tabpanel for `role="tab"` to control.
+            The 10px dot stays visual; the button around it is the 24px hit area
+            (WCAG 2.5.8 target size). */}
+        <div className="mt-6 flex justify-center" role="group" aria-label="Páginas de reseñas">
           {Array.from({ length: pageCount }).map((_, itemIndex) => (
             <button
               key={`resenas-page-${itemIndex}`}
               type="button"
-              role="tab"
-              aria-selected={itemIndex === safePage}
+              aria-current={itemIndex === safePage ? "true" : undefined}
               aria-label={`Mostrar reseñas, página ${itemIndex + 1}`}
-              className={cn(
-                "h-2.5 rounded-full transition-all",
-                itemIndex === safePage ? "w-8 bg-lime-500" : "w-2.5 bg-black/20 hover:bg-black/40",
-              )}
+              className="group flex h-6 items-center px-[7px]"
               onClick={() => setPage(itemIndex)}
-            />
+            >
+              <span
+                aria-hidden="true"
+                className={cn(
+                  "block h-2.5 rounded-full transition-all",
+                  itemIndex === safePage ? "w-8 bg-lime-500" : "w-2.5 bg-black/20 group-hover:bg-black/40",
+                )}
+              />
+            </button>
           ))}
         </div>
 
