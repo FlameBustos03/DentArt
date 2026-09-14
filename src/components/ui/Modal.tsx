@@ -4,6 +4,7 @@ import { useEffect, useId, useRef, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { shouldRestoreFocus } from "@/lib/utils";
 
 export interface ModalProps {
   open: boolean;
@@ -17,6 +18,7 @@ export function Modal({ open, title, onClose, children, labelledBy }: ModalProps
   const titleId = useId();
   const headingId = labelledBy ?? titleId;
   const closeRef = useRef<HTMLButtonElement>(null);
+  const layerRef = useRef<HTMLDivElement>(null);
   const previouslyFocused = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -67,19 +69,25 @@ export function Modal({ open, title, onClose, children, labelledBy }: ModalProps
     };
 
     document.addEventListener("keydown", onKeyDown);
+    const layer = layerRef.current;
 
     return () => {
       window.cancelAnimationFrame(frame);
       document.body.style.overflow = originalOverflow;
       document.removeEventListener("keydown", onKeyDown);
-      previouslyFocused.current?.focus();
+      if (shouldRestoreFocus(layer)) {
+        previouslyFocused.current?.focus({ preventScroll: true });
+      }
     };
   }, [open, headingId, onClose]);
 
   return (
     <AnimatePresence>
       {open ? (
-        <div className="fixed inset-0 z-50 flex items-end justify-center p-3 sm:items-center sm:p-6">
+        <div
+          ref={layerRef}
+          className="fixed inset-0 z-50 flex items-end justify-center p-3 sm:items-center sm:p-6"
+        >
           <motion.button
             type="button"
             aria-label="Close dialog overlay"

@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, Phone, X } from "lucide-react";
 import { clinicInfo, navLinks } from "@/data/mockData";
 import { Button } from "@/components/ui/Button";
-import { cn, scrollToId } from "@/lib/utils";
+import { cn, scrollToId, shouldRestoreFocus } from "@/lib/utils";
 
 export interface NavbarProps {
   className?: string;
@@ -17,6 +17,7 @@ export function Navbar({ className }: NavbarProps) {
   const drawerId = useId();
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const layerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!open) {
@@ -63,12 +64,15 @@ export function Navbar({ className }: NavbarProps) {
 
     document.addEventListener("keydown", onKeyDown);
     const menuButton = menuButtonRef.current;
+    const layer = layerRef.current;
 
     return () => {
       window.cancelAnimationFrame(frame);
       document.body.style.overflow = originalOverflow;
       document.removeEventListener("keydown", onKeyDown);
-      menuButton?.focus();
+      if (shouldRestoreFocus(layer)) {
+        menuButton?.focus({ preventScroll: true });
+      }
     };
   }, [open, drawerId]);
 
@@ -77,12 +81,13 @@ export function Navbar({ className }: NavbarProps) {
       <div className="glass-nav">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
           <a href="#main-content" className="group flex min-w-0 items-center gap-2">
-            <span className="relative h-10 w-10 shrink-0 sm:h-11 sm:w-11 lg:h-12 lg:w-12">
+            <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full sm:h-11 sm:w-11 lg:h-12 lg:w-12">
+              {/* The mark PNG is an opaque square with charcoal corners; the round mask + zoom shows only the badge. */}
               <Image
                 src="/dent-art-mark.png"
                 alt=""
                 fill
-                className="object-contain"
+                className="scale-110 object-cover"
                 sizes="(min-width: 1024px) 48px, (min-width: 640px) 44px, 40px"
                 priority
               />
@@ -136,7 +141,7 @@ export function Navbar({ className }: NavbarProps) {
 
       <AnimatePresence>
         {open ? (
-          <div className="fixed inset-0 z-50 xl:hidden">
+          <div ref={layerRef} className="fixed inset-0 z-50 xl:hidden">
             <motion.button
               type="button"
               aria-label="Close navigation overlay"
