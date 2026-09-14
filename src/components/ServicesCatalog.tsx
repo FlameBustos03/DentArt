@@ -82,10 +82,12 @@ export function ServicesCatalog() {
           {serviceModalRows.map((row, index) => (
             <li key={`${row.group}-${row.name}`} className="flex items-baseline gap-3 py-2.5">
               <span className="w-6 shrink-0 text-black/40">{index + 1}</span>
-              <span className="w-40 shrink-0 text-xs uppercase tracking-[0.14em] text-lime-800">
-                {row.group}
+              <span className="flex min-w-0 flex-1 flex-col gap-0.5 sm:flex-row sm:items-baseline sm:gap-3">
+                <span className="text-xs uppercase tracking-[0.14em] text-lime-800 sm:w-56 sm:shrink-0">
+                  {row.group}
+                </span>
+                <span className="text-ink-900">{row.name}</span>
               </span>
-              <span className="text-ink-900">{row.name}</span>
             </li>
           ))}
         </ol>
