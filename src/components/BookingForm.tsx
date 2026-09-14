@@ -129,7 +129,7 @@ export function BookingForm() {
   };
 
   return (
-    <section id="booking" aria-labelledby="booking-heading" className="scroll-mt-24 bg-ink-900 py-20 text-white">
+    <section id="booking" aria-labelledby="booking-heading" className="bg-ink-900 py-20 text-white">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <p className="text-xs uppercase tracking-[0.24em] text-lime-400">Agenda</p>
         <h2 id="booking-heading" className="mt-3 font-serif text-3xl sm:text-5xl">

@@ -86,7 +86,7 @@ export function SmileQuiz() {
   };
 
   return (
-    <section id="quiz" aria-labelledby="quiz-heading" className="scroll-mt-24 bg-mist py-20">
+    <section id="quiz" aria-labelledby="quiz-heading" className="bg-mist py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <p className="text-xs uppercase tracking-[0.24em] text-lime-800">AI-assisted triage</p>
         <h2 id="quiz-heading" className="mt-3 font-serif text-3xl text-ink-900 sm:text-5xl">

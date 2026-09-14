@@ -10,7 +10,7 @@ export function Locations() {
   const { locationId, locations, setLocationId } = useClinicLocation();
 
   return (
-    <section id="sedes" aria-labelledby="locations-heading" className="scroll-mt-24 bg-white py-20">
+    <section id="sedes" aria-labelledby="locations-heading" className="bg-white py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>

@@ -33,7 +33,7 @@ export function Testimonials() {
     <section
       id="celebrity-smiles"
       aria-labelledby="reviews-heading"
-      className="scroll-mt-24 bg-ink-900 py-20 text-white"
+      className="bg-ink-900 py-20 text-white"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <p className="text-xs uppercase tracking-[0.24em] text-lime-400">Celebrity & patient voices</p>

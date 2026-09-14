@@ -14,7 +14,7 @@ export function Footer() {
   const whatsappHref = buildWhatsAppUrl(clinicInfo.whatsappNumber, conciergePrefillMessage);
 
   return (
-    <footer id="contact" className="scroll-mt-24 bg-ink-900 text-white">
+    <footer id="contact" className="bg-ink-900 text-white">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-4">
         <div>
           <BrandLockup size="nav" />

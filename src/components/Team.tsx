@@ -5,9 +5,9 @@ export function Team() {
   const villahermosa = locations.find((location) => location.id === "villahermosa");
 
   return (
-    <section id="equipo" aria-labelledby="team-heading" className="scroll-mt-24 bg-white py-20">
+    <section id="equipo" aria-labelledby="team-heading" className="bg-white py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <p className="text-xs uppercase tracking-[0.24em] text-lime-800">Quién te atiende</p>
+        <p className="text-xs uppercase tracking-[0.24em] text-lime-800">Equipo</p>
         <h2 id="team-heading" className="mt-3 font-serif text-3xl text-ink-900 sm:text-5xl">
           Quién te atiende
         </h2>

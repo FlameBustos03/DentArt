@@ -2,7 +2,7 @@ import { insurers, insurersMicrocopy } from "@/data/mockData";
 
 export function Insurers() {
   return (
-    <section id="seguros" aria-labelledby="insurers-heading" className="scroll-mt-24 bg-mist py-20">
+    <section id="seguros" aria-labelledby="insurers-heading" className="bg-mist py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <p className="text-xs uppercase tracking-[0.24em] text-lime-800">Seguros</p>
         <h2 id="insurers-heading" className="mt-3 font-serif text-3xl text-ink-900 sm:text-5xl">
