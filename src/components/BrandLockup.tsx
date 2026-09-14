@@ -10,7 +10,6 @@ export interface BrandLockupProps {
   dockRef?: Ref<HTMLSpanElement>;
   showLockup?: boolean;
   size?: "nav" | "hero";
-  plate?: boolean;
   className?: string;
 }
 
@@ -24,22 +23,13 @@ export function BrandLockup({
   dockRef,
   showLockup = true,
   size = "hero",
-  plate = false,
   className,
 }: BrandLockupProps) {
   return (
-    <span
-      ref={lockupRef}
-      className={cn(
-        "relative inline-block shrink-0",
-        BOX[size],
-        plate && "rounded-2xl bg-white px-3 py-1.5",
-        className,
-      )}
-    >
+    <span ref={lockupRef} className={cn("relative inline-block shrink-0 bg-transparent", BOX[size], className)}>
       <span
         ref={dockRef}
-        className="pointer-events-none absolute left-0 top-0 h-full w-[38%]"
+        className="pointer-events-none absolute left-0 top-0 h-full w-[38%] bg-transparent"
         data-lockup-d=""
         aria-hidden="true"
       />
@@ -48,7 +38,7 @@ export function BrandLockup({
           src="/brand/dent-art-lockup.png"
           alt={brandMarkAlt}
           fill
-          className="object-contain object-left"
+          className="bg-transparent object-contain object-left"
           sizes={size === "hero" ? "(min-width: 640px) 36rem, 88vw" : "192px"}
           priority
         />

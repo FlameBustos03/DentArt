@@ -64,12 +64,7 @@ export function Hero() {
           </p>
 
           <h1 id="hero-heading">
-            <BrandLockup
-              dockRef={dockRef}
-              showLockup={lockupVisible}
-              size="hero"
-              plate
-            />
+            <BrandLockup dockRef={dockRef} showLockup={lockupVisible} size="hero" />
           </h1>
           <p data-hero-exclude className="mt-6 max-w-xl text-base text-white/85 sm:text-lg">
             {heroSubhead}
