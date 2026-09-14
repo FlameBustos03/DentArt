@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 export interface SocialLinksProps {
   className?: string;
   tone?: "light" | "dark";
+  /** Show only the network name; the handle stays available to screen readers. */
   compact?: boolean;
 }
 
@@ -12,7 +13,13 @@ export function SocialLinks({ className, tone = "dark", compact = false }: Socia
     tone === "dark" ? "text-white/85 hover:text-lime-400" : "text-ink-800 hover:text-lime-800";
 
   return (
-    <ul className={cn("flex flex-wrap items-center gap-x-4 gap-y-2 text-sm", className)}>
+    <ul
+      className={cn(
+        "flex items-center gap-x-4 gap-y-2 text-sm",
+        compact ? "flex-nowrap" : "flex-wrap",
+        className,
+      )}
+    >
       {socialLinks.map((link) => (
         <li key={link.id}>
           <a
@@ -21,7 +28,8 @@ export function SocialLinks({ className, tone = "dark", compact = false }: Socia
             rel="noreferrer"
             className={linkClass}
           >
-            {compact ? link.label : `${link.label} ${link.handle}`}
+            {link.label}
+            <span className={cn("ml-1", compact ? "sr-only" : "opacity-70")}>{link.handle}</span>
           </a>
         </li>
       ))}
