@@ -35,7 +35,7 @@ useTexture.preload(MARK_SRC);
 
 function MarkButterfly({ pointerRef, scrollRef }: Omit<HeroSceneProps, "visible" | "awake">) {
   const group = useRef<THREE.Group>(null);
-  // R3F resets its clock whenever frameloop flips never -> always, so keep our own phase
+  // R3F resets its clock whenever frameloop flips demand -> always, so keep our own phase
   // to avoid a visible snap each time the pointer wakes the scene.
   const elapsed = useRef(0);
   const texture = useTexture(MARK_SRC, prepareMarkTexture);
@@ -96,7 +96,10 @@ export function ButterflyScene({ pointerRef, scrollRef, visible, awake }: HeroSc
     <div className="pointer-events-none absolute inset-0" aria-hidden="true">
       <Canvas
         dpr={[1, 1.5]}
-        frameloop={visible && awake ? "always" : "never"}
+        // "demand" (not "never") while idle: R3F ignores invalidate() in "never"
+        // mode, so a canvas that mounts after the idle timer fires would stay blank
+        // until the pointer moves. "demand" still paints the mount/resize frames.
+        frameloop={visible && awake ? "always" : "demand"}
         gl={{
           antialias: true,
           alpha: true,
