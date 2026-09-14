@@ -26,6 +26,12 @@ import type {
   TrustBadge,
   VisualizerCase,
 } from "@/types";
+import {
+  dentaliaLogo,
+  dentegraLogo,
+  homeDepotLogo,
+  liverpoolLogo,
+} from "@/lib/partnerAssets";
 
 export const DEFAULT_LOCATION_ID: LocationId = "poza-rica";
 
@@ -199,13 +205,13 @@ export const insurers: Insurer[] = [
     id: "dentegra",
     name: "Dentegra",
     caption: "Dentegra (incluye odontopediatría)",
-    logoSrc: "/partners/dentegra.png",
+    logo: dentegraLogo,
   },
   {
     id: "dentalia",
     name: "Dentalia",
     caption: "Dentalia",
-    logoSrc: "/partners/dentalia.png",
+    logo: dentaliaLogo,
   },
 ];
 
@@ -224,14 +230,14 @@ export const corporatePlans: CorporatePlan[] = [
     name: "Home Depot",
     note: "Home Depot — según convenio vigente",
     variant: "logo",
-    logoSrc: "/partners/home-depot.png",
+    logo: homeDepotLogo,
   },
   {
     id: "liverpool",
     name: "Liverpool",
     note: "Liverpool — según convenio vigente",
     variant: "logo",
-    logoSrc: "/partners/liverpool.png",
+    logo: liverpoolLogo,
   },
   {
     id: "sector-petrolero",
