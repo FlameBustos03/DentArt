@@ -94,7 +94,7 @@ export function Navbar({ className }: NavbarProps) {
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
-            <SocialLinks className="hidden xl:flex" tone="light" />
+            <SocialLinks className="hidden xl:flex" tone="light" compact />
             <a
               href={`tel:${clinicInfo.phoneTel}`}
               className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-3.5 py-2 text-sm text-ink-900 hover:border-lime-800"

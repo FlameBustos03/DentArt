@@ -4,9 +4,10 @@ import { cn } from "@/lib/utils";
 export interface SocialLinksProps {
   className?: string;
   tone?: "light" | "dark";
+  compact?: boolean;
 }
 
-export function SocialLinks({ className, tone = "dark" }: SocialLinksProps) {
+export function SocialLinks({ className, tone = "dark", compact = false }: SocialLinksProps) {
   const linkClass =
     tone === "dark" ? "text-white/85 hover:text-lime-400" : "text-ink-800 hover:text-lime-800";
 
@@ -20,8 +21,7 @@ export function SocialLinks({ className, tone = "dark" }: SocialLinksProps) {
             rel="noreferrer"
             className={linkClass}
           >
-            {link.label}
-            <span className="ml-1 text-current/70">{link.handle}</span>
+            {compact ? link.label : `${link.label} ${link.handle}`}
           </a>
         </li>
       ))}
