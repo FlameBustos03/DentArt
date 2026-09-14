@@ -58,13 +58,16 @@ export function BookingForm() {
     setForm((prev) => (prev.locationId === locationId ? prev : { ...prev, locationId }));
   }, [locationId]);
 
-  const isFirstStepFocus = useRef(true);
+  // Track the last step we focused for instead of a "skip first run" flag:
+  // StrictMode re-runs mount effects, and the flag variant focused (and scrolled
+  // the page to) the booking heading on initial load.
+  const focusedStep = useRef(step);
 
   useEffect(() => {
-    if (isFirstStepFocus.current) {
-      isFirstStepFocus.current = false;
+    if (focusedStep.current === step) {
       return;
     }
+    focusedStep.current = step;
     headingRef.current?.focus();
   }, [step]);
 
