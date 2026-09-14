@@ -78,7 +78,7 @@ export function Navbar({ className }: NavbarProps) {
       <div className="glass-nav">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
           <a href="#main-content" className="group min-w-0">
-            <BrandLockup size="nav" showSlogan wordmarkClassName="text-ink-900" />
+            <BrandLockup size="nav" />
           </a>
 
           <nav aria-label="Primary" className="hidden items-center gap-6 xl:flex">

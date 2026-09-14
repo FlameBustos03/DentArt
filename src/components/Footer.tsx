@@ -18,8 +18,7 @@ export function Footer() {
     <footer id="contact" className="scroll-mt-24 bg-ink-900 text-white">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-4">
         <div>
-          <BrandLockup size="nav" wordmarkClassName="text-white" />
-          <p className="mt-3 text-sm italic text-lime-400">{clinicInfo.slogan}</p>
+          <BrandLockup size="nav" plate />
           <p className="mt-3 max-w-sm text-white/80">{clinicInfo.tagline}</p>
           <ul className="mt-6 space-y-3 text-sm">
             <li className="flex items-start gap-2">

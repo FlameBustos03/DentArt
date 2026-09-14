@@ -2,63 +2,57 @@
 
 import type { Ref } from "react";
 import Image from "next/image";
-import { brandMarkAlt, clinicInfo } from "@/data/mockData";
+import { brandMarkAlt } from "@/data/mockData";
 import { cn } from "@/lib/utils";
 
 export interface BrandLockupProps {
-  markRef?: Ref<HTMLSpanElement>;
-  showMark?: boolean;
+  lockupRef?: Ref<HTMLSpanElement>;
+  dockRef?: Ref<HTMLSpanElement>;
+  showLockup?: boolean;
   size?: "nav" | "hero";
-  showSlogan?: boolean;
+  plate?: boolean;
   className?: string;
-  wordmarkClassName?: string;
 }
 
-const MARK_BOX: Record<NonNullable<BrandLockupProps["size"]>, string> = {
-  nav: "h-10 w-10 sm:h-11 sm:w-11 lg:h-12 lg:w-12",
-  hero: "h-16 w-16 sm:h-20 sm:w-20",
+const BOX: Record<NonNullable<BrandLockupProps["size"]>, string> = {
+  nav: "h-10 w-[9.5rem] sm:h-11 sm:w-[10.5rem] lg:h-12 lg:w-48",
+  hero: "h-[4.5rem] w-[min(28rem,88vw)] sm:h-24 sm:w-[min(36rem,90vw)]",
 };
 
 export function BrandLockup({
-  markRef,
-  showMark = true,
+  lockupRef,
+  dockRef,
+  showLockup = true,
   size = "hero",
-  showSlogan = false,
+  plate = false,
   className,
-  wordmarkClassName,
 }: BrandLockupProps) {
   return (
-    <div className={cn("flex min-w-0 items-center gap-3", className)}>
+    <span
+      ref={lockupRef}
+      className={cn(
+        "relative inline-block shrink-0",
+        BOX[size],
+        plate && "rounded-2xl bg-white px-3 py-1.5",
+        className,
+      )}
+    >
       <span
-        ref={markRef}
-        className={cn("relative shrink-0", MARK_BOX[size])}
-        data-brand-lockup-mark=""
-      >
-        {showMark ? (
-          <Image
-            src="/dent-art-mark.png"
-            alt={brandMarkAlt}
-            fill
-            className="object-contain"
-            sizes={size === "hero" ? "80px" : "48px"}
-            priority
-          />
-        ) : null}
-      </span>
-      <span className="leading-tight">
-        <span
-          className={cn(
-            "block font-semibold tracking-tight",
-            size === "hero" ? "text-3xl sm:text-4xl" : "text-xl",
-            wordmarkClassName,
-          )}
-        >
-          Dent Art
-        </span>
-        {showSlogan ? (
-          <span className="hidden text-[11px] italic text-black/70 sm:block">{clinicInfo.slogan}</span>
-        ) : null}
-      </span>
-    </div>
+        ref={dockRef}
+        className="pointer-events-none absolute left-0 top-0 h-full w-[38%]"
+        data-lockup-d=""
+        aria-hidden="true"
+      />
+      {showLockup ? (
+        <Image
+          src="/brand/dent-art-lockup.png"
+          alt={brandMarkAlt}
+          fill
+          className="object-contain object-left"
+          sizes={size === "hero" ? "(min-width: 640px) 36rem, 88vw" : "192px"}
+          priority
+        />
+      ) : null}
+    </span>
   );
 }

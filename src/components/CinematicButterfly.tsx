@@ -8,7 +8,6 @@ import { brandMarkAlt } from "@/data/mockData";
 const SESSION_KEY = "dentart-cinematic-butterfly";
 const DURATION = 2.4;
 const EXCLUSION_PX = 24;
-const FLY_SIZE = 80;
 
 interface Point {
   x: number;
@@ -67,13 +66,20 @@ function ambientStart(section: HTMLElement, width: number, height: number, exclu
   return { x, y };
 }
 
-function pathClearsExcludes(start: Point, mid: Point, end: Point, excludes: Box[]): boolean {
+function pathClearsExcludes(
+  start: Point,
+  mid: Point,
+  end: Point,
+  excludes: Box[],
+  width: number,
+  height: number,
+): boolean {
   for (let i = 0; i <= 12; i += 1) {
     const t = i / 12;
     const inv = 1 - t;
     const x = inv * inv * start.x + 2 * inv * t * mid.x + t * t * end.x;
     const y = inv * inv * start.y + 2 * inv * t * mid.y + t * t * end.y;
-    const fly = boxAt(x, y, FLY_SIZE, FLY_SIZE);
+    const fly = boxAt(x, y, width, height);
     if (excludes.some((exclude) => overlaps(fly, exclude))) {
       return false;
     }
@@ -82,7 +88,13 @@ function pathClearsExcludes(start: Point, mid: Point, end: Point, excludes: Box[
 }
 
 export function CinematicButterfly({ targetRef, onSettled }: CinematicButterflyProps) {
-  const [flight, setFlight] = useState<{ start: Point; mid: Point; end: Point } | null>(null);
+  const [flight, setFlight] = useState<{
+    start: Point;
+    mid: Point;
+    end: Point;
+    width: number;
+    height: number;
+  } | null>(null);
 
   useLayoutEffect(() => {
     const settle = () => {
@@ -107,6 +119,8 @@ export function CinematicButterfly({ targetRef, onSettled }: CinematicButterflyP
 
     const sectionRect = section.getBoundingClientRect();
     const targetRect = target.getBoundingClientRect();
+    const width = Math.max(64, targetRect.width);
+    const height = Math.max(64, targetRect.height);
     const excludes = Array.from(section.querySelectorAll<HTMLElement>("[data-hero-exclude]")).map(
       (el) => {
         const rect = el.getBoundingClientRect();
@@ -119,10 +133,10 @@ export function CinematicButterfly({ targetRef, onSettled }: CinematicButterflyP
       },
     );
 
-    const start = ambientStart(section, FLY_SIZE, FLY_SIZE, excludes);
+    const start = ambientStart(section, width, height, excludes);
     const end = {
-      x: targetRect.left - sectionRect.left + (targetRect.width - FLY_SIZE) / 2,
-      y: targetRect.top - sectionRect.top + (targetRect.height - FLY_SIZE) / 2,
+      x: targetRect.left - sectionRect.left,
+      y: targetRect.top - sectionRect.top,
     };
 
     let mid: Point = {
@@ -130,15 +144,15 @@ export function CinematicButterfly({ targetRef, onSettled }: CinematicButterflyP
       y: Math.min(start.y, end.y) - 48,
     };
 
-    for (let lift = 0; lift < 6 && !pathClearsExcludes(start, mid, end, excludes); lift += 1) {
+    for (let lift = 0; lift < 6 && !pathClearsExcludes(start, mid, end, excludes, width, height); lift += 1) {
       mid = { x: mid.x, y: Math.max(8, mid.y - 36) };
     }
 
-    if (!pathClearsExcludes(start, mid, end, excludes)) {
+    if (!pathClearsExcludes(start, mid, end, excludes, width, height)) {
       mid = { x: (start.x + end.x) / 2, y: 12 };
     }
 
-    setFlight({ start, mid, end });
+    setFlight({ start, mid, end, width, height });
   }, [onSettled, targetRef]);
 
   if (!flight) {
@@ -147,7 +161,8 @@ export function CinematicButterfly({ targetRef, onSettled }: CinematicButterflyP
 
   return (
     <motion.div
-      className="pointer-events-none absolute z-[5] h-20 w-20"
+      className="pointer-events-none absolute z-[5]"
+      style={{ width: flight.width, height: flight.height }}
       initial={{ left: flight.start.x, top: flight.start.y, opacity: 1 }}
       animate={{
         left: [flight.start.x, flight.mid.x, flight.end.x],
@@ -161,7 +176,13 @@ export function CinematicButterfly({ targetRef, onSettled }: CinematicButterflyP
       aria-hidden="true"
     >
       <span className="relative block h-full w-full">
-        <Image src="/dent-art-mark.png" alt="" fill className="object-contain" sizes="80px" />
+        <Image
+          src="/brand/dent-art-butterfly-d.png"
+          alt=""
+          fill
+          className="object-contain object-left"
+          sizes="200px"
+        />
       </span>
       <span className="sr-only">{brandMarkAlt}</span>
     </motion.div>

@@ -10,7 +10,6 @@ import { LocationSwitch } from "@/components/LocationSwitch";
 import { useClinicLocation } from "@/components/LocationProvider";
 import { Button } from "@/components/ui/Button";
 import {
-  brandMarkAlt,
   clinicHoursLabel,
   clinicInfo,
   emergencyPrefillMessage,
@@ -20,9 +19,9 @@ import {
 import { buildWhatsAppUrl, scrollToId } from "@/lib/utils";
 
 export function Hero() {
-  const markRef = useRef<HTMLSpanElement>(null);
-  const [markVisible, setMarkVisible] = useState(false);
-  const onSettled = useCallback(() => setMarkVisible(true), []);
+  const dockRef = useRef<HTMLSpanElement>(null);
+  const [lockupVisible, setLockupVisible] = useState(false);
+  const onSettled = useCallback(() => setLockupVisible(true), []);
   const { location } = useClinicLocation();
   const whatsappHref = buildWhatsAppUrl(
     clinicInfo.whatsappNumber,
@@ -46,7 +45,7 @@ export function Hero() {
       <div className="hero-ambient" aria-hidden="true" />
       <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white to-transparent" />
 
-      <CinematicButterfly targetRef={markRef} onSettled={onSettled} />
+      <CinematicButterfly targetRef={dockRef} onSettled={onSettled} />
 
       <div className="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:py-28">
         <motion.div
@@ -63,18 +62,13 @@ export function Hero() {
             </span>
           </p>
 
-          <BrandLockup
-            markRef={markRef}
-            showMark={markVisible}
-            size="hero"
-            wordmarkClassName="text-white"
-          />
-
-          <h1
-            id="hero-heading"
-            className="mt-8 max-w-[16ch] font-serif text-4xl italic leading-tight text-lime-400 sm:text-5xl lg:text-7xl"
-          >
-            {clinicInfo.slogan}
+          <h1 id="hero-heading">
+            <BrandLockup
+              dockRef={dockRef}
+              showLockup={lockupVisible}
+              size="hero"
+              plate
+            />
           </h1>
           <p data-hero-exclude className="mt-6 max-w-xl text-base text-white/85 sm:text-lg">
             Atención dental cercana y profesional en Poza Rica y Villahermosa. Más de 16 años
@@ -108,7 +102,6 @@ export function Hero() {
           <p className="mt-4 text-sm text-white/70">{clinicHoursLabel}</p>
         </motion.div>
       </div>
-      <span className="sr-only">{brandMarkAlt}</span>
     </section>
   );
 }
