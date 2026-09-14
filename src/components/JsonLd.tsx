@@ -18,14 +18,21 @@ function sedeId(location: ClinicLocation): string {
   return absoluteUrl(`/#${location.id}`);
 }
 
+// schema.org has no DentalClinic type. A dental practice is `Dentist`, a
+// LocalBusiness (Place + Organization), which is where address, hours and
+// hasMap are defined; the brand has no single address, so it is a
+// MedicalOrganization (Google requires an address on any LocalBusiness).
+const DENTISTRY = "https://schema.org/Dentistry";
+
 function sedeNode(location: ClinicLocation) {
   const [streetAddress] = location.addressLines;
 
   return {
-    "@type": "DentalClinic",
+    "@type": "Dentist",
     "@id": sedeId(location),
     name: `${clinicInfo.name} ${location.city}`,
     parentOrganization: { "@id": ORG_ID },
+    medicalSpecialty: DENTISTRY,
     url: absoluteUrl("/#sedes"),
     address: {
       "@type": "PostalAddress",
@@ -48,7 +55,7 @@ const graph = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "DentalClinic",
+      "@type": "MedicalOrganization",
       "@id": ORG_ID,
       name: clinicInfo.name,
       alternateName: `${clinicInfo.name} — ${clinicInfo.slogan}`,
@@ -59,9 +66,8 @@ const graph = {
       telephone: clinicInfo.phoneTel,
       email: clinicInfo.email,
       slogan: clinicInfo.slogan,
-      medicalSpecialty: "Dentistry",
+      medicalSpecialty: DENTISTRY,
       sameAs: socialLinks.map((link) => link.href),
-      openingHoursSpecification,
       department: locations.map((location) => ({ "@id": sedeId(location) })),
       employee: [{ "@id": CLINICIAN_ID }],
     },
