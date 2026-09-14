@@ -180,7 +180,9 @@ export function CinematicButterfly({ targetRef, onSettled }: CinematicButterflyP
           src="/brand/dent-art-butterfly-d.png"
           alt=""
           fill
-          className="object-contain object-left"
+          unoptimized
+          className="bg-transparent object-contain object-left"
+          style={{ backgroundColor: "transparent" }}
           sizes="200px"
         />
       </span>

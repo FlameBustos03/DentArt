@@ -26,7 +26,11 @@ export function BrandLockup({
   className,
 }: BrandLockupProps) {
   return (
-    <span ref={lockupRef} className={cn("relative inline-block shrink-0 bg-transparent", BOX[size], className)}>
+    <span
+      ref={lockupRef}
+      className={cn("relative inline-block shrink-0 bg-transparent", BOX[size], className)}
+      style={{ backgroundColor: "transparent" }}
+    >
       <span
         ref={dockRef}
         className="pointer-events-none absolute left-0 top-0 h-full w-[38%] bg-transparent"
@@ -38,7 +42,9 @@ export function BrandLockup({
           src="/brand/dent-art-lockup.png"
           alt={brandMarkAlt}
           fill
+          unoptimized
           className="bg-transparent object-contain object-left"
+          style={{ backgroundColor: "transparent" }}
           sizes={size === "hero" ? "(min-width: 640px) 36rem, 88vw" : "192px"}
           priority
         />
