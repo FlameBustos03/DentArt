@@ -208,9 +208,11 @@ export function CinematicButterfly({ targetRef, onSettled }: CinematicButterflyP
     return null;
   }
 
+  // Above the hero copy (z-10): the flyer must stay visible while it crosses
+  // the lockup to dock, otherwise it slides underneath and vanishes.
   return (
     <motion.div
-      className="pointer-events-none absolute z-[5]"
+      className="pointer-events-none absolute z-20"
       style={{ width: flight.width, height: flight.height }}
       initial={{ left: flight.start.x, top: flight.start.y, opacity: 1 }}
       animate={{
