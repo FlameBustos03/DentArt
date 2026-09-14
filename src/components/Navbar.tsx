@@ -83,7 +83,7 @@ export function Navbar({ className }: NavbarProps) {
             <BrandLockup size="nav" />
           </a>
 
-          <nav aria-label="Primary" className="hidden items-center gap-8 xl:flex">
+          <nav aria-label="Principal" className="hidden items-center gap-8 xl:flex">
             {navLinks.map((link) => (
               <a
                 key={link.id}
@@ -96,7 +96,12 @@ export function Navbar({ className }: NavbarProps) {
           </nav>
 
           <div className="flex items-center gap-2">
-            <Button variant="primary" size="sm" onClick={() => scrollToId("booking")}>
+            <Button
+              variant="primary"
+              size="sm"
+              className="whitespace-nowrap"
+              onClick={() => scrollToId("booking")}
+            >
               Agendar cita
             </Button>
             <Button
