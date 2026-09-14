@@ -14,9 +14,12 @@ export interface BrandLockupProps {
   className?: string;
 }
 
+/** public/brand/dent-art-lockup.png is 1181x481; the butterfly occupies its left 38%. */
+const LOCKUP_ASPECT = "aspect-[1181/481]";
+
 const BOX: Record<NonNullable<BrandLockupProps["size"]>, string> = {
-  nav: "h-10 w-[9.5rem] sm:h-11 sm:w-[10.5rem] lg:h-12 lg:w-48",
-  hero: "h-[4.5rem] w-[min(28rem,88vw)] sm:h-24 sm:w-[min(36rem,90vw)]",
+  nav: "h-10 sm:h-11 lg:h-12",
+  hero: "h-[4.5rem] sm:h-24",
 };
 
 export function BrandLockup({
@@ -32,8 +35,9 @@ export function BrandLockup({
       ref={lockupRef}
       className={cn(
         "relative inline-block shrink-0",
+        LOCKUP_ASPECT,
         BOX[size],
-        plate && "rounded-2xl bg-white px-3 py-1.5",
+        plate && "rounded-2xl bg-white",
         className,
       )}
     >
@@ -43,16 +47,19 @@ export function BrandLockup({
         data-lockup-d=""
         aria-hidden="true"
       />
-      {showLockup ? (
-        <Image
-          src="/brand/dent-art-lockup.png"
-          alt={brandMarkAlt}
-          fill
-          className="object-contain object-left"
-          sizes={size === "hero" ? "(min-width: 640px) 36rem, 88vw" : "192px"}
-          priority
-        />
-      ) : null}
+      {/* Always mounted so the heading keeps its accessible name and the PNG is
+          preloaded while the butterfly is still in flight. */}
+      <Image
+        src="/brand/dent-art-lockup.png"
+        alt={brandMarkAlt}
+        fill
+        className={cn(
+          "object-contain object-left motion-safe:transition-opacity motion-safe:duration-300",
+          showLockup ? "opacity-100" : "opacity-0",
+        )}
+        sizes={size === "hero" ? "(min-width: 640px) 236px, 177px" : "118px"}
+        priority
+      />
     </span>
   );
 }

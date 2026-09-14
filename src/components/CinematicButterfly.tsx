@@ -1,12 +1,13 @@
 "use client";
 
-import { useLayoutEffect, useState, type RefObject } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { brandMarkAlt } from "@/data/mockData";
 
 const SESSION_KEY = "dentart-cinematic-butterfly";
 const DURATION = 2.4;
+/** Matches `motion-safe:duration-300` on the BrandLockup image. */
+const LOCKUP_FADE_MS = 320;
 const EXCLUSION_PX = 24;
 
 interface Point {
@@ -32,6 +33,45 @@ function overlaps(a: Box, b: Box): boolean {
 
 function boxAt(x: number, y: number, width: number, height: number): Box {
   return { left: x, top: y, right: x + width, bottom: y + height };
+}
+
+/**
+ * Layout box of `el` relative to `section`, walking the offsetParent chain.
+ * Unlike getBoundingClientRect this ignores CSS transforms, so measuring while
+ * the hero copy is still mid fly-in (translateY) yields the resting position.
+ */
+function layoutBox(el: HTMLElement, section: HTMLElement): Box {
+  let left = 0;
+  let top = 0;
+  let node: HTMLElement | null = el;
+  while (node && node !== section) {
+    left += node.offsetLeft;
+    top += node.offsetTop;
+    node = node.offsetParent as HTMLElement | null;
+  }
+  if (!node) {
+    const rect = el.getBoundingClientRect();
+    const sectionRect = section.getBoundingClientRect();
+    left = rect.left - sectionRect.left;
+    top = rect.top - sectionRect.top;
+  }
+  return { left, top, right: left + el.offsetWidth, bottom: top + el.offsetHeight };
+}
+
+function readSeen(): boolean {
+  try {
+    return window.sessionStorage.getItem(SESSION_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function markSeen(): void {
+  try {
+    window.sessionStorage.setItem(SESSION_KEY, "1");
+  } catch {
+    // Storage may be unavailable (privacy mode); the flight simply replays next load.
+  }
 }
 
 function ambientStart(section: HTMLElement, width: number, height: number, excludes: Box[]): Point {
@@ -95,17 +135,28 @@ export function CinematicButterfly({ targetRef, onSettled }: CinematicButterflyP
     width: number;
     height: number;
   } | null>(null);
+  const [landed, setLanded] = useState(false);
+  const landTimer = useRef<number | undefined>(undefined);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    return () => {
+      if (landTimer.current !== undefined) {
+        window.clearTimeout(landTimer.current);
+      }
+    };
+  }, []);
+
+  // A passive effect (not a layout effect) so the dock ref, which sits later in
+  // the tree, is already attached when we measure.
+  useEffect(() => {
     const settle = () => {
       onSettled();
     };
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const desktop = window.matchMedia("(min-width: 1024px)").matches;
-    const seen = sessionStorage.getItem(SESSION_KEY) === "1";
 
-    if (reduced || !desktop || seen) {
+    if (reduced || !desktop || readSeen()) {
       settle();
       return;
     }
@@ -117,27 +168,23 @@ export function CinematicButterfly({ targetRef, onSettled }: CinematicButterflyP
       return;
     }
 
-    const sectionRect = section.getBoundingClientRect();
-    const targetRect = target.getBoundingClientRect();
-    const width = Math.max(64, targetRect.width);
-    const height = Math.max(64, targetRect.height);
+    const targetBox = layoutBox(target, section);
+    const width = Math.max(64, targetBox.right - targetBox.left);
+    const height = Math.max(64, targetBox.bottom - targetBox.top);
     const excludes = Array.from(section.querySelectorAll<HTMLElement>("[data-hero-exclude]")).map(
       (el) => {
-        const rect = el.getBoundingClientRect();
+        const box = layoutBox(el, section);
         return {
-          left: rect.left - sectionRect.left - EXCLUSION_PX,
-          top: rect.top - sectionRect.top - EXCLUSION_PX,
-          right: rect.right - sectionRect.left + EXCLUSION_PX,
-          bottom: rect.bottom - sectionRect.top + EXCLUSION_PX,
+          left: box.left - EXCLUSION_PX,
+          top: box.top - EXCLUSION_PX,
+          right: box.right + EXCLUSION_PX,
+          bottom: box.bottom + EXCLUSION_PX,
         };
       },
     );
 
     const start = ambientStart(section, width, height, excludes);
-    const end = {
-      x: targetRect.left - sectionRect.left,
-      y: targetRect.top - sectionRect.top,
-    };
+    const end = { x: targetBox.left, y: targetBox.top };
 
     let mid: Point = {
       x: (start.x + end.x) / 2,
@@ -155,7 +202,9 @@ export function CinematicButterfly({ targetRef, onSettled }: CinematicButterflyP
     setFlight({ start, mid, end, width, height });
   }, [onSettled, targetRef]);
 
-  if (!flight) {
+  // Once landed the lockup's own butterfly takes over; unmount so the two never
+  // stack (a sub-pixel mismatch would otherwise read as a blurred double mark).
+  if (!flight || landed) {
     return null;
   }
 
@@ -170,8 +219,10 @@ export function CinematicButterfly({ targetRef, onSettled }: CinematicButterflyP
       }}
       transition={{ duration: DURATION, times: [0, 0.42, 1], ease: [0.22, 0.72, 0.18, 1] }}
       onAnimationComplete={() => {
-        sessionStorage.setItem(SESSION_KEY, "1");
+        markSeen();
         onSettled();
+        // Keep the flyer for the lockup's fade-in so the mark never dips.
+        landTimer.current = window.setTimeout(() => setLanded(true), LOCKUP_FADE_MS);
       }}
       aria-hidden="true"
     >
@@ -182,9 +233,9 @@ export function CinematicButterfly({ targetRef, onSettled }: CinematicButterflyP
           fill
           className="object-contain object-left"
           sizes="200px"
+          priority
         />
       </span>
-      <span className="sr-only">{brandMarkAlt}</span>
     </motion.div>
   );
 }
