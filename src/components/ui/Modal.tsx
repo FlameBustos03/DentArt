@@ -82,7 +82,7 @@ export function Modal({ open, title, onClose, children, labelledBy }: ModalProps
         <div className="fixed inset-0 z-50 flex items-end justify-center p-3 sm:items-center sm:p-6">
           <motion.button
             type="button"
-            aria-label="Close dialog overlay"
+            aria-label="Cerrar diálogo"
             className="absolute inset-0 bg-ink-900/55"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -108,7 +108,7 @@ export function Modal({ open, title, onClose, children, labelledBy }: ModalProps
                 ref={closeRef}
                 variant="ghost"
                 size="sm"
-                aria-label="Close dialog"
+                aria-label="Cerrar diálogo"
                 className="!px-2.5"
                 onClick={onClose}
               >

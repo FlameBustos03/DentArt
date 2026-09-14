@@ -145,7 +145,7 @@ export function BookingForm() {
           </p>
         </div>
 
-        <ol className="mt-8 flex flex-wrap gap-3 text-sm" aria-label="Booking progress">
+        <ol className="mt-8 flex flex-wrap gap-3 text-sm" aria-label="Progreso de la cita">
           {STEP_LABELS.map((label, index) => {
             const value = index + 1;
             const current = value === step;
