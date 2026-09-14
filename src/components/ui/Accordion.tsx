@@ -3,19 +3,27 @@
 import { useId, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import type { FAQItem } from "@/types";
 import { cn } from "@/lib/utils";
 
 export interface AccordionProps {
   items: FAQItem[];
+  className?: string;
 }
 
-export function Accordion({ items }: AccordionProps) {
+export function Accordion({ items, className }: AccordionProps) {
   const baseId = useId();
   const [openId, setOpenId] = useState<string | null>(items[0]?.id ?? null);
+  const reduced = usePrefersReducedMotion();
 
   return (
-    <div className="divide-y divide-black/10 rounded-3xl border border-black/10 bg-mist">
+    <div
+      className={cn(
+        "divide-y divide-[color:var(--border-subtle)] rounded-card border border-[color:var(--border-subtle)] bg-white shadow-card",
+        className,
+      )}
+    >
       {items.map((item) => {
         const isOpen = openId === item.id;
         const panelId = `${baseId}-${item.id}-panel`;
@@ -35,29 +43,36 @@ export function Accordion({ items }: AccordionProps) {
                 <span className="font-serif text-lg text-ink-900 sm:text-xl">{item.question}</span>
                 <ChevronDown
                   className={cn(
-                    "h-5 w-5 shrink-0 text-lime-800 transition-transform duration-300",
-                    isOpen && "rotate-180",
+                    "h-5 w-5 shrink-0 text-lime-800 transition-transform duration-panel ease-out motion-reduce:transition-none",
+                    isOpen && "rotate-180 motion-reduce:rotate-0",
                   )}
                   aria-hidden="true"
                 />
               </button>
             </h3>
-            <AnimatePresence initial={false}>
-              {isOpen ? (
-                <motion.div
-                  id={panelId}
-                  role="region"
-                  aria-labelledby={buttonId}
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.25 }}
-                  className="overflow-hidden"
-                >
-                  <p className="px-5 pb-5 text-black/70 sm:px-6">{item.answer}</p>
-                </motion.div>
-              ) : null}
-            </AnimatePresence>
+            {reduced ? (
+              isOpen ? (
+                <div id={panelId} role="region" aria-labelledby={buttonId}>
+                  <p className="px-5 pb-5 text-[color:var(--text-body)] sm:px-6">{item.answer}</p>
+                </div>
+              ) : null
+            ) : (
+              <AnimatePresence initial={false}>
+                {isOpen ? (
+                  <motion.div
+                    id={panelId}
+                    role="region"
+                    aria-labelledby={buttonId}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.16, ease: [0, 0, 0.2, 1] }}
+                  >
+                    <p className="px-5 pb-5 text-[color:var(--text-body)] sm:px-6">{item.answer}</p>
+                  </motion.div>
+                ) : null}
+              </AnimatePresence>
+            )}
           </div>
         );
       })}

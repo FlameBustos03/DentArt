@@ -2,9 +2,21 @@ import Image from "next/image";
 import { UserRound } from "lucide-react";
 import { clinicalTeams, leadClinician } from "@/data/mockData";
 
-export function ClinicianProfile() {
+export function ClinicianProfile({
+  headingId = "team-heading",
+  nameAs = "h2",
+  blurb = leadClinician.blurb,
+  showEyebrow = true,
+}: {
+  headingId?: string;
+  nameAs?: "h2" | "h3" | "p";
+  blurb?: string[];
+  showEyebrow?: boolean;
+}) {
+  const NameTag = nameAs;
+
   return (
-    <article className="overflow-hidden rounded-3xl border border-black/10 bg-mist">
+    <article className="overflow-hidden rounded-card border border-[color:var(--border-subtle)] bg-mist">
       <div className="grid items-start gap-8 p-6 sm:p-8 lg:grid-cols-[360px_minmax(0,1fr)]">
         <div className="relative h-[420px] w-full max-w-[360px] overflow-hidden rounded-2xl bg-white">
           <Image
@@ -17,13 +29,15 @@ export function ClinicianProfile() {
           />
         </div>
         <div className="min-w-0">
-          <p className="text-xs uppercase tracking-[0.18em] text-lime-800">{leadClinician.eyebrow}</p>
-          <h2 id="team-heading" className="mt-2 font-serif text-3xl text-ink-900 sm:text-4xl">
+          {showEyebrow ? (
+            <p className="text-xs uppercase tracking-[0.18em] text-lime-800">{leadClinician.eyebrow}</p>
+          ) : null}
+          <NameTag id={headingId} className="mt-2 font-serif text-3xl text-ink-900 sm:text-4xl">
             {leadClinician.name}
-          </h2>
+          </NameTag>
           <p className="mt-2 text-sm text-ink-800">{leadClinician.role}</p>
           <div className="mt-5 space-y-4 text-black/70">
-            {leadClinician.blurb.map((paragraph, index) => (
+            {blurb.map((paragraph, index) => (
               <p key={index}>{paragraph}</p>
             ))}
           </div>
