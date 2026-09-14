@@ -13,7 +13,9 @@ export function ClinicianProfile() {
             width={leadClinician.photo.width}
             height={leadClinician.photo.height}
             className="h-full w-full object-cover object-top"
-            sizes="360px"
+            // The landscape photo is scaled by object-cover to fill the 420px-tall
+            // frame (~480px wide) before being cropped, so pick candidates for that.
+            sizes="480px"
           />
         </div>
         <div className="min-w-0">
