@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, Phone, X } from "lucide-react";
 import { clinicInfo, navLinks } from "@/data/mockData";
 import { Button } from "@/components/ui/Button";
-import { cn } from "@/lib/utils";
+import { cn, scrollToId } from "@/lib/utils";
 
 export interface NavbarProps {
   className?: string;
@@ -74,25 +75,30 @@ export function Navbar({ className }: NavbarProps) {
   return (
     <header className={cn("sticky top-0 z-40", className)}>
       <div className="glass-nav">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-          <a href="#main-content" className="group flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-full border border-gold-500/50 bg-navy-900 font-serif text-lg text-gold-300">
-              D
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
+          <a href="#main-content" className="group flex min-w-0 items-center gap-2">
+            <span className="relative h-10 w-10 shrink-0 sm:h-11 sm:w-11 lg:h-12 lg:w-12">
+              <Image
+                src="/dent-art-mark.png"
+                alt=""
+                fill
+                className="object-contain"
+                sizes="(min-width: 1024px) 48px, (min-width: 640px) 44px, 40px"
+                priority
+              />
             </span>
             <span className="leading-tight">
-              <span className="block font-serif text-xl text-navy-900">DentArt</span>
-              <span className="block text-[10px] uppercase tracking-[0.22em] text-stone-500">
-                Elite Dental Atelier
-              </span>
+              <span className="block text-xl font-semibold tracking-tight text-ink-900">Dent Art</span>
+              <span className="hidden text-[11px] italic text-black/70 sm:block">{clinicInfo.slogan}</span>
             </span>
           </a>
 
-          <nav aria-label="Primary" className="hidden items-center gap-7 lg:flex">
+          <nav aria-label="Primary" className="hidden items-center gap-6 xl:flex">
             {navLinks.map((link) => (
               <a
                 key={link.id}
                 href={link.href}
-                className="text-sm tracking-wide text-navy-800 transition-colors hover:text-gold-600"
+                className="text-sm tracking-wide text-ink-900 underline-offset-4 transition-colors hover:text-lime-800 hover:underline"
               >
                 {link.label}
               </a>
@@ -102,13 +108,14 @@ export function Navbar({ className }: NavbarProps) {
           <div className="hidden items-center gap-3 lg:flex">
             <a
               href={`tel:${clinicInfo.phoneTel}`}
-              className="inline-flex items-center gap-2 text-sm text-navy-800 hover:text-gold-600"
+              className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-3.5 py-2 text-sm text-ink-900 hover:border-lime-800"
             >
-              <Phone className="h-4 w-4" aria-hidden="true" />
-              <span>{clinicInfo.phoneDisplay}</span>
+              <Phone className="h-4 w-4 text-lime-800" aria-hidden="true" />
+              <span className="font-medium">Concierge</span>
+              <span className="hidden text-black/60 xl:inline">{clinicInfo.phoneDisplay}</span>
             </a>
-            <Button variant="gold" size="sm" onClick={() => scrollToId("booking")}>
-              Elite Care Booking
+            <Button variant="primary" size="sm" onClick={() => scrollToId("booking")}>
+              Book VIP Consultation
             </Button>
           </div>
 
@@ -116,7 +123,7 @@ export function Navbar({ className }: NavbarProps) {
             ref={menuButtonRef}
             variant="ghost"
             size="sm"
-            className="!px-2.5 lg:hidden"
+            className="!px-2.5 xl:hidden"
             aria-expanded={open}
             aria-controls={drawerId}
             onClick={() => setOpen(true)}
@@ -129,11 +136,11 @@ export function Navbar({ className }: NavbarProps) {
 
       <AnimatePresence>
         {open ? (
-          <div className="fixed inset-0 z-50 lg:hidden">
+          <div className="fixed inset-0 z-50 xl:hidden">
             <motion.button
               type="button"
               aria-label="Close navigation overlay"
-              className="absolute inset-0 bg-navy-950/50"
+              className="absolute inset-0 bg-ink-900/50"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -144,14 +151,14 @@ export function Navbar({ className }: NavbarProps) {
               role="dialog"
               aria-modal="true"
               aria-label="Mobile navigation"
-              className="absolute right-0 top-0 flex h-full w-[min(22rem,92vw)] flex-col bg-ivory-50 px-6 py-5 shadow-lift"
+              className="absolute right-0 top-0 flex h-full w-[min(22rem,92vw)] flex-col bg-white px-6 py-5 shadow-lift"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "tween", duration: 0.28 }}
             >
               <div className="mb-8 flex items-center justify-between">
-                <p className="font-serif text-2xl text-navy-900">Menu</p>
+                <p className="text-2xl font-semibold text-ink-900">Menu</p>
                 <Button
                   ref={closeButtonRef}
                   variant="ghost"
@@ -168,29 +175,30 @@ export function Navbar({ className }: NavbarProps) {
                   <a
                     key={link.id}
                     href={link.href}
-                    className="border-b border-ivory-300 pb-3 font-serif text-2xl text-navy-900"
+                    className="border-b border-black/10 pb-3 font-serif text-2xl text-ink-900"
                     onClick={() => setOpen(false)}
                   >
                     {link.label}
                   </a>
                 ))}
               </nav>
+              <p className="mt-6 italic text-black/70">{clinicInfo.slogan}</p>
               <a
                 href={`tel:${clinicInfo.phoneTel}`}
-                className="mt-8 inline-flex items-center gap-2 text-navy-800"
+                className="mt-4 inline-flex items-center gap-2 text-ink-900 hover:text-lime-800"
               >
-                <Phone className="h-4 w-4" aria-hidden="true" />
-                {clinicInfo.phoneDisplay}
+                <Phone className="h-4 w-4 text-lime-800" aria-hidden="true" />
+                Concierge · {clinicInfo.phoneDisplay}
               </a>
               <Button
-                variant="gold"
+                variant="primary"
                 className="mt-4"
                 onClick={() => {
                   setOpen(false);
                   scrollToId("booking");
                 }}
               >
-                Elite Care Booking
+                Book VIP Consultation
               </Button>
             </motion.aside>
           </div>
@@ -198,8 +206,4 @@ export function Navbar({ className }: NavbarProps) {
       </AnimatePresence>
     </header>
   );
-}
-
-function scrollToId(id: string): void {
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
 }

@@ -17,7 +17,16 @@ export interface TrustBadge {
   value: string;
 }
 
-export type VisualizerCategory = "Smile Design" | "Orthodontics" | "Veneers";
+export interface MediaOutlet {
+  id: string;
+  name: string;
+  caption: string;
+}
+
+export type VisualizerCategory =
+  | "Porcelain Veneers"
+  | "Invisalign"
+  | "Full Mouth Rehabilitation";
 
 export interface VisualizerCase {
   id: string;
@@ -30,10 +39,11 @@ export interface VisualizerCase {
 }
 
 export type ServiceIconName =
-  | "implants"
+  | "smile-design"
+  | "veneers"
   | "whitening"
-  | "general"
-  | "pediatric";
+  | "implants"
+  | "sedation";
 
 export interface Service {
   id: string;
@@ -70,8 +80,11 @@ export interface TreatmentOption {
 
 export type ContactPreference = "phone" | "email" | "whatsapp";
 
+export type ConsultationMode = "in-clinic" | "virtual";
+
 export interface BookingFormData {
   treatmentId: string;
+  consultationMode: ConsultationMode | "";
   dateIso: string;
   slotId: string;
   fullName: string;
@@ -83,6 +96,7 @@ export interface BookingFormData {
 
 export interface BookingFieldErrors {
   treatmentId?: string;
+  consultationMode?: string;
   dateIso?: string;
   slotId?: string;
   fullName?: string;
@@ -90,6 +104,8 @@ export interface BookingFieldErrors {
   phone?: string;
   contactPreference?: string;
 }
+
+export type TestimonialKind = "review" | "video";
 
 export interface Testimonial {
   id: string;
@@ -100,6 +116,9 @@ export interface Testimonial {
   verified: boolean;
   location: string;
   image: ImageAsset;
+  kind: TestimonialKind;
+  duration?: string;
+  privacyNote?: string;
 }
 
 export interface FAQItem {
@@ -116,6 +135,7 @@ export interface ClinicHours {
 
 export interface ClinicInfo {
   name: string;
+  slogan: string;
   tagline: string;
   phoneDisplay: string;
   phoneTel: string;
@@ -126,14 +146,70 @@ export interface ClinicInfo {
   hours: ClinicHours[];
 }
 
+export interface PublishedBook {
+  title: string;
+  year: string;
+  note: string;
+}
+
 export interface Doctor {
   id: string;
   name: string;
   title: string;
   credentials: string;
+  bio: string;
+  portrait: ImageAsset;
+  awards: string[];
+  books: PublishedBook[];
+  fellowships: string[];
+}
+
+export interface PhilanthropyProgram {
+  id: string;
+  name: string;
+  impact: string;
+  description: string;
+  metric: string;
 }
 
 export interface Certification {
   id: string;
   label: string;
+}
+
+export type QuizImprovement = "whitening" | "alignment" | "veneers" | "implants";
+
+export type QuizGoal = "celebrity" | "natural" | "function";
+
+export interface QuizChoice<T extends string> {
+  id: T;
+  label: string;
+  description: string;
+}
+
+export interface QuizRecommendation {
+  title: string;
+  summary: string;
+  protocol: string;
+  recommendedServiceId: string;
+  recommendedServiceName: string;
+}
+
+export interface QuizLead {
+  fullName: string;
+  email: string;
+  phone: string;
+}
+
+export interface QuizLeadErrors {
+  fullName?: string;
+  email?: string;
+  phone?: string;
+}
+
+export interface ConsultationModeOption {
+  id: ConsultationMode;
+  label: string;
+  description: string;
+  durationNote: string;
 }

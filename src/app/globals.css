@@ -4,6 +4,13 @@
 
 :root {
   color-scheme: light;
+  --brand-lime: #2ecc71;
+  --brand-lime-hover: #27ae60;
+  --brand-lime-text: #1b7a45;
+  --brand-ink: #000000;
+  --brand-ink-soft: #111111;
+  --brand-white: #ffffff;
+  --brand-mist: #f9f9f9;
 }
 
 html {
@@ -11,17 +18,20 @@ html {
 }
 
 body {
-  @apply bg-ivory-100 text-navy-900 antialiased;
+  @apply bg-white text-ink-900 antialiased;
 }
 
 ::selection {
-  background: #c4a46a;
-  color: #061018;
+  background: #2ecc71;
+  color: #000000;
 }
 
 :focus-visible {
-  outline: 2px solid #c4a46a;
+  outline: 2px solid #111111;
   outline-offset: 3px;
+  box-shadow:
+    0 0 0 5px #ffffff,
+    0 0 0 7px #2ecc71;
 }
 
 .skip-link {
@@ -30,8 +40,8 @@ body {
   top: -3rem;
   z-index: 80;
   border-radius: 999px;
-  background: #0b1c2c;
-  color: #f7f3eb;
+  background: #000000;
+  color: #ffffff;
   padding: 0.6rem 1rem;
   font-size: 0.875rem;
 }
@@ -40,13 +50,82 @@ body {
   top: 1rem;
 }
 
-.gold-hairline {
-  background: linear-gradient(90deg, transparent, #c4a46a, transparent);
+.lime-hairline {
+  background: linear-gradient(90deg, transparent, #2ecc71, transparent);
 }
 
 .glass-nav {
-  background: rgba(253, 252, 250, 0.88);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.glass-card {
+  background: rgba(249, 249, 249, 0.92);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  border-bottom: 1px solid rgba(196, 164, 106, 0.28);
+  border: 1px solid rgba(46, 204, 113, 0.28);
+}
+
+.glass-dark {
+  background: rgba(17, 17, 17, 0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(46, 204, 113, 0.28);
+}
+
+.hero-ambient {
+  position: absolute;
+  inset: 8% 12% auto auto;
+  width: min(28rem, 48vw);
+  height: min(22rem, 40vw);
+  background: radial-gradient(circle, rgba(46, 204, 113, 0.22), transparent 68%);
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.hero-depth-card {
+  background: rgba(17, 17, 17, 0.48);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(46, 204, 113, 0.38);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28), 0 0 24px rgba(46, 204, 113, 0.16);
+}
+
+.hero-depth-card--far {
+  transform: translate3d(calc(var(--hero-px, 0) * 18px), calc(var(--hero-py, 0) * -14px), 0);
+}
+
+.hero-depth-card--near {
+  transform: translate3d(calc(var(--hero-px, 0) * 28px), calc(var(--hero-py, 0) * -20px), 0);
+}
+
+.tilt-card--lit {
+  box-shadow:
+    0 0 0 1px rgba(46, 204, 113, 0.28),
+    0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+.service-glyph {
+  transform-style: preserve-3d;
+}
+
+.service-glyph-plate {
+  transform: translateZ(-10px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .hero-depth-card--far,
+  .hero-depth-card--near {
+    transform: none;
+  }
+
+  .tilt-card {
+    transform: none !important;
+  }
 }

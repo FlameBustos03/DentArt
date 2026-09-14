@@ -1,10 +1,6 @@
-# DentArt
+# Dent Art | Atrévete a Sonreír
 
-Premier dental clinic web platform for the patient journey—from discovery to appointment confirmation.
-
-## Elite platform
-
-Next.js App Router site with a luxury clinical aesthetic, interactive smile visualizer, multi-step booking, emergency triage, and accessible concierge UI.
+VIP smile studio platform for Dent Art in Poza Rica, Veracruz—lime green brand identity, concierge booking, and 24/7 emergency care.
 
 ## Run locally
 

@@ -5,34 +5,21 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        navy: {
-          950: "#061018",
-          900: "#0B1C2C",
-          800: "#12263A",
-          700: "#1B3550",
-          600: "#2A4A6A",
-          500: "#3D6488",
+        lime: {
+          400: "#32CD32",
+          500: "#2ECC71",
+          600: "#27AE60",
+          700: "#219150",
+          // Accessible text/icon lime on white and mist (≥4.5:1). Do not use 400–700 for small text on light surfaces.
+          800: "#1B7A45",
+          text: "#1B7A45",
         },
-        gold: {
-          200: "#F0E4C4",
-          300: "#E8D5A3",
-          400: "#D4B87A",
-          500: "#C4A46A",
-          600: "#A88A4F",
-          700: "#8A7040",
+        ink: {
+          800: "#111111",
+          900: "#000000",
         },
-        ivory: {
-          50: "#FDFCFA",
-          100: "#F7F3EB",
-          200: "#EFE8DC",
-          300: "#E4D9C8",
-          400: "#D4C6B0",
-        },
-        stone: {
-          400: "#B8AFA3",
-          500: "#8A8278",
-          600: "#6B645C",
-          700: "#4A453F",
+        mist: {
+          DEFAULT: "#F9F9F9",
         },
       },
       fontFamily: {
@@ -40,13 +27,13 @@ const config: Config = {
         sans: ["var(--font-dm-sans)", "system-ui", "sans-serif"],
       },
       boxShadow: {
-        glass: "0 8px 32px rgba(6, 16, 24, 0.12)",
-        lift: "0 18px 40px rgba(11, 28, 44, 0.14)",
-        gold: "0 8px 24px rgba(196, 164, 106, 0.28)",
+        glass: "0 8px 32px rgba(0, 0, 0, 0.08)",
+        lift: "0 18px 40px rgba(0, 0, 0, 0.12)",
+        lime: "0 8px 24px rgba(46, 204, 113, 0.32)",
       },
       backgroundImage: {
-        "navy-veil":
-          "linear-gradient(135deg, rgba(11, 28, 44, 0.88) 0%, rgba(6, 16, 24, 0.72) 60%, rgba(11, 28, 44, 0.55) 100%)",
+        "ink-veil":
+          "linear-gradient(135deg, rgba(0, 0, 0, 0.88) 0%, rgba(17, 17, 17, 0.72) 60%, rgba(0, 0, 0, 0.55) 100%)",
       },
     },
   },

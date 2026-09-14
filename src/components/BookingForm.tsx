@@ -4,6 +4,7 @@ import { useEffect, useId, useMemo, useRef, useState, type FormEvent } from "rea
 import { CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
 import {
   clinicInfo,
+  consultationModes,
   getUpcomingBookingDates,
   treatmentOptions,
 } from "@/data/mockData";
@@ -15,6 +16,7 @@ import { cn, isValidEmail, isValidPhone } from "@/lib/utils";
 
 const INITIAL_FORM: BookingFormData = {
   treatmentId: "",
+  consultationMode: "",
   dateIso: "",
   slotId: "",
   fullName: "",
@@ -30,6 +32,8 @@ const CONTACT_OPTIONS: Array<{ value: ContactPreference; label: string }> = [
   { value: "whatsapp", label: "WhatsApp" },
 ];
 
+const STEP_LABELS = ["Specialty & service", "Consultation mode", "Date, time & contact"] as const;
+
 export function BookingForm() {
   const [step, setStep] = useState(1);
   const [form, setForm] = useState<BookingFormData>(INITIAL_FORM);
@@ -41,6 +45,7 @@ export function BookingForm() {
   const selectedDate = dates.find((date) => date.iso === form.dateIso);
   const selectedTreatment = treatmentOptions.find((item) => item.id === form.treatmentId);
   const selectedSlot = selectedDate?.slots.find((slot) => slot.id === form.slotId);
+  const selectedMode = consultationModes.find((item) => item.id === form.consultationMode);
 
   const isFirstStepFocus = useRef(true);
 
@@ -56,19 +61,20 @@ export function BookingForm() {
     const nextErrors: BookingFieldErrors = {};
 
     if (current === 1 && !form.treatmentId) {
-      nextErrors.treatmentId = "Select a treatment or specialty to continue.";
+      nextErrors.treatmentId = "Select a specialty and service to continue.";
     }
 
-    if (current === 2) {
+    if (current === 2 && !form.consultationMode) {
+      nextErrors.consultationMode = "Choose In-Clinic VIP or Virtual Consultation.";
+    }
+
+    if (current === 3) {
       if (!form.dateIso) {
         nextErrors.dateIso = "Choose a date.";
       }
       if (!form.slotId) {
         nextErrors.slotId = "Choose an available time.";
       }
-    }
-
-    if (current === 3) {
       if (form.fullName.trim().length < 2) {
         nextErrors.fullName = "Enter your full name.";
       }
@@ -112,19 +118,19 @@ export function BookingForm() {
   };
 
   return (
-    <section id="booking" aria-labelledby="booking-heading" className="bg-navy-900 py-20 text-ivory-100">
+    <section id="booking" aria-labelledby="booking-heading" className="scroll-mt-24 bg-ink-900 py-20 text-white">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <p className="text-xs uppercase tracking-[0.24em] text-gold-400">Concierge reservations</p>
+        <p className="text-xs uppercase tracking-[0.24em] text-lime-400">VIP booking concierge</p>
         <h2 id="booking-heading" className="mt-3 font-serif text-3xl sm:text-5xl">
-          Interactive multi-step booking
+          Reserve your atelier visit
         </h2>
-        <p className="mt-4 max-w-2xl text-ivory-200/85">
-          Three considered steps. Your hold is confirmed instantly, then a coordinator telephones
-          to refine imaging, sedation, and arrival details.
+        <p className="mt-4 max-w-2xl text-white/85">
+          Specialty, consultation mode, then calendar and contact. Your hold is confirmed instantly;
+          a coordinator telephones to refine imaging, sedation, and arrival privacy.
         </p>
 
         <ol className="mt-8 flex flex-wrap gap-3 text-sm" aria-label="Booking progress">
-          {["Treatment", "Date & time", "Details"].map((label, index) => {
+          {STEP_LABELS.map((label, index) => {
             const value = index + 1;
             const current = value === step;
             return (
@@ -133,10 +139,10 @@ export function BookingForm() {
                 className={cn(
                   "rounded-full border px-4 py-2",
                   current
-                    ? "border-gold-400 bg-gold-500 text-navy-950"
+                    ? "border-lime-500 bg-lime-500 text-ink-900"
                     : value < step
-                      ? "border-gold-400/40 text-gold-300"
-                      : "border-white/15 text-ivory-200/70",
+                      ? "border-lime-500/40 text-lime-400"
+                      : "border-white/15 text-white/70",
                 )}
                 aria-current={current ? "step" : undefined}
               >
@@ -151,14 +157,10 @@ export function BookingForm() {
           onSubmit={onSubmit}
           noValidate
         >
-          <h3
-            ref={headingRef}
-            tabIndex={-1}
-            className="font-serif text-2xl outline-none"
-          >
-            {step === 1 && "Step 1 · Select a specialty"}
-            {step === 2 && "Step 2 · Choose date and time"}
-            {step === 3 && "Step 3 · Patient details"}
+          <h3 ref={headingRef} tabIndex={-1} className="font-serif text-2xl outline-none">
+            {step === 1 && "Step 1 · Select a specialty & service"}
+            {step === 2 && "Step 2 · Preferred consultation mode"}
+            {step === 3 && "Step 3 · Date, time & patient contact"}
           </h3>
           <p id={statusId} className="sr-only" aria-live="polite">
             Step {step} of 3
@@ -166,7 +168,7 @@ export function BookingForm() {
 
           {step === 1 ? (
             <fieldset className="mt-6">
-              <legend className="sr-only">Treatment or specialty</legend>
+              <legend className="sr-only">Specialty and service</legend>
               <div className="grid gap-3 sm:grid-cols-2">
                 {treatmentOptions.map((option) => {
                   const selected = form.treatmentId === option.id;
@@ -176,8 +178,8 @@ export function BookingForm() {
                       className={cn(
                         "cursor-pointer rounded-2xl border p-4 transition-colors",
                         selected
-                          ? "border-gold-400 bg-gold-500/15"
-                          : "border-white/10 hover:border-gold-400/50",
+                          ? "border-lime-500 bg-lime-500/15"
+                          : "border-white/10 hover:border-lime-500/50",
                       )}
                     >
                       <input
@@ -190,12 +192,12 @@ export function BookingForm() {
                           setErrors((prev) => ({ ...prev, treatmentId: undefined }));
                         }}
                       />
-                      <span className="block text-xs uppercase tracking-[0.16em] text-gold-300">
+                      <span className="block text-xs uppercase tracking-[0.16em] text-lime-400">
                         {option.specialty}
                       </span>
                       <span className="mt-1 block font-serif text-xl">{option.name}</span>
-                      <span className="mt-2 block text-sm text-ivory-200/80">{option.summary}</span>
-                      <span className="mt-3 block text-xs text-ivory-200/70">
+                      <span className="mt-2 block text-sm text-white/80">{option.summary}</span>
+                      <span className="mt-3 block text-xs text-white/70">
                         {option.durationMinutes} minutes
                       </span>
                     </label>
@@ -211,9 +213,52 @@ export function BookingForm() {
           ) : null}
 
           {step === 2 ? (
+            <fieldset className="mt-6">
+              <legend className="sr-only">Consultation mode</legend>
+              <div className="grid gap-4 md:grid-cols-2">
+                {consultationModes.map((option) => {
+                  const selected = form.consultationMode === option.id;
+                  return (
+                    <label
+                      key={option.id}
+                      className={cn(
+                        "cursor-pointer rounded-2xl border p-5 transition-colors",
+                        selected
+                          ? "border-lime-500 bg-lime-500/15"
+                          : "border-white/10 hover:border-lime-500/50",
+                      )}
+                    >
+                      <input
+                        type="radio"
+                        name="consultationMode"
+                        className="sr-only"
+                        checked={selected}
+                        onChange={() => {
+                          setForm((prev) => ({ ...prev, consultationMode: option.id }));
+                          setErrors((prev) => ({ ...prev, consultationMode: undefined }));
+                        }}
+                      />
+                      <span className="block font-serif text-2xl">{option.label}</span>
+                      <span className="mt-3 block text-sm text-white/85">{option.description}</span>
+                      <span className="mt-4 block text-xs uppercase tracking-[0.16em] text-lime-400">
+                        {option.durationNote}
+                      </span>
+                    </label>
+                  );
+                })}
+              </div>
+              {errors.consultationMode ? (
+                <p role="alert" className="mt-3 text-sm text-red-300">
+                  {errors.consultationMode}
+                </p>
+              ) : null}
+            </fieldset>
+          ) : null}
+
+          {step === 3 ? (
             <div className="mt-6 space-y-6">
               <fieldset>
-                <legend className="text-xs uppercase tracking-[0.16em] text-gold-300">Date</legend>
+                <legend className="text-xs uppercase tracking-[0.16em] text-lime-400">Date</legend>
                 <div className="mt-3 flex gap-2 overflow-x-auto pb-2">
                   {dates.map((date) => {
                     const selected = form.dateIso === date.iso;
@@ -228,8 +273,8 @@ export function BookingForm() {
                         className={cn(
                           "min-w-[4.75rem] rounded-2xl border px-3 py-3 text-center",
                           selected
-                            ? "border-gold-400 bg-gold-500 text-navy-950"
-                            : "border-white/10 hover:border-gold-400/50",
+                            ? "border-lime-500 bg-lime-500 text-ink-900"
+                            : "border-white/10 hover:border-lime-500/50",
                         )}
                       >
                         <span className="block text-xs uppercase">{date.weekday}</span>
@@ -246,7 +291,7 @@ export function BookingForm() {
               </fieldset>
 
               <fieldset>
-                <legend className="text-xs uppercase tracking-[0.16em] text-gold-300">Time</legend>
+                <legend className="text-xs uppercase tracking-[0.16em] text-lime-400">Time</legend>
                 <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
                   {(selectedDate?.slots ?? []).map((slot) => (
                     <button
@@ -260,8 +305,8 @@ export function BookingForm() {
                       className={cn(
                         "rounded-xl border px-3 py-3 text-sm disabled:cursor-not-allowed disabled:opacity-35",
                         form.slotId === slot.id
-                          ? "border-gold-400 bg-gold-500 text-navy-950"
-                          : "border-white/10 hover:border-gold-400/50",
+                          ? "border-lime-500 bg-lime-500 text-ink-900"
+                          : "border-white/10 hover:border-lime-500/50",
                       )}
                     >
                       {slot.time}
@@ -270,7 +315,7 @@ export function BookingForm() {
                   ))}
                 </div>
                 {!selectedDate ? (
-                  <p className="mt-3 text-sm text-ivory-200/70">Select a date to view open chairs.</p>
+                  <p className="mt-3 text-sm text-white/70">Select a date to view open chairs.</p>
                 ) : null}
                 {errors.slotId ? (
                   <p role="alert" className="mt-2 text-sm text-red-300">
@@ -278,77 +323,75 @@ export function BookingForm() {
                   </p>
                 ) : null}
               </fieldset>
-            </div>
-          ) : null}
 
-          {step === 3 ? (
-            <div className="mt-6 grid gap-4 md:grid-cols-2">
-              <TextField
-                id="fullName"
-                label="Full name"
-                tone="dark"
-                autoComplete="name"
-                value={form.fullName}
-                error={errors.fullName}
-                onChange={(event) => setForm((prev) => ({ ...prev, fullName: event.target.value }))}
-              />
-              <TextField
-                id="email"
-                label="Email"
-                type="email"
-                tone="dark"
-                autoComplete="email"
-                value={form.email}
-                error={errors.email}
-                onChange={(event) => setForm((prev) => ({ ...prev, email: event.target.value }))}
-              />
-              <TextField
-                id="phone"
-                label="Phone"
-                type="tel"
-                tone="dark"
-                autoComplete="tel"
-                value={form.phone}
-                error={errors.phone}
-                onChange={(event) => setForm((prev) => ({ ...prev, phone: event.target.value }))}
-              />
-              <fieldset className="flex flex-col gap-1.5">
-                <legend className="text-xs uppercase tracking-[0.16em] text-gold-300">
-                  Contact preference
-                </legend>
-                <div className="flex flex-wrap gap-2 pt-2">
-                  {CONTACT_OPTIONS.map((option) => (
-                    <label
-                      key={option.value}
-                      className={cn(
-                        "cursor-pointer rounded-full border px-4 py-2 text-sm",
-                        form.contactPreference === option.value
-                          ? "border-gold-400 bg-gold-500 text-navy-950"
-                          : "border-white/15",
-                      )}
-                    >
-                      <input
-                        type="radio"
-                        name="contactPreference"
-                        className="sr-only"
-                        checked={form.contactPreference === option.value}
-                        onChange={() =>
-                          setForm((prev) => ({ ...prev, contactPreference: option.value }))
-                        }
-                      />
-                      {option.label}
-                    </label>
-                  ))}
-                </div>
-              </fieldset>
-              <div className="md:col-span-2">
-                <TextAreaField
-                  id="notes"
-                  label="Notes for the concierge (optional)"
+              <div className="grid gap-4 md:grid-cols-2">
+                <TextField
+                  id="fullName"
+                  label="Full name"
                   tone="dark"
-                  value={form.notes}
-                  onChange={(event) => setForm((prev) => ({ ...prev, notes: event.target.value }))}
+                  autoComplete="name"
+                  value={form.fullName}
+                  error={errors.fullName}
+                  onChange={(event) => setForm((prev) => ({ ...prev, fullName: event.target.value }))}
                 />
+                <TextField
+                  id="email"
+                  label="Email"
+                  type="email"
+                  tone="dark"
+                  autoComplete="email"
+                  value={form.email}
+                  error={errors.email}
+                  onChange={(event) => setForm((prev) => ({ ...prev, email: event.target.value }))}
+                />
+                <TextField
+                  id="phone"
+                  label="Phone"
+                  type="tel"
+                  tone="dark"
+                  autoComplete="tel"
+                  value={form.phone}
+                  error={errors.phone}
+                  onChange={(event) => setForm((prev) => ({ ...prev, phone: event.target.value }))}
+                />
+                <fieldset className="flex flex-col gap-1.5">
+                  <legend className="text-xs uppercase tracking-[0.16em] text-lime-400">
+                    Contact preference
+                  </legend>
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    {CONTACT_OPTIONS.map((option) => (
+                      <label
+                        key={option.value}
+                        className={cn(
+                          "cursor-pointer rounded-full border px-4 py-2 text-sm",
+                          form.contactPreference === option.value
+                            ? "border-lime-500 bg-lime-500 text-ink-900"
+                            : "border-white/15",
+                        )}
+                      >
+                        <input
+                          type="radio"
+                          name="contactPreference"
+                          className="sr-only"
+                          checked={form.contactPreference === option.value}
+                          onChange={() =>
+                            setForm((prev) => ({ ...prev, contactPreference: option.value }))
+                          }
+                        />
+                        {option.label}
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
+                <div className="md:col-span-2">
+                  <TextAreaField
+                    id="notes"
+                    label="Notes for the concierge (optional)"
+                    tone="dark"
+                    value={form.notes}
+                    onChange={(event) => setForm((prev) => ({ ...prev, notes: event.target.value }))}
+                  />
+                </div>
               </div>
             </div>
           ) : null}
@@ -363,28 +406,31 @@ export function BookingForm() {
               Back
             </Button>
             {step < 3 ? (
-              <Button variant="gold" onClick={goNext}>
+              <Button variant="primary" onClick={goNext}>
                 Continue
                 <ChevronRight className="h-4 w-4" aria-hidden="true" />
               </Button>
             ) : (
-              <Button type="submit" variant="gold">
-                Confirm reservation
+              <Button type="submit" variant="primary">
+                Confirm VIP reservation
               </Button>
             )}
           </div>
         </form>
       </div>
 
-      <Modal open={successOpen} title="Your chair is reserved" onClose={resetBooking}>
-        <div className="space-y-4 text-stone-600">
-          <p className="flex items-center gap-2 text-navy-900">
-            <CheckCircle2 className="h-5 w-5 text-gold-600" aria-hidden="true" />
+      <Modal open={successOpen} title="Your VIP chair is reserved" onClose={resetBooking}>
+        <div className="space-y-4 text-black/70">
+          <p className="flex items-center gap-2 text-ink-900">
+            <CheckCircle2 className="h-5 w-5 text-lime-800" aria-hidden="true" />
             Confirmation sent to {form.email || "your inbox"}
           </p>
           <ul className="space-y-1 text-sm">
             <li>
               <strong>Visit:</strong> {selectedTreatment?.name}
+            </li>
+            <li>
+              <strong>Mode:</strong> {selectedMode?.label}
             </li>
             <li>
               <strong>When:</strong> {form.dateIso} {selectedSlot ? `· ${selectedSlot.time}` : ""}
@@ -400,7 +446,7 @@ export function BookingForm() {
             If you need same-day triage instead, call {clinicInfo.phoneDisplay} or use the
             emergency button.
           </p>
-          <Button variant="gold" onClick={resetBooking}>
+          <Button variant="primary" onClick={resetBooking}>
             Book another visit
           </Button>
         </div>

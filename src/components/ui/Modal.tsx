@@ -83,7 +83,7 @@ export function Modal({ open, title, onClose, children, labelledBy }: ModalProps
           <motion.button
             type="button"
             aria-label="Close dialog overlay"
-            className="absolute inset-0 bg-navy-950/55"
+            className="absolute inset-0 bg-ink-900/55"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -94,14 +94,14 @@ export function Modal({ open, title, onClose, children, labelledBy }: ModalProps
             role="dialog"
             aria-modal="true"
             aria-labelledby={headingId}
-            className="relative z-10 max-h-[88vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-gold-500/25 bg-ivory-50 p-6 shadow-lift sm:p-8"
+            className="relative z-10 max-h-[88vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-lime-500/30 bg-white p-6 shadow-lift sm:p-8"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 16 }}
             transition={{ duration: 0.28 }}
           >
             <div className="mb-5 flex items-start justify-between gap-4">
-              <h2 id={headingId} className="font-serif text-2xl text-navy-900 sm:text-3xl">
+              <h2 id={headingId} className="font-serif text-2xl text-ink-900 sm:text-3xl">
                 {title}
               </h2>
               <Button

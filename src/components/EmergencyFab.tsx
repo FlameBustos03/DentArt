@@ -22,15 +22,16 @@ export function EmergencyFab() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 8 }}
-            className="w-72 rounded-2xl border border-gold-500/30 bg-ivory-50 p-4 shadow-lift"
+            className="w-72 rounded-2xl border border-lime-500/40 bg-white p-4 shadow-lift"
           >
-            <p className="font-serif text-xl text-navy-900">Emergency triage</p>
-            <p className="mt-1 text-sm text-stone-600">
-              A clinician reviews pain, trauma, and failed restorations around the clock.
+            <p className="font-serif text-xl text-ink-900">VIP emergency</p>
+            <p className="mt-1 text-sm text-black/70">
+              A clinician reviews pain, trauma, and failed restorations around the clock. WhatsApp
+              opens with a pre-filled concierge message.
             </p>
             <a
               href={`tel:${clinicInfo.phoneTel}`}
-              className="mt-4 flex items-center justify-between rounded-xl bg-navy-900 px-4 py-3 text-sm text-ivory-100"
+              className="mt-4 flex items-center justify-between rounded-xl bg-ink-900 px-4 py-3 text-sm text-white"
             >
               Call {clinicInfo.phoneDisplay}
               <Phone className="h-4 w-4" aria-hidden="true" />
@@ -39,7 +40,7 @@ export function EmergencyFab() {
               href={whatsappHref}
               target="_blank"
               rel="noreferrer"
-              className="mt-2 flex items-center justify-center rounded-xl border border-gold-500 bg-gold-500 px-4 py-3 text-sm text-navy-950"
+              className="mt-2 flex items-center justify-center rounded-xl border border-lime-600 bg-lime-500 px-4 py-3 text-sm text-ink-900"
             >
               WhatsApp the on-call desk
             </a>
@@ -51,11 +52,11 @@ export function EmergencyFab() {
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen((value) => !value)}
-        className="inline-flex h-14 items-center gap-2 rounded-full bg-navy-900 px-5 text-sm uppercase tracking-[0.14em] text-ivory-100 shadow-lift"
+        className="inline-flex h-14 items-center gap-2 rounded-full bg-lime-500 px-5 text-sm uppercase tracking-[0.14em] text-ink-900 shadow-lime"
       >
-        <Siren className="h-5 w-5 text-gold-400" aria-hidden="true" />
-        <span className="hidden sm:inline">Emergency</span>
-        <span className="sr-only sm:hidden">Open emergency triage</span>
+        <Siren className="h-5 w-5 text-ink-900" aria-hidden="true" />
+        <span className="hidden sm:inline">VIP Emergency</span>
+        <span className="sr-only sm:hidden">Open VIP emergency options</span>
       </button>
     </div>
   );
