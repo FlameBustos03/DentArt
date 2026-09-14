@@ -3,6 +3,7 @@ import { DM_Sans, Playfair_Display } from "next/font/google";
 import { JsonLd } from "@/components/JsonLd";
 import { LocationProvider } from "@/components/LocationProvider";
 import { clinicInfo } from "@/data/mockData";
+import { siteUrl } from "@/lib/siteUrl";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -18,6 +19,8 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
+  alternates: { canonical: "/" },
   title: "Dent Art | Atrévete a Sonreír",
   description:
     "Atención dental cercana y profesional en Poza Rica y Villahermosa. Más de 16 años acompañando sonrisas con estética, prevención y tratamientos personalizados.",
