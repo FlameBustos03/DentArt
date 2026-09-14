@@ -2,9 +2,13 @@ import type {
   BookingDate,
   Certification,
   ClinicInfo,
+  ClinicLocation,
   ConsultationModeOption,
   Doctor,
   FAQItem,
+  Insurer,
+  LeadClinician,
+  LocationId,
   MediaOutlet,
   NavLink,
   PhilanthropyProgram,
@@ -13,6 +17,7 @@ import type {
   QuizImprovement,
   QuizRecommendation,
   Service,
+  ServiceGroup,
   Testimonial,
   TimeSlot,
   TreatmentOption,
@@ -20,35 +25,140 @@ import type {
   VisualizerCase,
 } from "@/types";
 
+export const DEFAULT_LOCATION_ID: LocationId = "poza-rica";
+
+export const clinicHoursLabel =
+  "Lun–Vie 10:00–13:00 y 16:00–19:00 · Sáb 10:00–13:00";
+
+export const clinicHoursNote = "Mismo horario en ambas sedes, salvo aviso.";
+
+export const locations: ClinicLocation[] = [
+  {
+    id: "poza-rica",
+    city: "Poza Rica",
+    region: "Veracruz",
+    addressLines: ["Cipres #204, Col. Chapultepec", "Poza Rica, Veracruz"],
+    mapQuery: "Cipres 204 Colonia Chapultepec, Poza Rica, Veracruz, Mexico",
+    teamCapacity: "Equipo de dos doctores",
+  },
+  {
+    id: "villahermosa",
+    city: "Villahermosa",
+    region: "Tabasco",
+    addressLines: ["Ermitaño 9, mz 22, Valle del Jaguar", "Villahermosa, Tabasco"],
+    mapQuery: "Ermitaño 9 manzana 22 Valle del Jaguar, Villahermosa, Tabasco, Mexico",
+    teamCapacity: "Un doctor",
+  },
+];
+
+export function getLocationById(id: LocationId): ClinicLocation {
+  return locations.find((location) => location.id === id) ?? locations[0];
+}
+
 export const clinicInfo: ClinicInfo = {
   name: "Dent Art",
   slogan: "Atrévete a Sonreír",
-  tagline: "VIP smile studio in Poza Rica, Veracruz",
-  phoneDisplay: "+52 782 210 8172",
+  tagline: "Atención dental cercana y profesional en Poza Rica y Villahermosa.",
+  phoneDisplay: "782 210 8172",
   phoneTel: "+527822108172",
   whatsappNumber: "527822108172",
-  email: "concierge@dentart.mx",
-  addressLines: ["Cipres #204 Col. Chapultepec", "Poza Rica, Veracruz, México"],
+  email: "DentArt@gmail.com",
+  addressLines: ["Cipres #204, Col. Chapultepec", "Poza Rica, Veracruz"],
   mapQuery: "Cipres 204 Colonia Chapultepec, Poza Rica, Veracruz, Mexico",
   hours: [
-    { days: "Monday — Friday", hours: "9:00 AM – 7:00 PM" },
-    { days: "Saturday", hours: "9:00 AM – 2:00 PM · VIP by request" },
-    { days: "Sunday", hours: "24/7 VIP emergency triage only" },
+    { days: "Lun–Vie", hours: "10:00–13:00 y 16:00–19:00" },
+    { days: "Sáb", hours: "10:00–13:00" },
   ],
 };
 
 export const navLinks: NavLink[] = [
-  { id: "services", label: "Services", href: "#services" },
-  { id: "celebrity-smiles", label: "Celebrity Smiles", href: "#celebrity-smiles" },
-  { id: "before-after", label: "Before/After", href: "#before-after" },
-  { id: "quiz", label: "Virtual Quiz", href: "#quiz" },
-  { id: "faq", label: "FAQ", href: "#faq" },
+  { id: "nosotros", label: "Nosotros", href: "#nosotros" },
+  { id: "servicios", label: "Servicios", href: "#servicios" },
+  { id: "equipo", label: "Equipo", href: "#equipo" },
+  { id: "seguros", label: "Seguros", href: "#seguros" },
+  { id: "sedes", label: "Sedes", href: "#sedes" },
+  { id: "faq", label: "Preguntas", href: "#faq" },
+  { id: "booking", label: "Citas", href: "#booking" },
 ];
 
 export const trustBadges: TrustBadge[] = [
-  { id: "rating", label: "Rating", value: "5.0 ★ Top Cosmetic Dentist" },
-  { id: "smiles", label: "Outcomes", value: "15,000+ Smiles Created" },
+  {
+    id: "trust",
+    label: "Confianza",
+    value: "+16 años · Poza Rica y Villahermosa · Dentegra",
+  },
 ];
+
+export const brandMarkAlt = "Dent Art — Atrévete a Sonreír";
+
+export const leadClinician: LeadClinician = {
+  name: "Dra. Claudia Solis",
+  focus: "Estética y diseño de sonrisa",
+  blurb: "Estética y diseño de sonrisa en Dent Art.",
+};
+
+export const serviceGroups: ServiceGroup[] = [
+  {
+    id: "estetica",
+    name: "Estética",
+    items: ["Diseño de sonrisa", "Carillas", "Blanqueamiento"],
+  },
+  {
+    id: "general",
+    name: "Odontología general",
+    items: ["Limpieza", "Resinas", "Amalgamas", "Incrustaciones"],
+  },
+  {
+    id: "protesis",
+    name: "Prótesis y ortodoncia",
+    items: ["Brackets", "Ortopedia", "Prótesis", "Puentes"],
+  },
+  {
+    id: "laser",
+    name: "Láser",
+    items: ["Terapéutico", "Blanqueamiento", "Anestesia"],
+    note: "El láser no sustituye el diagnóstico clínico.",
+  },
+];
+
+export const insurers: Insurer[] = [
+  {
+    id: "dentegra",
+    name: "Dentegra",
+    note: "Aceptada, incluida odontopediatría según el plan vigente.",
+  },
+  {
+    id: "dentalia",
+    name: "Dentalia",
+    note: "Aceptada. La cobertura depende del plan vigente.",
+  },
+  {
+    id: "empresarial",
+    name: "Planes empresariales",
+    note: "Home Depot, Liverpool y sector petrolero, según vigencia.",
+  },
+];
+
+export const insurersMicrocopy =
+  "Pregunta por tu cobertura al agendar. Las coberturas dependen del plan vigente.";
+
+export const socialLinks = [
+  {
+    id: "instagram",
+    label: "Instagram",
+    handle: "@__dentart",
+    href: "https://www.instagram.com/__dentart/",
+  },
+  {
+    id: "facebook",
+    label: "Facebook",
+    handle: "Dent Art — Atrévete a Sonreír",
+    href: "https://www.facebook.com/Dent-Art-Atrévete-a-Sonreir-562773417196892/",
+  },
+] as const;
+
+export const medicalDisclaimer =
+  "La información de este sitio es de orientación general y no sustituye la evaluación, el diagnóstico ni el tratamiento que realiza un profesional de la salud bucal en consulta. Cada plan se define de forma individual tras la exploración clínica. En caso de trauma, sangrado intenso o inflamación que comprometa la vía aérea, acude a un servicio de urgencias.";
 
 export const mediaOutlets: MediaOutlet[] = [
   { id: "tv", name: "As Seen On TV", caption: "National broadcast features" },
@@ -314,82 +424,75 @@ export const services: Service[] = [
 
 export const treatmentOptions: TreatmentOption[] = [
   {
-    id: "consult-smile",
-    name: "VIP Smile Architecture",
-    specialty: "Cosmetic Smile Design",
+    id: "consult-estetica",
+    name: "Consulta de estética",
+    specialty: "Estética",
     durationMinutes: 60,
-    summary: "Photography, digital preview, and a written aesthetic brief.",
+    summary: "Diseño de sonrisa, carillas o blanqueamiento.",
   },
   {
-    id: "consult-veneers",
-    name: "Veneers & Lumineers Studio",
-    specialty: "Porcelain Veneers",
-    durationMinutes: 75,
-    summary: "Enamel mapping, mock-up, and ceramic material selection.",
-  },
-  {
-    id: "consult-whitening",
-    name: "Zoom! Luminosity Consult",
-    specialty: "Whitening",
+    id: "consult-general",
+    name: "Odontología general",
+    specialty: "General",
     durationMinutes: 45,
-    summary: "Shade strategy isolated from existing restorations.",
+    summary: "Limpieza, resinas, amalgamas o incrustaciones.",
   },
   {
-    id: "consult-implant",
-    name: "Implants & All-on-4",
-    specialty: "Implants",
-    durationMinutes: 75,
-    summary: "CBCT review and surgical-restorative mapping.",
+    id: "consult-protesis",
+    name: "Prótesis y ortodoncia",
+    specialty: "Rehabilitación",
+    durationMinutes: 60,
+    summary: "Brackets, ortopedia, prótesis o puentes.",
   },
   {
-    id: "consult-sedation",
-    name: "Sedation Comfort Planning",
-    specialty: "VIP Sedation",
+    id: "consult-laser",
+    name: "Evaluación con láser",
+    specialty: "Láser",
     durationMinutes: 40,
-    summary: "Medical screening and a named anesthesia protocol.",
+    summary: "Uso terapéutico, blanqueamiento o anestesia. No sustituye el diagnóstico.",
   },
   {
     id: "consult-emergency",
-    name: "Same-Day VIP Emergency",
-    specialty: "Triage",
+    name: "Urgencia dental",
+    specialty: "Urgencias",
     durationMinutes: 30,
-    summary: "Pain, trauma, or failed restoration—around the clock.",
+    summary: "Dolor, trauma o restauración fracturada.",
   },
 ];
 
 export const consultationModes: ConsultationModeOption[] = [
   {
     id: "in-clinic",
-    label: "In-Clinic VIP",
-    description:
-      "Arrive at the Poza Rica suite for photography, imaging, and a private briefing with your attending clinician.",
-    durationNote: "90-minute atelier visit · discreet elevator available",
+    label: "Presencial",
+    description: "Consulta en la sede seleccionada, con exploración clínica.",
+    durationNote: "El diagnóstico se confirma en silla",
   },
   {
     id: "virtual",
-    label: "Virtual Consultation",
+    label: "Virtual",
     description:
-      "A encrypted video architecture session with photo protocol sent in advance—ideal for international and on-set guests.",
-    durationNote: "45-minute secure video · same written plan as in-suite",
+      "Orientación a distancia para agendar y resolver dudas. No sustituye la exploración presencial.",
+    durationNote: "El plan de tratamiento se define en clínica",
   },
 ];
 
-const SLOT_TIMES = ["8:00 AM", "9:30 AM", "11:00 AM", "1:00 PM", "2:30 PM", "4:00 PM"] as const;
+const WEEKDAY_SLOT_TIMES = ["10:00", "11:00", "12:00", "16:00", "17:00", "18:00"] as const;
+const SATURDAY_SLOT_TIMES = ["10:00", "11:00", "12:00"] as const;
 
-function buildSlots(seed: number): TimeSlot[] {
-  return SLOT_TIMES.map((time, index) => ({
+function buildSlots(seed: number, times: readonly string[]): TimeSlot[] {
+  return times.map((time, index) => ({
     id: `slot-${seed}-${index}`,
     time,
     available: (seed + index) % 5 !== 0,
   }));
 }
 
-function formatBookingDate(date: Date): BookingDate {
+function formatBookingDate(date: Date, times: readonly string[]): BookingDate {
   const iso = date.toISOString().slice(0, 10);
-  const weekday = date.toLocaleDateString("en-US", { weekday: "short" });
-  const label = date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  const weekday = date.toLocaleDateString("es-MX", { weekday: "short" });
+  const label = date.toLocaleDateString("es-MX", { day: "numeric", month: "short" });
   const seed = date.getDate() + date.getMonth();
-  return { iso, label, weekday, slots: buildSlots(seed) };
+  return { iso, label, weekday, slots: buildSlots(seed, times) };
 }
 
 export function getUpcomingBookingDates(count = 10): BookingDate[] {
@@ -400,7 +503,8 @@ export function getUpcomingBookingDates(count = 10): BookingDate[] {
   while (dates.length < count) {
     const day = cursor.getDay();
     if (day !== 0) {
-      dates.push(formatBookingDate(new Date(cursor)));
+      const times = day === 6 ? SATURDAY_SLOT_TIMES : WEEKDAY_SLOT_TIMES;
+      dates.push(formatBookingDate(new Date(cursor), times));
     }
     cursor.setDate(cursor.getDate() + 1);
   }
@@ -502,53 +606,39 @@ export const testimonials: Testimonial[] = [
 
 export const faqs: FAQItem[] = [
   {
-    id: "financing-plans",
-    category: "financing",
-    question: "Do you offer financing for veneers, implants, or All-on-4?",
-    answer:
-      "Yes. Qualified patients may use in-house staged payments or third-party medical financing (typically 0–24 months). Your VIP concierge reviews options privately after the clinical plan is written—never during the exam.",
-  },
-  {
-    id: "financing-deposit",
-    category: "financing",
-    question: "What is required to reserve a VIP consultation?",
-    answer:
-      "Consultations require a $250 scheduling hold, applied in full to treatment. Virtual architecture sessions carry the same hold. Same-day emergency triage is billed to insurance when possible; uninsured emergency visits begin at $295.",
-  },
-  {
-    id: "procedures-veneers",
+    id: "agendar",
     category: "procedures",
-    question: "How long do porcelain veneers last?",
+    question: "¿Cómo agendo una cita?",
     answer:
-      "With night-guard protection and routine hygiene, our feldspathic and lithium-disilicate veneers commonly last 12–20 years. We photograph and scan every case so future repairs match the original atelier work.",
+      "Usa el formulario de esta página o escríbenos por WhatsApp al 782 210 8172. Indica la sede (Poza Rica o Villahermosa) y el motivo de consulta. Confirmamos horario según disponibilidad.",
   },
   {
-    id: "procedures-pain",
+    id: "urgencia",
     category: "procedures",
-    question: "Is implant, veneer, or Zoom! treatment painful?",
+    question: "¿Qué hago si es una urgencia?",
     answer:
-      "Most patients describe pressure, not pain. We offer local anesthesia, oral sedation, and IV sedation with a dedicated anesthesia provider. You will never be rushed into a chair without a written comfort plan.",
+      "Llama o manda WhatsApp al 782 210 8172. Valoramos dolor, trauma o una restauración fracturada y te indicamos si puedes acudir a la sede o si conviene un servicio de urgencias hospitalario.",
   },
   {
-    id: "procedures-virtual",
-    category: "procedures",
-    question: "Can I start with a virtual consultation?",
-    answer:
-      "Yes. Encrypted video sessions follow the same photography protocol as in-suite visits. We mail a written plan, then reserve chair time only when you are ready to proceed—ideal for international and on-set guests.",
-  },
-  {
-    id: "insurance-ppo",
+    id: "seguros",
     category: "insurance",
-    question: "Do you accept dental insurance?",
+    question: "¿Aceptan Dentegra o Dentalia?",
     answer:
-      "We are a fee-for-service VIP atelier that files out-of-network PPO claims as a courtesy. Many plans reimburse a portion of exams, imaging, and reconstructive codes. We provide a pre-estimate before you commit.",
+      "Sí. Dentegra (incluida odontopediatría) y Dentalia son aseguradoras aceptadas. Las coberturas dependen del plan vigente; pregunta por la tuya al agendar. También revisamos planes empresariales (Home Depot, Liverpool y sector petrolero) según vigencia.",
   },
   {
-    id: "insurance-hsa",
-    category: "insurance",
-    question: "Can I use HSA or FSA funds?",
+    id: "laser",
+    category: "procedures",
+    question: "¿El láser dental sustituye el diagnóstico?",
     answer:
-      "Yes. Medically necessary and many cosmetic-restorative treatments are eligible. We itemize superbills for HSA/FSA administrators and can split payment methods at checkout.",
+      "No. El láser terapéutico, de blanqueamiento o de anestesia es un apoyo al tratamiento. El diagnóstico y el plan se definen en la exploración clínica, no por el uso del láser.",
+  },
+  {
+    id: "horarios",
+    category: "procedures",
+    question: "¿Cuál es el horario de las dos sedes?",
+    answer:
+      "El mismo en Poza Rica y Villahermosa, salvo aviso: lun–vie 10:00–13:00 y 16:00–19:00; sáb 10:00–13:00.",
   },
 ];
 
@@ -715,10 +805,10 @@ export const heroImages = {
 };
 
 export const emergencyPrefillMessage =
-  "Hola Dent Art, necesito atención de emergencia 24/7. Hello Dent Art, I need 24/7 emergency triage. Please advise the soonest clinical review.";
+  "Hola Dent Art, necesito atención de urgencia. Mi sede de preferencia es:";
 
 export const bookingPrefillMessage =
-  "Hola Dent Art, me gustaría agendar una consulta VIP. Hello Dent Art, I would like to reserve a VIP consultation.";
+  "Hola Dent Art, quiero agendar una cita. Mi sede de preferencia es:";
 
 export const conciergePrefillMessage =
-  "Hola Dent Art, necesito ayuda con mi cita y llegada. Hello Dent Art, I would like assistance with scheduling and arrival details.";
+  "Hola Dent Art, necesito ayuda para agendar o confirmar una cita.";

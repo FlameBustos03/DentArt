@@ -1,15 +1,14 @@
+import { About } from "@/components/About";
 import { BookingForm } from "@/components/BookingForm";
-import { DoctorAuthority } from "@/components/DoctorAuthority";
 import { EmergencyFab } from "@/components/EmergencyFab";
-import { EmergencySection } from "@/components/EmergencySection";
 import { FAQ } from "@/components/FAQ";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
+import { Insurers } from "@/components/Insurers";
+import { Locations } from "@/components/Locations";
 import { Navbar } from "@/components/Navbar";
 import { ServicesCatalog } from "@/components/ServicesCatalog";
-import { SmileQuiz } from "@/components/SmileQuiz";
-import { SmileVisualizer } from "@/components/SmileVisualizer";
-import { Testimonials } from "@/components/Testimonials";
+import { Team } from "@/components/Team";
 
 export default function HomePage() {
   return (
@@ -17,14 +16,13 @@ export default function HomePage() {
       <Navbar />
       <main id="main-content">
         <Hero />
-        <SmileVisualizer />
-        <SmileQuiz />
+        <About />
         <ServicesCatalog />
-        <Testimonials />
-        <DoctorAuthority />
-        <EmergencySection />
-        <BookingForm />
+        <Team />
+        <Insurers />
+        <Locations />
         <FAQ />
+        <BookingForm />
       </main>
       <Footer />
       <EmergencyFab />

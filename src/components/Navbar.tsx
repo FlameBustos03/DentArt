@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, Phone, X } from "lucide-react";
+import { BrandLockup } from "@/components/BrandLockup";
+import { SocialLinks } from "@/components/SocialLinks";
 import { clinicInfo, navLinks } from "@/data/mockData";
 import { Button } from "@/components/ui/Button";
 import { cn, scrollToId } from "@/lib/utils";
@@ -76,21 +77,8 @@ export function Navbar({ className }: NavbarProps) {
     <header className={cn("sticky top-0 z-40", className)}>
       <div className="glass-nav">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
-          <a href="#main-content" className="group flex min-w-0 items-center gap-2">
-            <span className="relative h-10 w-10 shrink-0 sm:h-11 sm:w-11 lg:h-12 lg:w-12">
-              <Image
-                src="/dent-art-mark.png"
-                alt=""
-                fill
-                className="object-contain"
-                sizes="(min-width: 1024px) 48px, (min-width: 640px) 44px, 40px"
-                priority
-              />
-            </span>
-            <span className="leading-tight">
-              <span className="block text-xl font-semibold tracking-tight text-ink-900">Dent Art</span>
-              <span className="hidden text-[11px] italic text-black/70 sm:block">{clinicInfo.slogan}</span>
-            </span>
+          <a href="#main-content" className="group min-w-0">
+            <BrandLockup size="nav" showSlogan wordmarkClassName="text-ink-900" />
           </a>
 
           <nav aria-label="Primary" className="hidden items-center gap-6 xl:flex">
@@ -106,16 +94,17 @@ export function Navbar({ className }: NavbarProps) {
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
+            <SocialLinks className="hidden xl:flex" tone="light" />
             <a
               href={`tel:${clinicInfo.phoneTel}`}
               className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-3.5 py-2 text-sm text-ink-900 hover:border-lime-800"
             >
               <Phone className="h-4 w-4 text-lime-800" aria-hidden="true" />
-              <span className="font-medium">Concierge</span>
+              <span className="font-medium">Llamar</span>
               <span className="hidden text-black/60 xl:inline">{clinicInfo.phoneDisplay}</span>
             </a>
             <Button variant="primary" size="sm" onClick={() => scrollToId("booking")}>
-              Book VIP Consultation
+              Agendar cita
             </Button>
           </div>
 
@@ -129,7 +118,7 @@ export function Navbar({ className }: NavbarProps) {
             onClick={() => setOpen(true)}
           >
             <Menu className="h-5 w-5" aria-hidden="true" />
-            <span className="sr-only">Open navigation menu</span>
+            <span className="sr-only">Abrir menú</span>
           </Button>
         </div>
       </div>
@@ -167,7 +156,7 @@ export function Navbar({ className }: NavbarProps) {
                   onClick={() => setOpen(false)}
                 >
                   <X className="h-5 w-5" aria-hidden="true" />
-                  <span className="sr-only">Close navigation menu</span>
+                  <span className="sr-only">Cerrar menú</span>
                 </Button>
               </div>
               <nav aria-label="Mobile primary" className="flex flex-col gap-4">
@@ -183,12 +172,13 @@ export function Navbar({ className }: NavbarProps) {
                 ))}
               </nav>
               <p className="mt-6 italic text-black/70">{clinicInfo.slogan}</p>
+              <SocialLinks className="mt-4" tone="light" />
               <a
                 href={`tel:${clinicInfo.phoneTel}`}
                 className="mt-4 inline-flex items-center gap-2 text-ink-900 hover:text-lime-800"
               >
                 <Phone className="h-4 w-4 text-lime-800" aria-hidden="true" />
-                Concierge · {clinicInfo.phoneDisplay}
+                {clinicInfo.phoneDisplay}
               </a>
               <Button
                 variant="primary"
@@ -198,7 +188,7 @@ export function Navbar({ className }: NavbarProps) {
                   scrollToId("booking");
                 }}
               >
-                Book VIP Consultation
+                Agendar cita
               </Button>
             </motion.aside>
           </div>

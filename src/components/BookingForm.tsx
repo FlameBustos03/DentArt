@@ -3,11 +3,16 @@
 import { useEffect, useId, useMemo, useRef, useState, type FormEvent } from "react";
 import { CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
 import {
+  clinicHoursLabel,
+  clinicHoursNote,
   clinicInfo,
   consultationModes,
+  DEFAULT_LOCATION_ID,
   getUpcomingBookingDates,
   treatmentOptions,
 } from "@/data/mockData";
+import { LocationSwitch } from "@/components/LocationSwitch";
+import { useClinicLocation } from "@/components/LocationProvider";
 import type { BookingFieldErrors, BookingFormData, ContactPreference } from "@/types";
 import { Button } from "@/components/ui/Button";
 import { TextAreaField, TextField } from "@/components/ui/Input";
@@ -16,6 +21,7 @@ import { cn, isValidEmail, isValidPhone } from "@/lib/utils";
 
 const INITIAL_FORM: BookingFormData = {
   treatmentId: "",
+  locationId: DEFAULT_LOCATION_ID,
   consultationMode: "",
   dateIso: "",
   slotId: "",
@@ -27,16 +33,17 @@ const INITIAL_FORM: BookingFormData = {
 };
 
 const CONTACT_OPTIONS: Array<{ value: ContactPreference; label: string }> = [
-  { value: "phone", label: "Phone" },
-  { value: "email", label: "Email" },
+  { value: "phone", label: "Teléfono" },
+  { value: "email", label: "Correo" },
   { value: "whatsapp", label: "WhatsApp" },
 ];
 
-const STEP_LABELS = ["Specialty & service", "Consultation mode", "Date, time & contact"] as const;
+const STEP_LABELS = ["Servicio y sede", "Modalidad", "Fecha, hora y contacto"] as const;
 
 export function BookingForm() {
+  const { location, locationId } = useClinicLocation();
   const [step, setStep] = useState(1);
-  const [form, setForm] = useState<BookingFormData>(INITIAL_FORM);
+  const [form, setForm] = useState<BookingFormData>({ ...INITIAL_FORM, locationId });
   const [errors, setErrors] = useState<BookingFieldErrors>({});
   const [successOpen, setSuccessOpen] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -46,6 +53,10 @@ export function BookingForm() {
   const selectedTreatment = treatmentOptions.find((item) => item.id === form.treatmentId);
   const selectedSlot = selectedDate?.slots.find((slot) => slot.id === form.slotId);
   const selectedMode = consultationModes.find((item) => item.id === form.consultationMode);
+
+  useEffect(() => {
+    setForm((prev) => (prev.locationId === locationId ? prev : { ...prev, locationId }));
+  }, [locationId]);
 
   const isFirstStepFocus = useRef(true);
 
@@ -61,31 +72,31 @@ export function BookingForm() {
     const nextErrors: BookingFieldErrors = {};
 
     if (current === 1 && !form.treatmentId) {
-      nextErrors.treatmentId = "Select a specialty and service to continue.";
+      nextErrors.treatmentId = "Elige un servicio para continuar.";
     }
 
     if (current === 2 && !form.consultationMode) {
-      nextErrors.consultationMode = "Choose In-Clinic VIP or Virtual Consultation.";
+      nextErrors.consultationMode = "Elige consulta presencial o virtual.";
     }
 
     if (current === 3) {
       if (!form.dateIso) {
-        nextErrors.dateIso = "Choose a date.";
+        nextErrors.dateIso = "Elige una fecha.";
       }
       if (!form.slotId) {
-        nextErrors.slotId = "Choose an available time.";
+        nextErrors.slotId = "Elige un horario disponible.";
       }
       if (form.fullName.trim().length < 2) {
-        nextErrors.fullName = "Enter your full name.";
+        nextErrors.fullName = "Escribe tu nombre completo.";
       }
       if (!isValidEmail(form.email)) {
-        nextErrors.email = "Enter a valid email address.";
+        nextErrors.email = "Escribe un correo válido.";
       }
       if (!isValidPhone(form.phone)) {
-        nextErrors.phone = "Enter a valid phone number.";
+        nextErrors.phone = "Escribe un teléfono válido.";
       }
       if (!form.contactPreference) {
-        nextErrors.contactPreference = "Select a contact preference.";
+        nextErrors.contactPreference = "Elige cómo te contactamos.";
       }
     }
 
@@ -112,7 +123,7 @@ export function BookingForm() {
 
   const resetBooking = () => {
     setSuccessOpen(false);
-    setForm(INITIAL_FORM);
+    setForm({ ...INITIAL_FORM, locationId });
     setErrors({});
     setStep(1);
   };
@@ -120,14 +131,19 @@ export function BookingForm() {
   return (
     <section id="booking" aria-labelledby="booking-heading" className="scroll-mt-24 bg-ink-900 py-20 text-white">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <p className="text-xs uppercase tracking-[0.24em] text-lime-400">VIP booking concierge</p>
+        <p className="text-xs uppercase tracking-[0.24em] text-lime-400">Agenda</p>
         <h2 id="booking-heading" className="mt-3 font-serif text-3xl sm:text-5xl">
-          Reserve your atelier visit
+          Agendar cita
         </h2>
         <p className="mt-4 max-w-2xl text-white/85">
-          Specialty, consultation mode, then calendar and contact. Your hold is confirmed instantly;
-          a coordinator telephones to refine imaging, sedation, and arrival privacy.
+          Elige servicio, sede y horario. {clinicHoursLabel}. {clinicHoursNote}
         </p>
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <LocationSwitch tone="dark" />
+          <p className="text-sm text-white/80">
+            {location.city} · {location.addressLines[0]}
+          </p>
+        </div>
 
         <ol className="mt-8 flex flex-wrap gap-3 text-sm" aria-label="Booking progress">
           {STEP_LABELS.map((label, index) => {
@@ -158,17 +174,17 @@ export function BookingForm() {
           noValidate
         >
           <h3 ref={headingRef} tabIndex={-1} className="font-serif text-2xl outline-none">
-            {step === 1 && "Step 1 · Select a specialty & service"}
-            {step === 2 && "Step 2 · Preferred consultation mode"}
-            {step === 3 && "Step 3 · Date, time & patient contact"}
+            {step === 1 && "Paso 1 · Servicio"}
+            {step === 2 && "Paso 2 · Modalidad"}
+            {step === 3 && "Paso 3 · Fecha, hora y contacto"}
           </h3>
           <p id={statusId} className="sr-only" aria-live="polite">
-            Step {step} of 3
+            Paso {step} de 3
           </p>
 
           {step === 1 ? (
             <fieldset className="mt-6">
-              <legend className="sr-only">Specialty and service</legend>
+              <legend className="sr-only">Servicio</legend>
               <div className="grid gap-3 sm:grid-cols-2">
                 {treatmentOptions.map((option) => {
                   const selected = form.treatmentId === option.id;
@@ -198,7 +214,7 @@ export function BookingForm() {
                       <span className="mt-1 block font-serif text-xl">{option.name}</span>
                       <span className="mt-2 block text-sm text-white/80">{option.summary}</span>
                       <span className="mt-3 block text-xs text-white/70">
-                        {option.durationMinutes} minutes
+                        {option.durationMinutes} minutos
                       </span>
                     </label>
                   );
@@ -214,7 +230,7 @@ export function BookingForm() {
 
           {step === 2 ? (
             <fieldset className="mt-6">
-              <legend className="sr-only">Consultation mode</legend>
+              <legend className="sr-only">Modalidad de consulta</legend>
               <div className="grid gap-4 md:grid-cols-2">
                 {consultationModes.map((option) => {
                   const selected = form.consultationMode === option.id;
@@ -258,7 +274,7 @@ export function BookingForm() {
           {step === 3 ? (
             <div className="mt-6 space-y-6">
               <fieldset>
-                <legend className="text-xs uppercase tracking-[0.16em] text-lime-400">Date</legend>
+                <legend className="text-xs uppercase tracking-[0.16em] text-lime-400">Fecha</legend>
                 <div className="mt-3 flex gap-2 overflow-x-auto pb-2">
                   {dates.map((date) => {
                     const selected = form.dateIso === date.iso;
@@ -291,7 +307,7 @@ export function BookingForm() {
               </fieldset>
 
               <fieldset>
-                <legend className="text-xs uppercase tracking-[0.16em] text-lime-400">Time</legend>
+                <legend className="text-xs uppercase tracking-[0.16em] text-lime-400">Hora</legend>
                 <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
                   {(selectedDate?.slots ?? []).map((slot) => (
                     <button
@@ -310,12 +326,12 @@ export function BookingForm() {
                       )}
                     >
                       {slot.time}
-                      {!slot.available ? " · Held" : ""}
+                      {!slot.available ? " · Ocupado" : ""}
                     </button>
                   ))}
                 </div>
                 {!selectedDate ? (
-                  <p className="mt-3 text-sm text-white/70">Select a date to view open chairs.</p>
+                  <p className="mt-3 text-sm text-white/70">Elige una fecha para ver horarios.</p>
                 ) : null}
                 {errors.slotId ? (
                   <p role="alert" className="mt-2 text-sm text-red-300">
@@ -327,7 +343,7 @@ export function BookingForm() {
               <div className="grid gap-4 md:grid-cols-2">
                 <TextField
                   id="fullName"
-                  label="Full name"
+                  label="Nombre completo"
                   tone="dark"
                   autoComplete="name"
                   value={form.fullName}
@@ -336,7 +352,7 @@ export function BookingForm() {
                 />
                 <TextField
                   id="email"
-                  label="Email"
+                  label="Correo"
                   type="email"
                   tone="dark"
                   autoComplete="email"
@@ -346,7 +362,7 @@ export function BookingForm() {
                 />
                 <TextField
                   id="phone"
-                  label="Phone"
+                  label="Teléfono"
                   type="tel"
                   tone="dark"
                   autoComplete="tel"
@@ -356,7 +372,7 @@ export function BookingForm() {
                 />
                 <fieldset className="flex flex-col gap-1.5">
                   <legend className="text-xs uppercase tracking-[0.16em] text-lime-400">
-                    Contact preference
+                    Cómo te contactamos
                   </legend>
                   <div className="flex flex-wrap gap-2 pt-2">
                     {CONTACT_OPTIONS.map((option) => (
@@ -386,7 +402,7 @@ export function BookingForm() {
                 <div className="md:col-span-2">
                   <TextAreaField
                     id="notes"
-                    label="Notes for the concierge (optional)"
+                    label="Notas (opcional)"
                     tone="dark"
                     value={form.notes}
                     onChange={(event) => setForm((prev) => ({ ...prev, notes: event.target.value }))}
@@ -403,51 +419,50 @@ export function BookingForm() {
               onClick={() => setStep((value) => Math.max(1, value - 1))}
             >
               <ChevronLeft className="h-4 w-4" aria-hidden="true" />
-              Back
+              Atrás
             </Button>
             {step < 3 ? (
               <Button variant="primary" onClick={goNext}>
-                Continue
+                Continuar
                 <ChevronRight className="h-4 w-4" aria-hidden="true" />
               </Button>
             ) : (
               <Button type="submit" variant="primary">
-                Confirm VIP reservation
+                Enviar solicitud
               </Button>
             )}
           </div>
         </form>
       </div>
 
-      <Modal open={successOpen} title="Your VIP chair is reserved" onClose={resetBooking}>
+      <Modal open={successOpen} title="Solicitud enviada" onClose={resetBooking}>
         <div className="space-y-4 text-black/70">
           <p className="flex items-center gap-2 text-ink-900">
             <CheckCircle2 className="h-5 w-5 text-lime-800" aria-hidden="true" />
-            Confirmation sent to {form.email || "your inbox"}
+            Confirmaremos a {form.email || "tu correo"}
           </p>
           <ul className="space-y-1 text-sm">
             <li>
-              <strong>Visit:</strong> {selectedTreatment?.name}
+              <strong>Servicio:</strong> {selectedTreatment?.name}
             </li>
             <li>
-              <strong>Mode:</strong> {selectedMode?.label}
+              <strong>Sede:</strong> {location.city} · {location.addressLines[0]}
             </li>
             <li>
-              <strong>When:</strong> {form.dateIso} {selectedSlot ? `· ${selectedSlot.time}` : ""}
+              <strong>Modalidad:</strong> {selectedMode?.label}
             </li>
             <li>
-              <strong>Guest:</strong> {form.fullName}
+              <strong>Cuando:</strong> {form.dateIso} {selectedSlot ? `· ${selectedSlot.time}` : ""}
             </li>
             <li>
-              <strong>Concierge will reach you by:</strong> {form.contactPreference}
+              <strong>Paciente:</strong> {form.fullName}
             </li>
           </ul>
           <p>
-            If you need same-day triage instead, call {clinicInfo.phoneDisplay} or use the
-            emergency button.
+            Si es una urgencia, llama o manda WhatsApp al {clinicInfo.phoneDisplay}.
           </p>
           <Button variant="primary" onClick={resetBooking}>
-            Book another visit
+            Agendar otra cita
           </Button>
         </div>
       </Modal>
