@@ -1,7 +1,6 @@
 "use client";
 
 import { useClinicLocation } from "@/components/LocationProvider";
-import type { LocationId } from "@/types";
 import { cn } from "@/lib/utils";
 
 export interface LocationSwitchProps {
@@ -31,13 +30,11 @@ export function LocationSwitch({ className, tone = "light" }: LocationSwitchProp
             type="button"
             role="radio"
             aria-checked={selected}
-            onClick={() => setLocationId(location.id as LocationId)}
+            onClick={() => setLocationId(location.id)}
             className={cn(
               "rounded-full px-3.5 py-1.5 text-sm transition-colors",
               selected
-                ? dark
-                  ? "bg-lime-500 text-ink-900"
-                  : "bg-lime-500 text-ink-900"
+                ? "bg-lime-500 text-ink-900"
                 : dark
                   ? "text-white/85 hover:text-white"
                   : "text-ink-800 hover:text-ink-900",
