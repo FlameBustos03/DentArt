@@ -14,7 +14,7 @@ export interface BrandLockupProps {
 }
 
 const BOX: Record<NonNullable<BrandLockupProps["size"]>, string> = {
-  nav: "h-10 w-[9.5rem] sm:h-11 sm:w-[10.5rem] lg:h-12 lg:w-48",
+  nav: "h-10 w-[9.25rem] sm:w-[10.5rem]",
   hero: "h-[4.5rem] w-[min(28rem,88vw)] sm:h-24 sm:w-[min(36rem,90vw)]",
 };
 
