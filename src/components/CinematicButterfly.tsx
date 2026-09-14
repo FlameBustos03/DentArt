@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { brandButterflyImage } from "@/lib/brandAssets";
 
 const SESSION_KEY = "dentart-cinematic-butterfly";
 const DURATION = 2.4;
@@ -230,12 +231,10 @@ export function CinematicButterfly({ targetRef, onSettled }: CinematicButterflyP
     >
       <span className="relative block h-full w-full">
         <Image
-          src="/brand/dent-art-butterfly-d.png"
+          src={brandButterflyImage}
           alt=""
           fill
-          unoptimized
           className="bg-transparent object-contain object-left"
-          style={{ backgroundColor: "transparent" }}
           sizes="200px"
           priority
         />

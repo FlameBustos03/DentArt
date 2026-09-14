@@ -3,6 +3,7 @@
 import type { Ref } from "react";
 import Image from "next/image";
 import { brandMarkAlt } from "@/data/mockData";
+import { brandLockupImage } from "@/lib/brandAssets";
 import { cn } from "@/lib/utils";
 
 export interface BrandLockupProps {
@@ -13,7 +14,7 @@ export interface BrandLockupProps {
   className?: string;
 }
 
-/** public/brand/dent-art-lockup.png is 1125x422; the butterfly-D occupies its left 38%. */
+/** The lockup PNG is 1125x422; the butterfly-D occupies its left 38%. */
 const LOCKUP_ASPECT = "aspect-[1125/422]";
 
 const BOX: Record<NonNullable<BrandLockupProps["size"]>, string> = {
@@ -32,7 +33,6 @@ export function BrandLockup({
     <span
       ref={lockupRef}
       className={cn("relative inline-block shrink-0 bg-transparent", LOCKUP_ASPECT, BOX[size], className)}
-      style={{ backgroundColor: "transparent" }}
     >
       <span
         ref={dockRef}
@@ -43,15 +43,13 @@ export function BrandLockup({
       {/* Always mounted so the heading keeps its accessible name and the PNG is
           preloaded while the butterfly is still in flight. */}
       <Image
-        src="/brand/dent-art-lockup.png"
+        src={brandLockupImage}
         alt={brandMarkAlt}
         fill
-        unoptimized
         className={cn(
           "bg-transparent object-contain object-left motion-safe:transition-opacity motion-safe:duration-300",
           showLockup ? "opacity-100" : "opacity-0",
         )}
-        style={{ backgroundColor: "transparent" }}
         sizes={size === "hero" ? "(min-width: 640px) 256px, 192px" : "107px"}
         priority
       />
