@@ -13,10 +13,21 @@ import { partnerLogoById } from "@/lib/partnerAssets";
 import { cn } from "@/lib/utils";
 
 /** ~160×80 tiles; native brand colors; no grayscale / lime overlay. */
-function LogoTile({ image }: { image: StaticImageData }) {
+function LogoTile({
+  image,
+  alt = "",
+  fit = "contain",
+  padded = true,
+}: {
+  image: StaticImageData;
+  alt?: string;
+  fit?: "contain" | "cover";
+  padded?: boolean;
+}) {
+  const decorative = alt.length === 0;
   return (
     <div
-      aria-hidden="true"
+      aria-hidden={decorative || undefined}
       className={cn(
         "relative h-20 w-40 overflow-hidden rounded-2xl border border-black/10 bg-white",
         "logo-tile",
@@ -25,9 +36,11 @@ function LogoTile({ image }: { image: StaticImageData }) {
     >
       <Image
         src={image}
-        alt=""
+        alt={alt}
         fill
-        className="object-contain p-2.5"
+        className={
+          fit === "cover" ? "object-cover object-center" : padded ? "object-contain p-2.5" : "object-contain"
+        }
         sizes="160px"
       />
     </div>
@@ -77,17 +90,16 @@ export function PartnerRow() {
       <p className="type-body mt-3 max-w-2xl">{plansIntro}</p>
       <ul className="mt-8 flex flex-wrap items-stretch gap-6">
         {corporatePlans.map((plan) => {
-          const logo = plan.variant === "logo" ? partnerLogoById[plan.id] : undefined;
+          const logo = partnerLogoById[plan.id];
           return (
-            <li key={plan.id} className="min-w-[10rem]">
-              {plan.variant === "badge" ? (
-                <div className="flex h-20 items-center" aria-hidden="true">
-                  <span className="inline-flex rounded-full border border-lime-800/30 bg-lime-500/20 px-4 py-2 text-sm font-medium text-ink-900">
-                    {plan.name}
-                  </span>
-                </div>
-              ) : logo ? (
-                <LogoTile image={logo} />
+            <li key={plan.id} className="min-w-[10rem] max-w-[160px]">
+              {logo ? (
+                <LogoTile
+                  image={logo}
+                  alt={plan.id === "sector-petrolero" ? "Logo Sector Petrolero" : ""}
+                  fit={plan.id === "sector-petrolero" ? "cover" : "contain"}
+                  padded={plan.id !== "sector-petrolero"}
+                />
               ) : (
                 <div
                   className="flex h-20 w-40 items-center justify-center rounded-2xl border border-dashed border-black/25 bg-mist px-3 text-center"
@@ -108,7 +120,7 @@ export function PartnerRow() {
 
 export function Insurers() {
   return (
-    <section id="seguros" aria-labelledby="insurers-heading" className="bg-mist pb-16 pt-8 md:pb-20">
+    <section id="seguros" aria-labelledby="insurers-heading" className="bg-white pb-16 pt-8 md:pb-20">
       <div className="section-x">
         <InsurerGrid />
         <PartnerRow />

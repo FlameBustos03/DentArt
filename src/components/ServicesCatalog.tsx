@@ -22,7 +22,7 @@ export function ServicesCatalog() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section id="servicios" aria-labelledby="services-heading" className="bg-mist py-16 md:py-20">
+    <section id="servicios" aria-labelledby="services-heading" className="bg-white py-16 md:py-20">
       <div className="section-x">
         <motion.p
           initial={reduceMotion ? false : { opacity: 0, y: 10 }}
@@ -57,7 +57,7 @@ export function ServicesCatalog() {
                 viewport={{ once: true, amount: 0.3 }}
                 transition={reduceMotion ? { duration: 0 } : { delay: index * 0.06 }}
               >
-                <TiltCard className="h-full rounded-2xl bg-white">
+                <TiltCard className="h-full rounded-2xl border border-black/10 bg-white">
                   <div className="p-5 md:p-4">
                     <div className="flex items-center gap-3">
                       <ServiceGlyph icon={Icon} />

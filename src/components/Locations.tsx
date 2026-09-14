@@ -29,35 +29,35 @@ export function Locations() {
     <section
       id="sedes"
       aria-labelledby="locations-heading"
-      className="relative z-0 isolate overflow-x-clip bg-white py-16 md:py-20"
+      className="relative z-0 isolate overflow-x-clip bg-ink-900 py-16 text-white md:py-20"
     >
       <div className="section-x">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="type-eyebrow">Sedes</p>
-            <h2 id="locations-heading" className="type-section mt-3">
+        <div className="flex min-w-0 flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div className="min-w-0">
+            <p className="type-eyebrow-dark">Sedes</p>
+            <h2 id="locations-heading" className="type-section mt-3 text-white">
               Poza Rica y Villahermosa
             </h2>
-            <p className="type-body mt-4 max-w-2xl">{locationsIntro}</p>
+            <p className="mt-4 max-w-2xl text-base leading-[1.625rem] text-white/85">{locationsIntro}</p>
           </div>
-          <LocationSwitch />
+          <LocationSwitch tone="dark" className="max-w-full shrink sm:max-w-[20rem]" />
         </div>
 
         <ul className="mt-10 grid gap-6 lg:grid-cols-2">
           {locations.map((location) => {
             const selected = location.id === locationId;
             return (
-              <li key={location.id}>
+              <li key={location.id} className="min-w-0">
                 <article
                   aria-labelledby={`location-${location.id}`}
                   className={cn(
-                    "isolate overflow-hidden rounded-3xl border p-6 transition-colors",
+                    "isolate min-w-0 overflow-hidden rounded-3xl border p-6 transition-colors",
                     selected
-                      ? "border-lime-800 bg-mist shadow-sm"
-                      : "border-black/10 bg-white hover:border-lime-800/40",
+                      ? "border-lime-500 bg-mist shadow-sm"
+                      : "border-white/15 bg-white hover:border-lime-500/50",
                   )}
                 >
-                  <div className="flex flex-wrap items-start justify-between gap-3">
+                  <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                     <p className="text-xs uppercase tracking-[0.16em] text-lime-800">
                       {selected ? "Sede seleccionada" : "Sede"}
                     </p>
@@ -66,7 +66,7 @@ export function Locations() {
                       aria-pressed={selected}
                       onClick={() => setLocationId(location.id)}
                       className={cn(
-                        "shrink-0 whitespace-nowrap rounded-full border px-3 py-1 text-xs uppercase tracking-[0.12em] min-h-11 transition-colors",
+                        "min-h-11 min-w-0 max-w-full break-words rounded-full border px-3 py-2 text-center text-xs uppercase leading-tight tracking-[0.12em] transition-colors",
                         selected
                           ? "border-lime-500 bg-lime-500 text-ink-900"
                           : "border-black/15 text-ink-800 hover:border-lime-800 hover:text-lime-800",
@@ -75,7 +75,10 @@ export function Locations() {
                       Elegir {location.city}
                     </button>
                   </div>
-                  <h3 id={`location-${location.id}`} className="type-card mt-2">
+                  <h3
+                    id={`location-${location.id}`}
+                    className="type-card mt-2 min-w-0 break-words text-ink-900"
+                  >
                     {location.city}
                   </h3>
                   <p className="mt-3 flex items-start gap-2 text-black/75">

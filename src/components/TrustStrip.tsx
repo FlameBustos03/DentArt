@@ -2,7 +2,7 @@ import { clinicHoursLabel, trustBadges } from "@/data/mockData";
 
 export function TrustStrip() {
   return (
-    <section aria-label="Confianza" className="bg-mist py-8 md:py-10">
+    <section aria-label="Confianza" className="bg-white py-8 md:py-10">
       <div className="section-x">
         <ul className="flex flex-wrap items-center gap-3">
           {trustBadges.map((badge) => (

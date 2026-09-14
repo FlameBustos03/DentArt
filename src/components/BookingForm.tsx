@@ -132,18 +132,18 @@ export function BookingForm() {
   };
 
   return (
-    <section id="booking" aria-labelledby="booking-heading" className="bg-white py-16 text-ink-900 md:py-20">
+    <section id="booking" aria-labelledby="booking-heading" className="bg-ink-900 py-16 text-white md:py-20">
       <div className="section-x">
-        <p className="type-eyebrow">Agenda</p>
-        <h2 id="booking-heading" className="type-section mt-3">
+        <p className="type-eyebrow-dark">Agenda</p>
+        <h2 id="booking-heading" className="type-section mt-3 text-white">
           Agendar cita
         </h2>
-        <p className="type-body mt-4 max-w-2xl">
+        <p className="mt-4 max-w-2xl text-base leading-[1.625rem] text-white/85">
           Elige servicio, sede y horario. {clinicHoursLabel}. {clinicHoursNote}
         </p>
-        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <LocationSwitch />
-          <p className="text-sm text-black/70">
+        <div className="mt-6 flex min-w-0 flex-col gap-3 sm:flex-row sm:items-center">
+          <LocationSwitch tone="dark" className="max-w-full" />
+          <p className="min-w-0 break-words text-sm text-white/80">
             {location.city} · {location.addressLines[0]}
           </p>
         </div>
@@ -160,8 +160,8 @@ export function BookingForm() {
                   current
                     ? "border-lime-500 bg-lime-500 text-ink-900"
                     : value < step
-                      ? "border-lime-800/40 text-lime-800"
-                      : "border-black/15 text-black/70",
+                      ? "border-lime-400/40 text-lime-400"
+                      : "border-white/20 text-white/70",
                 )}
                 aria-current={current ? "step" : undefined}
               >

@@ -14,7 +14,7 @@ export function Hours() {
     <section
       id="horarios"
       aria-labelledby="hours-heading"
-      className="stack-surface bg-mist py-16 md:py-20"
+      className="stack-surface bg-white py-16 md:py-20"
     >
       <div className="section-x">
         <p className="type-eyebrow">Horarios</p>
@@ -24,13 +24,13 @@ export function Hours() {
         <p className="type-body mt-4 max-w-2xl">{locationsIntro}</p>
 
         <div className="mt-8 grid gap-6 lg:grid-cols-2">
-          <article className="card-lift rounded-2xl border border-black/10 bg-white p-6">
+          <article className="card-lift rounded-2xl border border-black/10 bg-mist p-6">
             <p className="flex items-start gap-2 text-ink-900">
               <Clock className="mt-0.5 h-4 w-4 shrink-0 text-lime-800" aria-hidden="true" />
               <span className="type-card">{clinicHoursLabel}</span>
             </p>
           </article>
-          <article className="card-lift rounded-2xl border border-black/10 bg-white p-6">
+          <article className="card-lift rounded-2xl border border-black/10 bg-mist p-6">
             <p className="flex items-start gap-2 text-sm text-ink-800">
               <Phone className="mt-0.5 h-4 w-4 shrink-0 text-lime-800" aria-hidden="true" />
               <span>

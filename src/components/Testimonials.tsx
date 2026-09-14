@@ -82,7 +82,7 @@ export function Testimonials() {
           <p id={`testimonial-${item.id}`} className="mt-3 text-sm font-medium text-ink-900">
             {item.initials}
           </p>
-          <p className="type-caption mt-1">{item.location}</p>
+          <p className="type-caption mt-1 min-w-0 break-words">{item.location}</p>
         </article>
       ))}
     </div>
@@ -90,14 +90,14 @@ export function Testimonials() {
 
   const controls = (
     <div className="mt-6 flex flex-col items-center gap-4 md:flex-row md:justify-between">
-      <p id={statusId} className="text-sm text-black/70" aria-live="polite">
+      <p id={statusId} className="text-sm text-white/80" aria-live="polite">
         {safePage + 1} de {pageCount}
       </p>
       <div className="flex items-center gap-2">
         <Button
           variant="outline"
           size="sm"
-          className="!h-11 !w-11 !px-0"
+          className="!h-11 !w-11 !px-0 border-white/30 text-white hover:border-lime-400 hover:text-white"
           aria-label="Reseñas anteriores"
           onClick={() => go(-1)}
         >
@@ -106,7 +106,7 @@ export function Testimonials() {
         <Button
           variant="outline"
           size="sm"
-          className="!h-11 !w-11 !px-0"
+          className="!h-11 !w-11 !px-0 border-white/30 text-white hover:border-lime-400 hover:text-white"
           aria-label="Reseñas siguientes"
           onClick={() => go(1)}
         >
@@ -128,7 +128,7 @@ export function Testimonials() {
             <span
               className={cn(
                 "block h-2 w-2 rounded-full",
-                itemIndex === safePage ? "bg-lime-500" : "bg-black/20",
+                itemIndex === safePage ? "bg-lime-500" : "bg-white/20",
               )}
             />
           </button>
@@ -138,13 +138,13 @@ export function Testimonials() {
   );
 
   return (
-    <section id="resenas" aria-labelledby="reviews-heading" className="bg-white py-16 md:py-20">
+    <section id="resenas" aria-labelledby="reviews-heading" className="bg-ink-900 py-16 text-white md:py-20">
       <div className="section-x">
-        <p className="type-eyebrow">{testimonialsEyebrow}</p>
-        <h2 id="reviews-heading" className="type-section mt-3">
+        <p className="type-eyebrow-dark">{testimonialsEyebrow}</p>
+        <h2 id="reviews-heading" className="type-section mt-3 text-white">
           {testimonialsHeading}
         </h2>
-        <p className="type-body mt-4 max-w-2xl">{testimonialsIntro}</p>
+        <p className="mt-4 max-w-2xl text-base leading-[1.625rem] text-white/85">{testimonialsIntro}</p>
 
         <div className="mt-8" aria-describedby={statusId}>
           {reducedMotion ? (
@@ -167,14 +167,14 @@ export function Testimonials() {
         {controls}
 
         <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-3">
-          <p className="text-black/75">{testimonialsCtaPrompt}</p>
+          <p className="text-white/85">{testimonialsCtaPrompt}</p>
           <Button variant="primary" onClick={() => scrollToId("booking")}>
             {testimonialsCtaLabel}
           </Button>
         </div>
 
-        <p className="type-caption mt-8 flex max-w-2xl items-start gap-2">
-          <Scale className="mt-0.5 h-4 w-4 shrink-0 text-lime-800" aria-hidden="true" />
+        <p className="mt-8 flex max-w-2xl items-start gap-2 text-[13px] leading-5 text-white/70">
+          <Scale className="mt-0.5 h-4 w-4 shrink-0 text-lime-400" aria-hidden="true" />
           <span>{testimonialsDisclaimer}</span>
         </p>
       </div>

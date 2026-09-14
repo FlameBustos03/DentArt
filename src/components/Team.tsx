@@ -36,16 +36,16 @@ export function ClinicianProfile() {
 export function TeamBySede() {
   return (
     <div className="mt-8">
-      <h3 id="clinical-team-heading" className="type-section">
+      <h3 id="clinical-team-heading" className="type-section text-white">
         Equipo clínico
       </h3>
-      <p className="type-body mt-3 max-w-2xl">
+      <p className="mt-3 max-w-2xl text-base leading-[1.625rem] text-white/85">
         Atención en dos sedes, con el mismo compromiso de cuidado cercano y profesional.
       </p>
       <ul className="mt-8 grid gap-6 lg:grid-cols-2">
         {clinicalTeams.map((team) => (
-          <li key={team.locationId} className="card-lift rounded-2xl border border-black/10 bg-white p-6">
-            <h4 className="type-card">{team.city}</h4>
+          <li key={team.locationId} className="card-lift min-w-0 overflow-hidden rounded-2xl border border-black/10 bg-white p-6">
+            <h4 className="type-card min-w-0 break-words">{team.city}</h4>
             <p className="mt-2 text-sm text-ink-800">{team.summary}</p>
             <p className="mt-1 text-sm text-black/65">{team.address}</p>
             <ul className="mt-5 grid gap-3">
@@ -57,9 +57,9 @@ export function TeamBySede() {
                   <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-lime-800">
                     <UserRound className="h-6 w-6" aria-hidden="true" />
                   </span>
-                  <span>
+                  <span className="min-w-0">
                     <span className="block font-serif text-lg text-ink-900">{team.unnamedLabel}</span>
-                    <span className="type-caption">Equipo clínico · {team.city}</span>
+                    <span className="type-caption break-words">Equipo clínico · {team.city}</span>
                   </span>
                 </li>
               ))}
@@ -73,7 +73,7 @@ export function TeamBySede() {
 
 export function Team() {
   return (
-    <section id="equipo" aria-labelledby="team-heading" className="bg-white pb-16 pt-16 md:pt-20">
+    <section id="equipo" aria-labelledby="team-heading" className="bg-ink-900 pb-16 pt-16 text-white md:pt-20">
       <div className="section-x">
         <ClinicianProfile />
         <TeamBySede />

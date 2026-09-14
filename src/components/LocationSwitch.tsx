@@ -41,7 +41,7 @@ export function LocationSwitch({ className, tone = "light" }: LocationSwitchProp
       role="radiogroup"
       aria-label="Sede"
       className={cn(
-        "flex w-full rounded-full border p-1 sm:inline-flex sm:w-auto",
+        "flex w-full min-w-0 max-w-full overflow-hidden rounded-full border p-1 sm:inline-flex sm:w-auto",
         dark ? "border-white/20 bg-black/30" : "border-black/10 bg-white",
         className,
       )}
@@ -61,7 +61,7 @@ export function LocationSwitch({ className, tone = "light" }: LocationSwitchProp
             onClick={() => setLocationId(location.id)}
             onKeyDown={(event) => onKeyDown(event, index)}
             className={cn(
-              "min-h-11 min-w-[44px] flex-1 rounded-full px-3.5 py-1.5 text-sm transition-colors sm:flex-none",
+              "min-h-11 min-w-0 flex-1 basis-0 overflow-hidden rounded-full px-2 py-1.5 text-center text-sm leading-tight break-words transition-colors sm:flex-none sm:px-3.5",
               selected
                 ? "bg-lime-500 text-ink-900"
                 : dark

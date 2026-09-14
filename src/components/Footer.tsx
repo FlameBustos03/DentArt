@@ -97,6 +97,13 @@ export function Footer() {
       <div className="border-t border-white/10">
         <div className="section-x flex flex-col gap-3 py-6 text-xs text-white/70">
           <p>
+            © {new Date().getFullYear()} Dent Art · Todos los derechos reservados
+          </p>
+          <p className="flex max-w-4xl items-start gap-2">
+            <Scale className="mt-0.5 h-3.5 w-3.5 shrink-0 text-lime-400" aria-hidden="true" />
+            <span>{medicalDisclaimer}</span>
+          </p>
+          <p>
             <a href={`tel:${clinicInfo.phoneTel}`} className="text-link-dark">
               {clinicInfo.phoneDisplay}
             </a>
@@ -104,11 +111,6 @@ export function Footer() {
             <a href={`mailto:${clinicInfo.email}`} className="text-link-dark">
               {clinicInfo.email}
             </a>
-          </p>
-          <p>© {new Date().getFullYear()} Dent Art. Todos los derechos reservados.</p>
-          <p className="flex max-w-4xl items-start gap-2">
-            <Scale className="mt-0.5 h-3.5 w-3.5 shrink-0 text-lime-500" aria-hidden="true" />
-            <span>{medicalDisclaimer}</span>
           </p>
         </div>
       </div>

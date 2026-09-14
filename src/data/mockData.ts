@@ -237,7 +237,8 @@ export const corporatePlans: CorporatePlan[] = [
     id: "sector-petrolero",
     name: "Sector Petrolero",
     note: "Sector Petrolero — según convenio vigente",
-    variant: "badge",
+    variant: "logo",
+    logoSrc: "/partners/sector-petrolero.webp",
   },
 ];
 

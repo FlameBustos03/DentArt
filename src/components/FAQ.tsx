@@ -4,7 +4,7 @@ import { Accordion } from "@/components/ui/Accordion";
 
 export function FAQ() {
   return (
-    <section id="faq" aria-labelledby="faq-heading" className="stack-surface bg-mist py-16 md:py-20">
+    <section id="faq" aria-labelledby="faq-heading" className="stack-surface bg-white py-16 md:py-20">
       <div className="section-x">
         <p className="type-eyebrow">Preguntas frecuentes</p>
         <h2 id="faq-heading" className="type-section mt-3">
