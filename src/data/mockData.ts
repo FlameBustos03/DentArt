@@ -623,35 +623,36 @@ export function getUpcomingBookingDates(count = 10): BookingDate[] {
   return dates;
 }
 
-/** Placeholder quotes — Copywriter initials/sedes are frozen; quote bodies await paste. */
 export const testimonials: Testimonial[] = [
   {
     id: "mr-poza-rica",
     initials: "M.R.",
     location: "Poza Rica",
     quote:
-      "Me escucharon con calma y me explicaron el plan antes de tratar. Me sentí acompañada en cada paso.",
+      "Me explicaron cada paso con calma. Salí entendiendo mi plan y sin presión para decidir en el momento.",
     rating: 5,
   },
   {
     id: "al-villahermosa",
     initials: "A.L.",
     location: "Villahermosa",
-    quote: "La consulta fue clara: qué sí convenía ahora y qué podía esperar. Sin prisa.",
+    quote: "El trato fue cercano desde la recepción. Me sentí escuchada y eso hizo toda la diferencia.",
     rating: 5,
   },
   {
     id: "jc-poza-rica",
     initials: "J.C.",
     location: "Poza Rica",
-    quote: "Buen trato y explicación honesta. Salí entendiendo el siguiente paso.",
+    quote:
+      "Buena organización de horarios y atención clara. Resolvieron mis dudas sobre el tratamiento antes de empezar.",
     rating: 5,
   },
   {
     id: "sp-villahermosa",
     initials: "S.P.",
     location: "Villahermosa",
-    quote: "Atención cercana en Villahermosa. Resolvieron mis dudas sin presionar.",
+    quote:
+      "Ambiente profesional y amable. Me gustó que hablaran en lenguaje sencillo, sin tecnicismos de más.",
     rating: 5,
   },
   {
@@ -659,14 +660,15 @@ export const testimonials: Testimonial[] = [
     initials: "L.G.",
     location: "Poza Rica",
     quote:
-      "Fui por una revisión y me explicaron las opciones con claridad. Confío en el seguimiento.",
+      "Llevé a mi hijo y se sintió tranquilo. El equipo fue paciente y muy cuidadoso en todo momento.",
     rating: 5,
   },
   {
     id: "rh-villahermosa",
     initials: "R.H.",
     location: "Villahermosa",
-    quote: "El equipo fue puntual y cuidadoso. Cada decisión se habló en consulta.",
+    quote:
+      "Agendar por WhatsApp fue fácil. En la cita me orientaron sobre opciones y tiempos de forma realista.",
     rating: 5,
   },
 ];

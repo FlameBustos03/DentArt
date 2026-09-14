@@ -66,9 +66,8 @@ export function Testimonials() {
           aria-labelledby={`testimonial-${item.id}`}
         >
           <h3 id={`testimonial-${item.id}`} className="font-serif text-3xl text-ink-900">
-            {item.initials}
+            {item.initials} · {item.location}
           </h3>
-          <p className="mt-1 text-sm text-black/70">{item.location}</p>
           <div className="mt-4 flex flex-wrap items-center gap-2">
             <div className="flex items-center gap-1" aria-hidden="true">
               {Array.from({ length: item.rating }).map((_, starIndex) => (
