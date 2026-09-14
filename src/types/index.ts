@@ -1,3 +1,5 @@
+import type { StaticImageData } from "next/image";
+
 export interface ImageAsset {
   src: string;
   alt: string;
@@ -104,7 +106,8 @@ export interface Insurer {
   id: string;
   name: string;
   caption: string;
-  logoSrc?: string;
+  /** Official lockup (static import). Omit to render the name on a plain tile. */
+  logo?: StaticImageData;
 }
 
 export interface CorporatePlan {
@@ -112,7 +115,8 @@ export interface CorporatePlan {
   name: string;
   note: string;
   variant: "logo" | "badge";
-  logoSrc?: string;
+  /** Official lockup for `variant: "logo"`. Omit to render a dashed placeholder. */
+  logo?: StaticImageData;
 }
 
 export interface ClinicalTeam {
