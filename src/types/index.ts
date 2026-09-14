@@ -184,6 +184,24 @@ export interface ClinicHours {
   hours: string;
 }
 
+export type Weekday =
+  | "Monday"
+  | "Tuesday"
+  | "Wednesday"
+  | "Thursday"
+  | "Friday"
+  | "Saturday"
+  | "Sunday";
+
+/** Machine-readable counterpart of `ClinicHours`, consumed by the JSON-LD `openingHoursSpecification`. */
+export interface OpeningHoursRule {
+  days: Weekday[];
+  /** 24h "HH:MM" */
+  opens: string;
+  /** 24h "HH:MM" */
+  closes: string;
+}
+
 export interface ClinicInfo {
   name: string;
   slogan: string;
@@ -195,6 +213,7 @@ export interface ClinicInfo {
   addressLines: string[];
   mapQuery: string;
   hours: ClinicHours[];
+  schedule: OpeningHoursRule[];
 }
 
 export interface PublishedBook {
