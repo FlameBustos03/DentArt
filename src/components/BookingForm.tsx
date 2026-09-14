@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useId, useMemo, useRef, useState, type FormEvent } from "react";
-import { CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
+import { CheckCircle2, ChevronLeft, ChevronRight, MessageCircle } from "lucide-react";
 import {
   clinicHoursLabel,
   clinicHoursNote,
@@ -17,7 +17,7 @@ import type { BookingFieldErrors, BookingFormData, ContactPreference } from "@/t
 import { Button } from "@/components/ui/Button";
 import { TextAreaField, TextField } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
-import { cn, isValidEmail, isValidPhone } from "@/lib/utils";
+import { buildWhatsAppUrl, cn, isValidEmail, isValidPhone } from "@/lib/utils";
 
 const INITIAL_FORM: BookingFormData = {
   treatmentId: "",
@@ -87,7 +87,7 @@ export function BookingForm() {
         nextErrors.dateIso = "Elige una fecha.";
       }
       if (!form.slotId) {
-        nextErrors.slotId = "Elige un horario disponible.";
+        nextErrors.slotId = "Elige tu horario preferido.";
       }
       if (form.fullName.trim().length < 2) {
         nextErrors.fullName = "Escribe tu nombre completo.";
@@ -114,6 +114,29 @@ export function BookingForm() {
     }
   };
 
+  const contactLabel =
+    CONTACT_OPTIONS.find((option) => option.value === form.contactPreference)?.label ?? "";
+
+  const whatsappUrl = useMemo(() => {
+    const lines = [
+      "Hola Dent Art, quiero agendar una cita.",
+      selectedTreatment
+        ? `Servicio: ${selectedTreatment.name} (${selectedTreatment.durationMinutes} min)`
+        : "",
+      `Sede: ${location.city} · ${location.addressLines[0]}`,
+      selectedMode ? `Modalidad: ${selectedMode.label}` : "",
+      selectedDate
+        ? `Fecha y hora preferida: ${selectedDate.weekday} ${selectedDate.label}${selectedSlot ? ` · ${selectedSlot.time}` : ""}`
+        : "",
+      `Nombre: ${form.fullName.trim()}`,
+      `Teléfono: ${form.phone.trim()}`,
+      `Correo: ${form.email.trim()}`,
+      contactLabel ? `Prefiero que me contacten por: ${contactLabel}` : "",
+      form.notes.trim() ? `Notas: ${form.notes.trim()}` : "",
+    ].filter(Boolean);
+    return buildWhatsAppUrl(clinicInfo.whatsappNumber, lines.join("\n"));
+  }, [selectedTreatment, selectedMode, selectedDate, selectedSlot, location, form, contactLabel]);
+
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const nextErrors = validateStep(3);
@@ -121,6 +144,7 @@ export function BookingForm() {
     if (Object.keys(nextErrors).length > 0) {
       return;
     }
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
     setSuccessOpen(true);
   };
 
@@ -139,7 +163,8 @@ export function BookingForm() {
           Agendar cita
         </h2>
         <p className="mt-4 max-w-2xl text-base leading-[1.625rem] text-white/85">
-          Elige servicio, sede y horario. {clinicHoursLabel}. {clinicHoursNote}
+          Elige servicio, sede y horario preferido; tu solicitud se envía por WhatsApp y el
+          consultorio confirma la disponibilidad. {clinicHoursLabel}. {clinicHoursNote}
         </p>
         <div className="mt-6 flex min-w-0 flex-col gap-3 sm:flex-row sm:items-center">
           <LocationSwitch tone="dark" className="max-w-full" />
@@ -311,33 +336,35 @@ export function BookingForm() {
               </fieldset>
 
               <fieldset>
-                <legend className="type-eyebrow">Hora</legend>
+                <legend className="type-eyebrow">Hora preferida</legend>
                 <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
                   {(selectedDate?.slots ?? []).map((slot) => (
                     <button
                       key={slot.id}
                       type="button"
                       aria-pressed={form.slotId === slot.id}
-                      disabled={!slot.available}
                       onClick={() => {
                         setForm((prev) => ({ ...prev, slotId: slot.id }));
                         setErrors((prev) => ({ ...prev, slotId: undefined }));
                       }}
                       className={cn(
-                        "min-h-11 rounded-xl border px-3 py-3 text-sm disabled:cursor-not-allowed disabled:opacity-35",
+                        "min-h-11 rounded-xl border px-3 py-3 text-sm",
                         form.slotId === slot.id
                           ? "border-lime-500 bg-lime-500 text-ink-900"
                           : "border-black/10 bg-white hover:border-black/20",
                       )}
                     >
                       {slot.time}
-                      {!slot.available ? " · Ocupado" : ""}
                     </button>
                   ))}
                 </div>
                 {!selectedDate ? (
                   <p className="mt-3 text-sm text-black/70">Elige una fecha para ver horarios.</p>
-                ) : null}
+                ) : (
+                  <p className="mt-3 text-sm text-black/70">
+                    El consultorio confirma la disponibilidad al recibir tu solicitud.
+                  </p>
+                )}
                 {errors.slotId ? (
                   <p role="alert" className="mt-2 text-sm text-red-700">
                     {errors.slotId}
@@ -352,7 +379,10 @@ export function BookingForm() {
                   autoComplete="name"
                   value={form.fullName}
                   error={errors.fullName}
-                  onChange={(event) => setForm((prev) => ({ ...prev, fullName: event.target.value }))}
+                  onChange={(event) => {
+                    setForm((prev) => ({ ...prev, fullName: event.target.value }));
+                    setErrors((prev) => ({ ...prev, fullName: undefined }));
+                  }}
                 />
                 <TextField
                   id="email"
@@ -361,7 +391,10 @@ export function BookingForm() {
                   autoComplete="email"
                   value={form.email}
                   error={errors.email}
-                  onChange={(event) => setForm((prev) => ({ ...prev, email: event.target.value }))}
+                  onChange={(event) => {
+                    setForm((prev) => ({ ...prev, email: event.target.value }));
+                    setErrors((prev) => ({ ...prev, email: undefined }));
+                  }}
                 />
                 <TextField
                   id="phone"
@@ -370,7 +403,10 @@ export function BookingForm() {
                   autoComplete="tel"
                   value={form.phone}
                   error={errors.phone}
-                  onChange={(event) => setForm((prev) => ({ ...prev, phone: event.target.value }))}
+                  onChange={(event) => {
+                    setForm((prev) => ({ ...prev, phone: event.target.value }));
+                    setErrors((prev) => ({ ...prev, phone: undefined }));
+                  }}
                 />
                 <fieldset className="flex flex-col gap-1.5">
                   <legend className="type-eyebrow">
@@ -429,18 +465,19 @@ export function BookingForm() {
               </Button>
             ) : (
               <Button type="submit" variant="primary">
-                Enviar solicitud
+                <MessageCircle className="h-4 w-4" aria-hidden="true" />
+                Enviar por WhatsApp
               </Button>
             )}
           </div>
         </form>
       </div>
 
-      <Modal open={successOpen} title="Solicitud enviada" onClose={resetBooking}>
+      <Modal open={successOpen} title="Continúa en WhatsApp" onClose={resetBooking}>
         <div className="space-y-4 text-black/70">
           <p className="flex items-center gap-2 text-ink-900">
             <CheckCircle2 className="h-5 w-5 text-lime-800" aria-hidden="true" />
-            Confirmaremos a {form.email || "tu correo"}
+            Tu solicitud quedó lista en WhatsApp — solo falta que presiones enviar.
           </p>
           <ul className="space-y-1 text-sm">
             <li>
@@ -453,7 +490,7 @@ export function BookingForm() {
               <strong>Modalidad:</strong> {selectedMode?.label}
             </li>
             <li>
-              <strong>Cuándo:</strong>{" "}
+              <strong>Horario preferido:</strong>{" "}
               {selectedDate ? `${selectedDate.weekday} ${selectedDate.label}` : form.dateIso}
               {selectedSlot ? ` · ${selectedSlot.time}` : ""}
             </li>
@@ -462,11 +499,26 @@ export function BookingForm() {
             </li>
           </ul>
           <p>
+            El consultorio responde por ese chat para confirmar tu horario según disponibilidad.
+            ¿No se abrió WhatsApp?
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-lime-500 px-5 text-sm font-medium text-ink-900 transition-colors hover:bg-lime-400"
+            >
+              <MessageCircle className="h-4 w-4" aria-hidden="true" />
+              Abrir WhatsApp
+            </a>
+            <Button variant="ghost" onClick={resetBooking}>
+              Agendar otra cita
+            </Button>
+          </div>
+          <p className="text-sm">
             Si es una urgencia, llama o manda WhatsApp al {clinicInfo.phoneDisplay}.
           </p>
-          <Button variant="primary" onClick={resetBooking}>
-            Agendar otra cita
-          </Button>
         </div>
       </Modal>
     </section>

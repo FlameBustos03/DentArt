@@ -604,14 +604,14 @@ const WEEKDAY_SLOT_TIMES = ["10:00", "11:00", "12:00", "16:00", "17:00", "18:00"
 const SATURDAY_SLOT_TIMES = ["10:00", "11:00", "12:00"] as const;
 
 function buildSlots(seed: number, times: readonly string[], notBeforeHour: number): TimeSlot[] {
-  // Slots that already passed today are dropped, not flagged `available: false`:
-  // the form renders unavailable slots as "Ocupado", which is the wrong story
-  // for a time that has simply gone by.
+  // Slots that already passed today are dropped. Every listed time is a
+  // *preferred* time: the clinic confirms real availability by WhatsApp,
+  // so nothing is faked as "Ocupado".
   return times.flatMap((time, index) => {
     if (Number(time.slice(0, 2)) <= notBeforeHour) {
       return [];
     }
-    return [{ id: `slot-${seed}-${index}`, time, available: (seed + index) % 5 !== 0 }];
+    return [{ id: `slot-${seed}-${index}`, time, available: true }];
   });
 }
 
