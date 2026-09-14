@@ -13,6 +13,7 @@ import type {
   LocationId,
   MediaOutlet,
   NavLink,
+  OpeningHours,
   PhilanthropyProgram,
   QuizChoice,
   QuizGoal,
@@ -33,6 +34,15 @@ export const clinicHoursLabel =
   "Lun–Vie 10:00–13:00 y 16:00–19:00 · Sáb 10:00–13:00";
 
 export const clinicHoursNote = "Mismo horario en ambas sedes.";
+
+const weekdays: OpeningHours["days"] = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+
+/** Same schedule as clinicHoursLabel / clinicInfo.hours, in machine-readable form. */
+export const clinicOpeningHours: OpeningHours[] = [
+  { days: weekdays, opens: "10:00", closes: "13:00" },
+  { days: weekdays, opens: "16:00", closes: "19:00" },
+  { days: ["Saturday"], opens: "10:00", closes: "13:00" },
+];
 
 export const locationsIntro =
   "Encuéntranos en Poza Rica y Villahermosa — mismo horario en ambas sedes.";

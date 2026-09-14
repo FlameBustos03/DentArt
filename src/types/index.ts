@@ -184,6 +184,22 @@ export interface ClinicHours {
   hours: string;
 }
 
+export type Weekday =
+  | "Monday"
+  | "Tuesday"
+  | "Wednesday"
+  | "Thursday"
+  | "Friday"
+  | "Saturday"
+  | "Sunday";
+
+/** Machine-readable counterpart of ClinicHours (24h "HH:MM"), for structured data. */
+export interface OpeningHours {
+  days: Weekday[];
+  opens: string;
+  closes: string;
+}
+
 export interface ClinicInfo {
   name: string;
   slogan: string;
