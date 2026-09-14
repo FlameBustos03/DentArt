@@ -111,7 +111,8 @@ export interface CorporatePlan {
   id: string;
   name: string;
   note: string;
-  variant: "placeholder" | "badge";
+  variant: "logo" | "badge";
+  logoSrc?: string;
 }
 
 export interface ClinicalTeam {
