@@ -1,6 +1,8 @@
 "use client";
 
+import { useRef, type KeyboardEvent } from "react";
 import { useClinicLocation } from "@/components/LocationProvider";
+import type { LocationId } from "@/types";
 import { cn } from "@/lib/utils";
 
 export interface LocationSwitchProps {
@@ -11,6 +13,28 @@ export interface LocationSwitchProps {
 export function LocationSwitch({ className, tone = "light" }: LocationSwitchProps) {
   const { locationId, locations, setLocationId } = useClinicLocation();
   const dark = tone === "hero" || tone === "dark";
+  const buttonRefs = useRef<Partial<Record<LocationId, HTMLButtonElement | null>>>({});
+
+  // Radio-group keyboard contract: arrows move selection, Tab enters/leaves the group.
+  const onKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    let nextIndex: number | null = null;
+    if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+      nextIndex = (index + 1) % locations.length;
+    } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+      nextIndex = (index - 1 + locations.length) % locations.length;
+    } else if (event.key === "Home") {
+      nextIndex = 0;
+    } else if (event.key === "End") {
+      nextIndex = locations.length - 1;
+    }
+    if (nextIndex === null) {
+      return;
+    }
+    event.preventDefault();
+    const next = locations[nextIndex];
+    setLocationId(next.id);
+    buttonRefs.current[next.id]?.focus();
+  };
 
   return (
     <div
@@ -22,15 +46,20 @@ export function LocationSwitch({ className, tone = "light" }: LocationSwitchProp
         className,
       )}
     >
-      {locations.map((location) => {
+      {locations.map((location, index) => {
         const selected = location.id === locationId;
         return (
           <button
             key={location.id}
+            ref={(node) => {
+              buttonRefs.current[location.id] = node;
+            }}
             type="button"
             role="radio"
             aria-checked={selected}
+            tabIndex={selected ? 0 : -1}
             onClick={() => setLocationId(location.id)}
+            onKeyDown={(event) => onKeyDown(event, index)}
             className={cn(
               "rounded-full px-3.5 py-1.5 text-sm transition-colors",
               selected

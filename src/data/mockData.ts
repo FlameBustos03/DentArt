@@ -503,32 +503,38 @@ export const consultationModes: ConsultationModeOption[] = [
 const WEEKDAY_SLOT_TIMES = ["10:00", "11:00", "12:00", "16:00", "17:00", "18:00"] as const;
 const SATURDAY_SLOT_TIMES = ["10:00", "11:00", "12:00"] as const;
 
-function buildSlots(seed: number, times: readonly string[]): TimeSlot[] {
+function buildSlots(seed: number, times: readonly string[], notBeforeHour: number): TimeSlot[] {
   return times.map((time, index) => ({
     id: `slot-${seed}-${index}`,
     time,
-    available: (seed + index) % 5 !== 0,
+    available: (seed + index) % 5 !== 0 && Number(time.slice(0, 2)) > notBeforeHour,
   }));
 }
 
-function formatBookingDate(date: Date, times: readonly string[]): BookingDate {
+/** `notBeforeHour` hides slots that already passed when the date is today. */
+function formatBookingDate(date: Date, times: readonly string[], notBeforeHour: number): BookingDate {
   const iso = date.toISOString().slice(0, 10);
   const weekday = date.toLocaleDateString("es-MX", { weekday: "short" });
   const label = date.toLocaleDateString("es-MX", { day: "numeric", month: "short" });
   const seed = date.getDate() + date.getMonth();
-  return { iso, label, weekday, slots: buildSlots(seed, times) };
+  return { iso, label, weekday, slots: buildSlots(seed, times, notBeforeHour) };
 }
 
 export function getUpcomingBookingDates(count = 10): BookingDate[] {
   const dates: BookingDate[] = [];
-  const cursor = new Date();
+  const now = new Date();
+  const cursor = new Date(now);
   cursor.setHours(12, 0, 0, 0);
 
   while (dates.length < count) {
     const day = cursor.getDay();
     if (day !== 0) {
       const times = day === 6 ? SATURDAY_SLOT_TIMES : WEEKDAY_SLOT_TIMES;
-      dates.push(formatBookingDate(new Date(cursor), times));
+      const isToday = cursor.toDateString() === now.toDateString();
+      const entry = formatBookingDate(new Date(cursor), times, isToday ? now.getHours() : -1);
+      if (entry.slots.some((slot) => slot.available)) {
+        dates.push(entry);
+      }
     }
     cursor.setDate(cursor.getDate() + 1);
   }

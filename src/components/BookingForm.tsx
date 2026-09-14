@@ -282,6 +282,7 @@ export function BookingForm() {
                       <button
                         key={date.iso}
                         type="button"
+                        aria-pressed={selected}
                         onClick={() => {
                           setForm((prev) => ({ ...prev, dateIso: date.iso, slotId: "" }));
                           setErrors((prev) => ({ ...prev, dateIso: undefined, slotId: undefined }));
@@ -313,6 +314,7 @@ export function BookingForm() {
                     <button
                       key={slot.id}
                       type="button"
+                      aria-pressed={form.slotId === slot.id}
                       disabled={!slot.available}
                       onClick={() => {
                         setForm((prev) => ({ ...prev, slotId: slot.id }));
@@ -452,7 +454,9 @@ export function BookingForm() {
               <strong>Modalidad:</strong> {selectedMode?.label}
             </li>
             <li>
-              <strong>Cuando:</strong> {form.dateIso} {selectedSlot ? `· ${selectedSlot.time}` : ""}
+              <strong>Cuándo:</strong>{" "}
+              {selectedDate ? `${selectedDate.weekday} ${selectedDate.label}` : form.dateIso}
+              {selectedSlot ? ` · ${selectedSlot.time}` : ""}
             </li>
             <li>
               <strong>Paciente:</strong> {form.fullName}
