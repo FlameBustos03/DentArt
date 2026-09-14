@@ -112,7 +112,7 @@ export function NavDisclosure({
             href={item.href}
             className={cn(
               variant === "desktop"
-                ? "block px-4 py-2 text-sm text-ink-900 hover:bg-mist hover:text-lime-800"
+                ? "block whitespace-nowrap px-4 py-2 text-sm text-ink-900 hover:bg-mist hover:text-lime-800"
                 : "block border-b border-[color:var(--border-subtle)] pb-2 font-serif text-xl text-ink-900",
             )}
             onClick={() => {
@@ -163,7 +163,7 @@ export function NavDisclosure({
               animate={{ opacity: 1 }}
               exit={reduced ? undefined : { opacity: 0 }}
               transition={{ duration: reduced ? 0 : 0.16, ease: [0, 0, 0.2, 1] }}
-              className="absolute left-0 top-full z-50 mt-3 rounded-card border border-[color:var(--border-subtle)] bg-white shadow-card"
+              className="absolute left-0 top-full z-50 mt-3 w-56 rounded-card border border-[color:var(--border-subtle)] bg-white shadow-card"
             >
               {panel}
             </motion.div>

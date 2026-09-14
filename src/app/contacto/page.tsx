@@ -57,7 +57,7 @@ export default function ContactoPage() {
         </div>
       </section>
 
-      <PageSection id="directo" labelledBy="directo-heading" band="a">
+      <PageSection id="directo" labelledBy="directo-heading" band="a" className="stack-surface">
         <h2 id="directo-heading" className="font-serif text-3xl text-ink-900 sm:text-5xl">
           {contactoCopy.directoH2}
         </h2>
@@ -95,7 +95,7 @@ export default function ContactoPage() {
         </div>
       </PageSection>
 
-      <PageSection id="escribimos" labelledBy="escribimos-heading" band="b">
+      <PageSection id="escribimos" labelledBy="escribimos-heading" band="b" className="stack-surface">
         <ContactForm />
       </PageSection>
     </main>
