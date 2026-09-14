@@ -29,22 +29,25 @@ const sizeClasses: Record<ButtonSize, string> = {
   lg: "px-7 py-3.5 text-sm tracking-[0.16em]",
 };
 
+export function buttonClasses(
+  variant: ButtonVariant = "primary",
+  size: ButtonSize = "md",
+  className?: string,
+): string {
+  return cn(
+    "inline-flex items-center justify-center gap-2 rounded-full font-sans uppercase transition-colors duration-fast ease-out disabled:cursor-not-allowed disabled:opacity-50",
+    variantClasses[variant],
+    sizeClasses[size],
+    className,
+  );
+}
+
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   { variant = "primary", size = "md", className, children, type = "button", ...props },
   ref,
 ) {
   return (
-    <button
-      ref={ref}
-      type={type}
-      className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-full font-sans uppercase transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-50",
-        variantClasses[variant],
-        sizeClasses[size],
-        className,
-      )}
-      {...props}
-    >
+    <button ref={ref} type={type} className={buttonClasses(variant, size, className)} {...props}>
       {children}
     </button>
   );

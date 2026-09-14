@@ -1,4 +1,5 @@
 import { Clock, Mail, MapPin, MessageCircle, Phone, Scale } from "lucide-react";
+import Link from "next/link";
 import { BrandLockup } from "@/components/BrandLockup";
 import { SocialLinks } from "@/components/SocialLinks";
 import {
@@ -15,7 +16,7 @@ export function Footer() {
   const whatsappHref = buildWhatsAppUrl(clinicInfo.whatsappNumber, conciergePrefillMessage);
 
   return (
-    <footer id="contact" className="bg-ink-900 text-white">
+    <footer className="bg-ink-900 text-white">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-4">
         <div>
           <BrandLockup size="nav" />
@@ -67,9 +68,9 @@ export function Footer() {
           <ul className="mt-4 space-y-3 text-sm">
             {footerSitemap.map((link) => (
               <li key={link.id}>
-                <a href={link.href} className="hover:text-lime-400">
+                <Link href={link.href} className="hover:text-lime-400">
                   {link.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

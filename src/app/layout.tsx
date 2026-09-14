@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { DM_Sans, Playfair_Display } from "next/font/google";
+import { EmergencyFab } from "@/components/EmergencyFab";
+import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/JsonLd";
 import { LocationProvider } from "@/components/LocationProvider";
+import { Navbar } from "@/components/Navbar";
 import { clinicInfo } from "@/data/mockData";
 import "./globals.css";
 
@@ -44,7 +47,10 @@ export default function RootLayout({
           Ir al contenido principal
         </a>
         <LocationProvider>
+          <Navbar />
           {children}
+          <Footer />
+          <EmergencyFab />
           <p className="sr-only">
             {clinicInfo.name} · {clinicInfo.phoneDisplay}
           </p>

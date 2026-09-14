@@ -44,6 +44,7 @@ export const locations: ClinicLocation[] = [
     region: "Veracruz",
     addressLines: ["Cipres #204, Col. Chapultepec", "Poza Rica, Veracruz"],
     mapQuery: "Cipres 204 Colonia Chapultepec, Poza Rica, Veracruz, Mexico",
+    mapTitle: "Mapa: Poza Rica — Dent Art",
     teamCapacity: "Equipo de dos doctores",
   },
   {
@@ -52,6 +53,7 @@ export const locations: ClinicLocation[] = [
     region: "Tabasco",
     addressLines: ["Ermitaño 9, mz 22, Valle del Jaguar", "Villahermosa, Tabasco"],
     mapQuery: "Ermitaño 9 manzana 22 Valle del Jaguar, Villahermosa, Tabasco, Mexico",
+    mapTitle: "Mapa: Villahermosa — Dent Art",
     teamCapacity: "Un doctor",
   },
 ];
@@ -76,24 +78,37 @@ export const clinicInfo: ClinicInfo = {
   ],
 };
 
+export const BOOKING_HREF = "/#booking";
+
+export function bookingHref(pathname: string): string {
+  return pathname === "/" ? "#booking" : BOOKING_HREF;
+}
+
 export const navLinks: NavLink[] = [
-  { id: "nosotros", label: "Nosotros", href: "#nosotros" },
-  { id: "servicios", label: "Servicios", href: "#servicios" },
-  { id: "equipo", label: "Equipo", href: "#equipo" },
-  { id: "seguros", label: "Seguros", href: "#seguros" },
-  { id: "sedes", label: "Sedes", href: "#sedes" },
-  { id: "faq", label: "Preguntas", href: "#faq" },
-  { id: "booking", label: "Citas", href: "#booking" },
+  { id: "inicio", label: "Inicio", href: "/" },
+  { id: "nosotros", label: "Nosotros", href: "/nosotros" },
+  { id: "servicios", label: "Servicios", href: "/servicios" },
+  { id: "pacientes", label: "Pacientes", href: "/pacientes" },
+  { id: "seguros", label: "Seguros", href: "/seguros" },
+  { id: "contacto", label: "Contacto", href: "/contacto" },
+];
+
+export const serviciosNavItems: NavLink[] = [
+  { id: "todos", label: "Todos", href: "/servicios" },
+  { id: "estetica", label: "Estética", href: "/servicios#estetica" },
+  { id: "general", label: "General", href: "/servicios#general" },
+  { id: "protesis", label: "Prótesis", href: "/servicios#protesis" },
+  { id: "laser", label: "Láser", href: "/servicios#laser" },
 ];
 
 export const footerSitemap: NavLink[] = [
   { id: "inicio", label: "Inicio", href: "/" },
-  { id: "servicios", label: "Servicios", href: "#servicios" },
-  { id: "equipo", label: "Equipo", href: "#equipo" },
-  { id: "seguros", label: "Seguros", href: "#seguros" },
-  { id: "sedes", label: "Sedes", href: "#sedes" },
-  { id: "faq", label: "FAQ", href: "#faq" },
-  { id: "booking", label: "Agendar", href: "#booking" },
+  { id: "nosotros", label: "Nosotros", href: "/nosotros" },
+  { id: "servicios", label: "Servicios", href: "/servicios" },
+  { id: "pacientes", label: "Pacientes", href: "/pacientes" },
+  { id: "seguros", label: "Seguros", href: "/seguros" },
+  { id: "contacto", label: "Contacto", href: "/contacto" },
+  { id: "booking", label: "Agendar", href: BOOKING_HREF },
 ];
 
 export const testimonialsEyebrow = "Pacientes Dent Art";
@@ -198,13 +213,13 @@ export const insurers: Insurer[] = [
   {
     id: "dentegra",
     name: "Dentegra",
-    caption: "Dentegra (incluye odontopediatría)",
+    caption: "Incluye odontopediatría · Pregunta por tu cobertura al agendar.",
     logoSrc: "/partners/dentegra.png",
   },
   {
     id: "dentalia",
     name: "Dentalia",
-    caption: "Dentalia",
+    caption: "Aceptamos Dentalia · Las prestaciones incluidas dependen de tu plan vigente.",
     logoSrc: "/partners/dentalia.png",
   },
 ];
@@ -263,7 +278,7 @@ export const socialLinks = [
 ] as const;
 
 export const medicalDisclaimer =
-  "La información de este sitio es de carácter general e informativo sobre servicios odontológicos de Dent Art. No sustituye la consulta, diagnóstico ni tratamiento profesional. Los resultados varían según cada paciente. Coberturas de seguros y planes empresariales sujetas a vigencia y condiciones del plan. Ante urgencia dental, contacta al consultorio o a servicios de emergencia locales.";
+  "La información de este sitio es de carácter general e informativo sobre servicios odontológicos de Dent Art. No sustituye la consulta, diagnóstico ni tratamiento profesional. Los resultados varían según cada paciente. Coberturas de seguros y planes empresariales sujetas a vigencia y condiciones del plan. Ante urgencia dental, contacta al consultorio (782 210 8172) o a servicios de emergencia locales.";
 
 export const mediaOutlets: MediaOutlet[] = [
   { id: "tv", name: "As Seen On TV", caption: "National broadcast features" },

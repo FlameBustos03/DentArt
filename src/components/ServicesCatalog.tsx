@@ -2,11 +2,10 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Check, Sparkles } from "lucide-react";
 import { serviceGroups, serviceModalRows } from "@/data/mockData";
+import { ServiceGroup } from "@/components/ServiceGroup";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
-import { TiltCard } from "@/components/ui/TiltCard";
 import { scrollToId } from "@/lib/utils";
 
 export function ServicesCatalog() {
@@ -46,23 +45,7 @@ export function ServicesCatalog() {
               viewport={{ once: true, amount: 0.3 }}
               transition={{ delay: index * 0.06 }}
             >
-              <TiltCard className="glass-card h-full rounded-3xl bg-white shadow-sm">
-                <div className="p-6">
-                  <div className="flex items-center gap-3">
-                    <Sparkles className="h-5 w-5 text-lime-800" aria-hidden="true" />
-                    <h3 className="font-serif text-2xl text-ink-900">{group.name}</h3>
-                  </div>
-                  <ul className="mt-5 space-y-2">
-                    {group.items.map((item) => (
-                      <li key={item} className="flex items-start gap-2 text-sm text-ink-800">
-                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-lime-800" aria-hidden="true" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                  {group.note ? <p className="mt-5 text-sm text-black/65">{group.note}</p> : null}
-                </div>
-              </TiltCard>
+              <ServiceGroup group={group} variant="compact" />
             </motion.li>
           ))}
         </ul>

@@ -34,14 +34,27 @@ function LogoTile({ image }: { image: StaticImageData }) {
   );
 }
 
-export function InsurerGrid() {
+export function InsurerGrid({
+  heading = "Seguros dentales",
+  headingId = "insurers-heading",
+  showEyebrow = true,
+  intro = insurersIntro,
+}: {
+  heading?: string;
+  headingId?: string;
+  showEyebrow?: boolean;
+  intro?: string;
+}) {
   return (
     <div>
-      <p className="text-xs uppercase tracking-[0.24em] text-lime-800">Seguros</p>
-      <h2 id="insurers-heading" className="mt-3 font-serif text-3xl text-ink-900 sm:text-5xl">
-        Seguros dentales
+      {showEyebrow ? <p className="text-xs uppercase tracking-[0.24em] text-lime-800">Seguros</p> : null}
+      <h2
+        id={headingId}
+        className={cn("font-serif text-3xl text-ink-900 sm:text-5xl", showEyebrow && "mt-3")}
+      >
+        {heading}
       </h2>
-      <p className="mt-4 max-w-2xl text-black/70">{insurersIntro}</p>
+      {intro ? <p className="mt-4 max-w-2xl text-black/70">{intro}</p> : null}
       <ul className="mt-10 flex flex-wrap gap-6">
         {insurers.map((insurer) => {
           const logo = partnerLogoById[insurer.id];
@@ -68,12 +81,24 @@ export function InsurerGrid() {
   );
 }
 
-export function PartnerRow() {
+export function PartnerRow({
+  heading = "Planes empresariales",
+  headingId = "planes-heading",
+  headingAs = "h3",
+  className,
+}: {
+  heading?: string;
+  headingId?: string;
+  headingAs?: "h2" | "h3";
+  className?: string;
+}) {
+  const HeadingTag = headingAs;
+
   return (
-    <div className="mt-16">
-      <h3 id="planes-heading" className="font-serif text-3xl text-ink-900 sm:text-4xl">
-        Planes empresariales
-      </h3>
+    <div className={cn("mt-16", className)}>
+      <HeadingTag id={headingId} className="font-serif text-3xl text-ink-900 sm:text-4xl">
+        {heading}
+      </HeadingTag>
       <p className="mt-3 max-w-2xl text-black/70">{plansIntro}</p>
       <ul className="mt-8 flex flex-wrap items-stretch gap-6">
         {corporatePlans.map((plan) => {

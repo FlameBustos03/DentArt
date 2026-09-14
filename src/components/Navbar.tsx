@@ -1,13 +1,17 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { BrandLockup } from "@/components/BrandLockup";
+import { NavDisclosure } from "@/components/NavDisclosure";
 import { UtilityBar } from "@/components/UtilityBar";
-import { navLinks } from "@/data/mockData";
 import { Button } from "@/components/ui/Button";
-import { cn, scrollToId } from "@/lib/utils";
+import { ButtonLink } from "@/components/ui/ButtonLink";
+import { bookingHref, navLinks, serviciosNavItems } from "@/data/mockData";
+import { cn } from "@/lib/utils";
 
 export interface NavbarProps {
   className?: string;
@@ -18,6 +22,8 @@ export function Navbar({ className }: NavbarProps) {
   const drawerId = useId();
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const pathname = usePathname();
+  const agendarHref = bookingHref(pathname);
 
   useEffect(() => {
     if (!open) {
@@ -79,31 +85,39 @@ export function Navbar({ className }: NavbarProps) {
 
       <div className="glass-nav">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
-          <a href="#main-content" className="group min-w-0">
+          <Link href="/" className="group min-w-0">
             <BrandLockup size="nav" />
-          </a>
+          </Link>
 
-          <nav aria-label="Principal" className="hidden items-center gap-8 xl:flex">
-            {navLinks.map((link) => (
-              <a
-                key={link.id}
-                href={link.href}
-                className="text-sm tracking-wide text-ink-900 underline-offset-4 transition-colors hover:text-lime-800 hover:underline"
-              >
-                {link.label}
-              </a>
-            ))}
+          <nav aria-label="Principal" className="hidden items-center gap-6 xl:flex">
+            {navLinks.map((link) =>
+              link.id === "servicios" ? (
+                <NavDisclosure
+                  key={link.id}
+                  label={link.label}
+                  href={link.href}
+                  items={serviciosNavItems}
+                />
+              ) : (
+                <Link
+                  key={link.id}
+                  href={link.href}
+                  aria-current={pathname === link.href ? "page" : undefined}
+                  className={cn(
+                    "text-sm tracking-wide text-ink-900 underline-offset-4 transition-colors hover:text-lime-800 hover:underline",
+                    pathname === link.href && "text-lime-800",
+                  )}
+                >
+                  {link.label}
+                </Link>
+              ),
+            )}
           </nav>
 
           <div className="flex items-center gap-2">
-            <Button
-              variant="primary"
-              size="sm"
-              className="whitespace-nowrap"
-              onClick={() => scrollToId("booking")}
-            >
-              Agendar cita
-            </Button>
+            <ButtonLink href={agendarHref} variant="primary" size="sm" className="whitespace-nowrap">
+              Agendar
+            </ButtonLink>
             <Button
               ref={menuButtonRef}
               variant="ghost"
@@ -157,27 +171,31 @@ export function Navbar({ className }: NavbarProps) {
                 </Button>
               </div>
               <nav aria-label="Navegación móvil" className="flex flex-col gap-4">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.id}
-                    href={link.href}
-                    className="border-b border-black/10 pb-3 font-serif text-2xl text-ink-900"
-                    onClick={() => setOpen(false)}
-                  >
-                    {link.label}
-                  </a>
-                ))}
+                {navLinks.map((link) =>
+                  link.id === "servicios" ? (
+                    <NavDisclosure
+                      key={link.id}
+                      label={link.label}
+                      href={link.href}
+                      items={serviciosNavItems}
+                      variant="mobile"
+                      onNavigate={() => setOpen(false)}
+                    />
+                  ) : (
+                    <Link
+                      key={link.id}
+                      href={link.href}
+                      className="border-b border-black/10 pb-3 font-serif text-2xl text-ink-900"
+                      onClick={() => setOpen(false)}
+                    >
+                      {link.label}
+                    </Link>
+                  ),
+                )}
               </nav>
-              <Button
-                variant="primary"
-                className="mt-6"
-                onClick={() => {
-                  setOpen(false);
-                  scrollToId("booking");
-                }}
-              >
-                Agendar cita
-              </Button>
+              <ButtonLink href={agendarHref} variant="primary" className="mt-6" onClick={() => setOpen(false)}>
+                Agendar
+              </ButtonLink>
             </motion.aside>
           </div>
         ) : null}
