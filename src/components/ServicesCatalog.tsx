@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type ComponentType, type SVGProps } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Check, Layers, SmilePlus, Sparkles, Zap } from "lucide-react";
 import { serviceGroups, serviceModalRows } from "@/data/mockData";
 import { Button } from "@/components/ui/Button";
@@ -19,12 +19,13 @@ const GROUP_ICONS: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
 
 export function ServicesCatalog() {
   const [open, setOpen] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   return (
     <section id="servicios" aria-labelledby="services-heading" className="bg-mist py-16 md:py-20">
       <div className="section-x">
         <motion.p
-          initial={{ opacity: 0, y: 10 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="type-eyebrow"
@@ -33,7 +34,7 @@ export function ServicesCatalog() {
         </motion.p>
         <motion.h2
           id="services-heading"
-          initial={{ opacity: 0, y: 14 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="type-section mt-3"
@@ -51,10 +52,10 @@ export function ServicesCatalog() {
             return (
               <motion.li
                 key={group.id}
-                initial={{ opacity: 0, y: 16 }}
+                initial={reduceMotion ? false : { opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
-                transition={{ delay: index * 0.06 }}
+                transition={reduceMotion ? { duration: 0 } : { delay: index * 0.06 }}
               >
                 <TiltCard className="h-full rounded-2xl bg-white">
                   <div className="p-5 md:p-4">
