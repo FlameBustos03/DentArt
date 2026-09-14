@@ -83,7 +83,7 @@ export function Hero() {
               href={whatsappHref}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-lime-500/80 px-7 py-3.5 text-sm uppercase tracking-[0.16em] text-white hover:bg-white/10"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-lime-500/80 px-7 py-3.5 text-center text-sm uppercase tracking-[0.16em] text-white hover:bg-white/10"
             >
               <MessageCircle className="h-4 w-4" aria-hidden="true" />
               Emergencia por WhatsApp ({clinicInfo.phoneDisplay})
