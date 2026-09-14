@@ -17,6 +17,7 @@ import {
   heroImages,
 } from "@/data/mockData";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { buildWhatsAppUrl, scrollToId } from "@/lib/utils";
 
 export function Hero() {
   const dockRef = useRef<HTMLSpanElement>(null);
