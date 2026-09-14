@@ -115,13 +115,17 @@ export interface CorporatePlan {
   logoSrc?: string;
 }
 
+export interface TeamMember {
+  name: string;
+  role: string;
+}
+
 export interface ClinicalTeam {
   locationId: LocationId;
   city: string;
   summary: string;
   address: string;
-  unnamedCount: number;
-  unnamedLabel: string;
+  members: TeamMember[];
 }
 
 export interface LeadClinician {
@@ -129,6 +133,8 @@ export interface LeadClinician {
   eyebrow: string;
   role: string;
   blurb: string[];
+  credentials: string[];
+  cedula: ImageAsset & { number: string };
   photo: ImageAsset;
 }
 

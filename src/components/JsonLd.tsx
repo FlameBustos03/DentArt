@@ -89,11 +89,20 @@ const graph = {
     {
       "@type": ["Dentist", "Physician"],
       "@id": CLAUDIA_ID,
-      name: "Dra. Claudia Solis",
-      jobTitle: "Estética dental y diseño de sonrisa",
+      name: "Dra. Claudia Solís",
+      jobTitle: "Cirujana dentista · Estética dental y diseño de sonrisa",
       worksFor: { "@id": ORG_ID },
       image: CLAUDIA_PHOTO,
       url: `${SITE_ORIGIN}/#equipo`,
+      alumniOf: {
+        "@type": "CollegeOrUniversity",
+        name: "Universidad Veracruzana",
+      },
+      identifier: {
+        "@type": "PropertyValue",
+        propertyID: "Cédula profesional (SEP)",
+        value: "3820236",
+      },
     },
   ],
 };

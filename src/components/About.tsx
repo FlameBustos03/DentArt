@@ -7,21 +7,25 @@ export function About() {
           Nacimos en Poza Rica. Seguimos cerca.
         </h2>
         <div className="mt-6 grid gap-8 lg:grid-cols-2">
-          <p className="max-w-xl text-base leading-[1.625rem] text-white/85">
-            Dent Art nació en Poza Rica. Más de 16 años acompañando sonrisas con estética, prevención
-            y tratamientos personalizados.
-          </p>
           <div className="space-y-4 text-base leading-[1.625rem] text-white/85">
             <p>
-              Trabajamos con dos unidades dentales y equipo de rayos X individual y panorámico, para
-              ver con claridad antes de tratar.
+              Dent Art nació en Poza Rica. Más de 16 años acompañando sonrisas con estética,
+              prevención y tratamientos personalizados.
             </p>
             <p>
-              Abrimos sede en Villahermosa para estar más cerca de quienes ya confiaban en nosotros.
-              En ambas clínicas el trato es el mismo: explicación honesta, plan a tu medida y
-              atención cercana.
+              Trabajamos con equipo de vanguardia: dos unidades dentales, rayos X individual y
+              panorámico, y láser terapéutico, para ver con claridad antes de tratar.
             </p>
-            <p>La confianza se construye consulta a consulta.</p>
+          </div>
+          <div className="space-y-4 text-base leading-[1.625rem] text-white/85">
+            <p>
+              Hace un año abrimos sede en Villahermosa para estar más cerca de quienes ya confiaban
+              en nosotros. En ambas clínicas el trato es el mismo: explicación honesta, plan a tu
+              medida y atención cercana.
+            </p>
+            <p className="font-serif text-lg text-white">
+              La confianza se construye consulta a consulta.
+            </p>
           </div>
         </div>
       </div>

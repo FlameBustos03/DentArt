@@ -44,7 +44,7 @@ export const locations: ClinicLocation[] = [
     region: "Veracruz",
     addressLines: ["Cipres #204, Col. Chapultepec", "Poza Rica, Veracruz"],
     mapQuery: "Cipres 204 Colonia Chapultepec, Poza Rica, Veracruz, Mexico",
-    teamCapacity: "Equipo de dos doctores",
+    teamCapacity: "Equipo multidisciplinario",
   },
   {
     id: "villahermosa",
@@ -52,7 +52,7 @@ export const locations: ClinicLocation[] = [
     region: "Tabasco",
     addressLines: ["Ermitaño 9, mz 22, Valle del Jaguar", "Villahermosa, Tabasco"],
     mapQuery: "Ermitaño 9 manzana 22 Valle del Jaguar, Villahermosa, Tabasco, Mexico",
-    teamCapacity: "Un doctor",
+    teamCapacity: "Dra. Claudia Solís",
   },
 ];
 
@@ -123,18 +123,22 @@ export const clinicalTeams: ClinicalTeam[] = [
   {
     locationId: "poza-rica" as const,
     city: "Poza Rica",
-    summary: "2 unidades · 2 doctores · RX individual y panorámico",
+    summary: "2 unidades · RX individual y panorámico · equipo multidisciplinario",
     address: "Cipres #204, Col. Chapultepec",
-    unnamedCount: 2,
-    unnamedLabel: "Doctor",
+    members: [
+      { name: "Dra. Claudia Solís", role: "Cirujana dentista · Directora" },
+      { name: "Dr. Efrén Soto Santiago", role: "Cirujano maxilofacial" },
+      { name: "Dr. Jorge García", role: "Odontopediatra" },
+      { name: "Dra. Arlette Aquino", role: "Odontología general" },
+      { name: "Dra. Blanca Cotero", role: "Odontología general" },
+    ],
   },
   {
     locationId: "villahermosa" as const,
     city: "Villahermosa",
-    summary: "1 unidad · 1 doctor",
+    summary: "Sede reciente · equipo de vanguardia · láser terapéutico",
     address: "Ermitaño 9, mz 22, Valle del Jaguar",
-    unnamedCount: 1,
-    unnamedLabel: "Doctor",
+    members: [{ name: "Dra. Claudia Solís", role: "Cirujana dentista · Directora" }],
   },
 ];
 
@@ -154,17 +158,31 @@ export const serviceModalRows = [
 ] as const;
 
 export const leadClinician: LeadClinician = {
-  name: "Dra. Claudia Solis",
+  name: "Dra. Claudia Solís",
   eyebrow: "Quién te atiende",
-  role: "Estética dental y diseño de sonrisa · Dent Art",
+  role: "Cirujana dentista · Estética dental y diseño de sonrisa · Dent Art",
   blurb: [
-    "La Dra. Claudia Solis lidera Dent Art con un enfoque cercano en estética dental y diseño de sonrisa. En cada consulta prioriza escucharte, explicar opciones con claridad y construir un plan realista según tu salud bucal y lo que buscas lograr.",
-    "Con más de 16 años de trayectoria de Dent Art acompañando a familias en Poza Rica y Villahermosa, su práctica combina criterio clínico, prevención y tratamientos personalizados — siempre sin promesas vacías. El objetivo es que te sientas informado, seguro y acompañado en cada paso.",
+    "La Dra. Claudia Solís es egresada de la Facultad de Odontología de la Universidad Veracruzana, Campus Poza Rica–Tuxpan, titulada por CENEVAL con promedio de 9.8. Su formación continua incluye diversos cursos clínicos y dos diplomados: Ortopedia Maxilar y Diseño de Sonrisa. Actualmente está por ingresar a la especialidad de Ortodoncia en la Universidad Juárez Autónoma de Tabasco (UJAT).",
+    "Dirige las dos sedes de Dent Art. En Poza Rica encabeza un equipo multidisciplinario con cirujano maxilofacial, odontopediatra y odontólogas generales; la sede de Villahermosa, abierta hace un año, cuenta con equipo de vanguardia y todos los servicios, incluido el láser terapéutico.",
     "Si es tu primera visita, espera una conversación sobre tu motivo de consulta, una revisión cuidadosa y recomendaciones claras. Los resultados varían de persona a persona; el plan se define después de la evaluación profesional.",
   ],
+  credentials: [
+    "Universidad Veracruzana · Campus Poza Rica–Tuxpan",
+    "Titulación CENEVAL · promedio 9.8",
+    "Diplomado en Ortopedia Maxilar",
+    "Diplomado en Diseño de Sonrisa",
+    "Próximo ingreso: Especialidad en Ortodoncia · UJAT",
+  ],
+  cedula: {
+    src: "/team/cedula-claudia-solis.webp",
+    alt: "Cédula profesional electrónica 3820236 de Claudia Gabriela Solís Mezquida, Licenciatura como Cirujano Dentista, Universidad Veracruzana, expedida por la Dirección General de Profesiones de la SEP.",
+    width: 1163,
+    height: 1480,
+    number: "3820236",
+  },
   photo: {
     src: "/team/dra-claudia-solis.webp",
-    alt: "Dra. Claudia Solis, odontóloga de Dent Art, enfoque en estética dental y diseño de sonrisa.",
+    alt: "Dra. Claudia Solís, odontóloga de Dent Art, enfoque en estética dental y diseño de sonrisa.",
     width: 360,
     height: 420,
   },
