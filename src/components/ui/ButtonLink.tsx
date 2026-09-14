@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
-import { buttonClasses, type ButtonSize, type ButtonVariant } from "@/components/ui/Button";
+import { buttonClasses, type ButtonSize, type ButtonVariant } from "@/components/ui/buttonStyles";
 
 type LinkHref = ComponentProps<typeof Link>["href"];
 
