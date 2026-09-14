@@ -13,7 +13,7 @@ export function ServicesCatalog() {
   const [open, setOpen] = useState(false);
 
   return (
-    <section id="servicios" aria-labelledby="services-heading" className="scroll-mt-24 bg-mist py-20">
+    <section id="servicios" aria-labelledby="services-heading" className="bg-mist py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <motion.p
           initial={{ opacity: 0, y: 10 }}

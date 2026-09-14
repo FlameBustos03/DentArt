@@ -1,6 +1,6 @@
 export function About() {
   return (
-    <section id="nosotros" aria-labelledby="about-heading" className="scroll-mt-24 bg-white py-20">
+    <section id="nosotros" aria-labelledby="about-heading" className="bg-white py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <p className="text-xs uppercase tracking-[0.24em] text-lime-800">Nuestra historia</p>
         <h2 id="about-heading" className="mt-3 font-serif text-3xl text-ink-900 sm:text-5xl">
