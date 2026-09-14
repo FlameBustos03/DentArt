@@ -121,6 +121,8 @@ export const testimonialsCtaLabel = "Agendar";
 export const testimonialsDisclaimer =
   "Las opiniones reflejan experiencias individuales y no garantizan resultados. La información del sitio es general y no sustituye la consulta odontológica profesional. Resultados varían según cada paciente.";
 
+export const pageHeroTrustLine = "+16 años · Poza Rica y Villahermosa";
+
 export const trustBadges: TrustBadge[] = [
   {
     id: "trust",

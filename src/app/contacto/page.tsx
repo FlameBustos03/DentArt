@@ -48,6 +48,11 @@ export default function ContactoPage() {
                     <h3 className="font-serif text-3xl text-ink-900">{sede.heading}</h3>
                     <p className="mt-3 text-[color:var(--text-body)]">{sede.address}</p>
                     <p className="mt-2 text-sm text-[color:var(--text-muted)]">{sede.capacity}</p>
+                    <p className="mt-3">
+                      <a href={`tel:${clinicInfo.phoneTel}`} className="text-sm text-ink-900 hover:text-lime-800">
+                        {clinicInfo.phoneDisplay}
+                      </a>
+                    </p>
                     <SedeMap location={location} />
                   </article>
                 </li>

@@ -5,6 +5,7 @@ import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/JsonLd";
 import { LocationProvider } from "@/components/LocationProvider";
 import { Navbar } from "@/components/Navbar";
+import { WhatsAppChip } from "@/components/WhatsAppChip";
 import { clinicInfo } from "@/data/mockData";
 import "./globals.css";
 
@@ -50,6 +51,7 @@ export default function RootLayout({
           <Navbar />
           {children}
           <Footer />
+          <WhatsAppChip />
           <EmergencyFab />
           <p className="sr-only">
             {clinicInfo.name} · {clinicInfo.phoneDisplay}

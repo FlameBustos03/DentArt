@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { pageHeroTrustLine } from "@/data/mockData";
 import { cn } from "@/lib/utils";
 
 export interface PageHeroCta {
@@ -40,6 +41,7 @@ export function PageHero({
           {title}
         </h1>
         <p className="mt-4 max-w-2xl text-base leading-[26px] text-[color:var(--text-body)]">{lead}</p>
+        <p className="mt-3 text-sm text-[color:var(--text-muted)]">{pageHeroTrustLine}</p>
         {primaryCta || secondaryCta ? (
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             {primaryCta ? (
