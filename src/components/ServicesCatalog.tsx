@@ -1,13 +1,17 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Check, Sparkles } from "lucide-react";
-import { serviceGroups } from "@/data/mockData";
+import { serviceGroups, serviceModalRows } from "@/data/mockData";
 import { Button } from "@/components/ui/Button";
+import { Modal } from "@/components/ui/Modal";
 import { TiltCard } from "@/components/ui/TiltCard";
 import { scrollToId } from "@/lib/utils";
 
 export function ServicesCatalog() {
+  const [open, setOpen] = useState(false);
+
   return (
     <section id="servicios" aria-labelledby="services-heading" className="scroll-mt-24 bg-mist py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -63,12 +67,42 @@ export function ServicesCatalog() {
           ))}
         </ul>
 
-        <div className="mt-10">
-          <Button variant="primary" onClick={() => scrollToId("booking")}>
+        <div className="mt-10 flex flex-wrap gap-3">
+          <Button variant="primary" onClick={() => setOpen(true)}>
+            Ver catálogo
+          </Button>
+          <Button variant="ghost" onClick={() => scrollToId("booking")}>
             Agendar cita
           </Button>
         </div>
       </div>
+
+      <Modal open={open} title="Catálogo de servicios" onClose={() => setOpen(false)}>
+        <ol className="divide-y divide-black/10 text-sm">
+          {serviceModalRows.map((row, index) => (
+            <li key={`${row.group}-${row.name}`} className="flex items-baseline gap-3 py-2.5">
+              <span className="w-6 shrink-0 text-black/40">{index + 1}</span>
+              <span className="w-40 shrink-0 text-xs uppercase tracking-[0.14em] text-lime-800">
+                {row.group}
+              </span>
+              <span className="text-ink-900">{row.name}</span>
+            </li>
+          ))}
+        </ol>
+        <p className="mt-4 text-sm text-black/65">
+          El láser no sustituye el diagnóstico clínico.
+        </p>
+        <Button
+          variant="primary"
+          className="mt-6"
+          onClick={() => {
+            setOpen(false);
+            scrollToId("booking");
+          }}
+        >
+          Agendar cita
+        </Button>
+      </Modal>
     </section>
   );
 }

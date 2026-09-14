@@ -91,6 +91,30 @@ export const trustBadges: TrustBadge[] = [
 
 export const brandMarkAlt = "Dent Art — Atrévete a Sonreír";
 
+export const heroSubhead =
+  "Atención dental cercana y profesional en Poza Rica y Villahermosa. Más de 16 años acompañando sonrisas con estética, prevención y tratamientos personalizados, siempre definidos en consulta.";
+
+export const unnamedClinicians = [
+  { id: "pr-1", sede: "Poza Rica", role: "Equipo clínico" },
+  { id: "pr-2", sede: "Poza Rica", role: "Equipo clínico" },
+  { id: "vh-1", sede: "Villahermosa", role: "Equipo clínico" },
+] as const;
+
+export const serviceModalRows = [
+  { group: "Estética", name: "Diseño de sonrisa" },
+  { group: "Estética", name: "Carillas" },
+  { group: "Estética", name: "Blanqueamiento" },
+  { group: "General", name: "Limpieza" },
+  { group: "General", name: "Resinas" },
+  { group: "General", name: "Amalgamas e incrustaciones" },
+  { group: "Prótesis y ortodoncia", name: "Brackets" },
+  { group: "Prótesis y ortodoncia", name: "Ortopedia" },
+  { group: "Prótesis y ortodoncia", name: "Prótesis y puentes" },
+  { group: "Láser", name: "Terapéutico" },
+  { group: "Láser", name: "Blanqueamiento" },
+  { group: "Láser", name: "Anestesia" },
+] as const;
+
 export const leadClinician: LeadClinician = {
   name: "Dra. Claudia Solis",
   focus: "Estética y diseño de sonrisa",

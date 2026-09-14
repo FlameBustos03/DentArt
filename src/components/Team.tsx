@@ -1,4 +1,4 @@
-import { leadClinician, locations } from "@/data/mockData";
+import { leadClinician, locations, unnamedClinicians } from "@/data/mockData";
 
 export function Team() {
   const pozaRica = locations.find((location) => location.id === "poza-rica");
@@ -18,18 +18,24 @@ export function Team() {
           <p className="mt-4 text-black/70">{leadClinician.blurb}</p>
         </article>
 
-        <ul className="mt-8 grid gap-4 sm:grid-cols-2">
-          <li className="rounded-2xl border border-black/10 bg-white px-5 py-4">
-            <p className="text-xs uppercase tracking-[0.16em] text-lime-800">Poza Rica</p>
-            <p className="mt-2 font-serif text-xl text-ink-900">
-              {pozaRica?.teamCapacity ?? "Equipo de dos doctores"}
-            </p>
+        <ul className="mt-8 grid gap-4 sm:grid-cols-3">
+          {unnamedClinicians.map((clinician) => (
+            <li key={clinician.id} className="rounded-2xl border border-black/10 bg-white px-5 py-4">
+              <p className="text-xs uppercase tracking-[0.16em] text-lime-800">{clinician.sede}</p>
+              <p className="mt-2 font-serif text-xl text-ink-900">{clinician.role}</p>
+              <p className="mt-2 text-sm text-black/55">Sin nombre publicado.</p>
+            </li>
+          ))}
+        </ul>
+
+        <ul className="mt-6 grid gap-4 sm:grid-cols-2">
+          <li className="text-sm text-black/70">
+            <span className="font-medium text-ink-900">Poza Rica · </span>
+            {pozaRica?.teamCapacity ?? "Equipo de dos doctores"}
           </li>
-          <li className="rounded-2xl border border-black/10 bg-white px-5 py-4">
-            <p className="text-xs uppercase tracking-[0.16em] text-lime-800">Villahermosa</p>
-            <p className="mt-2 font-serif text-xl text-ink-900">
-              {villahermosa?.teamCapacity ?? "Un doctor"}
-            </p>
+          <li className="text-sm text-black/70">
+            <span className="font-medium text-ink-900">Villahermosa · </span>
+            {villahermosa?.teamCapacity ?? "Un doctor"}
           </li>
         </ul>
       </div>

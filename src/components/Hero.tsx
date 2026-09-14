@@ -13,6 +13,7 @@ import {
   clinicHoursLabel,
   clinicInfo,
   emergencyPrefillMessage,
+  heroSubhead,
   heroImages,
   trustBadges,
 } from "@/data/mockData";
@@ -71,8 +72,7 @@ export function Hero() {
             />
           </h1>
           <p data-hero-exclude className="mt-6 max-w-xl text-base text-white/85 sm:text-lg">
-            Atención dental cercana y profesional en Poza Rica y Villahermosa. Más de 16 años
-            acompañando sonrisas con estética, prevención y tratamientos personalizados.
+            {heroSubhead}
           </p>
           <div data-hero-exclude className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button variant="primary" size="lg" onClick={() => scrollToId("booking")}>
