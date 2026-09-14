@@ -50,7 +50,7 @@ export function SmileVisualizer() {
   };
 
   return (
-    <section id="before-after" aria-labelledby="visualizer-heading" className="scroll-mt-24 bg-mist py-20">
+    <section id="before-after" aria-labelledby="visualizer-heading" className="bg-mist py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <p className="text-xs uppercase tracking-[0.24em] text-lime-800">Interactive makeover gallery</p>
         <h2

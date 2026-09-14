@@ -3,7 +3,9 @@ import type {
   Certification,
   ClinicInfo,
   ClinicLocation,
+  ClinicalTeam,
   ConsultationModeOption,
+  CorporatePlan,
   Doctor,
   FAQItem,
   Insurer,
@@ -30,7 +32,10 @@ export const DEFAULT_LOCATION_ID: LocationId = "poza-rica";
 export const clinicHoursLabel =
   "Lun–Vie 10:00–13:00 y 16:00–19:00 · Sáb 10:00–13:00";
 
-export const clinicHoursNote = "Mismo horario en ambas sedes, salvo aviso.";
+export const clinicHoursNote = "Mismo horario en ambas sedes.";
+
+export const locationsIntro =
+  "Encuéntranos en Poza Rica y Villahermosa — mismo horario en ambas sedes.";
 
 export const locations: ClinicLocation[] = [
   {
@@ -94,11 +99,24 @@ export const brandMarkAlt = "Dent Art — Atrévete a Sonreír";
 export const heroSubhead =
   "Atención dental cercana y profesional en Poza Rica y Villahermosa. Más de 16 años acompañando sonrisas con estética, prevención y tratamientos personalizados, siempre definidos en consulta.";
 
-export const unnamedClinicians = [
-  { id: "pr-1", sede: "Poza Rica", role: "Equipo clínico" },
-  { id: "pr-2", sede: "Poza Rica", role: "Equipo clínico" },
-  { id: "vh-1", sede: "Villahermosa", role: "Equipo clínico" },
-] as const;
+export const clinicalTeams: ClinicalTeam[] = [
+  {
+    locationId: "poza-rica" as const,
+    city: "Poza Rica",
+    summary: "2 unidades · 2 doctores · RX individual y panorámico",
+    address: "Cipres #204, Col. Chapultepec",
+    unnamedCount: 2,
+    unnamedLabel: "Doctor",
+  },
+  {
+    locationId: "villahermosa" as const,
+    city: "Villahermosa",
+    summary: "1 unidad · 1 doctor",
+    address: "Ermitaño 9, mz 22, Valle del Jaguar",
+    unnamedCount: 1,
+    unnamedLabel: "Doctor",
+  },
+];
 
 export const serviceModalRows = [
   { group: "Estética", name: "Diseño de sonrisa" },
@@ -117,8 +135,19 @@ export const serviceModalRows = [
 
 export const leadClinician: LeadClinician = {
   name: "Dra. Claudia Solis",
-  focus: "Estética y diseño de sonrisa",
-  blurb: "Estética y diseño de sonrisa en Dent Art.",
+  eyebrow: "Quién te atiende",
+  role: "Estética dental y diseño de sonrisa · Dent Art",
+  blurb: [
+    "La Dra. Claudia Solis lidera Dent Art con un enfoque cercano en estética dental y diseño de sonrisa. En cada consulta prioriza escucharte, explicar opciones con claridad y construir un plan realista según tu salud bucal y lo que buscas lograr.",
+    "Con más de 16 años de trayectoria de Dent Art acompañando a familias en Poza Rica y Villahermosa, su práctica combina criterio clínico, prevención y tratamientos personalizados — siempre sin promesas vacías. El objetivo es que te sientas informado, seguro y acompañado en cada paso.",
+    "Si es tu primera visita, espera una conversación sobre tu motivo de consulta, una revisión cuidadosa y recomendaciones claras. Los resultados varían de persona a persona; el plan se define después de la evaluación profesional.",
+  ],
+  photo: {
+    src: "/team/dra-claudia-solis.webp",
+    alt: "Dra. Claudia Solis, odontóloga de Dent Art, enfoque en estética dental y diseño de sonrisa.",
+    width: 360,
+    height: 420,
+  },
 };
 
 export const serviceGroups: ServiceGroup[] = [
@@ -149,22 +178,50 @@ export const insurers: Insurer[] = [
   {
     id: "dentegra",
     name: "Dentegra",
-    note: "Aceptada, incluida odontopediatría según el plan vigente.",
+    caption: "Dentegra (incluye odontopediatría)",
   },
   {
     id: "dentalia",
     name: "Dentalia",
-    note: "Aceptada. La cobertura depende del plan vigente.",
-  },
-  {
-    id: "empresarial",
-    name: "Planes empresariales",
-    note: "Home Depot, Liverpool y sector petrolero, según vigencia.",
+    caption: "Dentalia",
   },
 ];
 
+export const insurersIntro =
+  "Trabajamos con aseguradoras dentales para facilitar tu atención.";
+
 export const insurersMicrocopy =
   "Pregunta por tu cobertura al agendar. Las coberturas dependen del plan vigente.";
+
+export const insurersHelper =
+  "No todas las prestaciones están incluidas en todos los planes.";
+
+export const corporatePlans: CorporatePlan[] = [
+  {
+    id: "home-depot",
+    name: "Home Depot",
+    note: "Home Depot — según convenio vigente",
+    variant: "placeholder",
+  },
+  {
+    id: "liverpool",
+    name: "Liverpool",
+    note: "Liverpool — según convenio vigente",
+    variant: "placeholder",
+  },
+  {
+    id: "sector-petrolero",
+    name: "Sector Petrolero",
+    note: "Sector Petrolero — según convenio vigente",
+    variant: "badge",
+  },
+];
+
+export const plansIntro =
+  "También atendemos planes dentales de empresa, sujetos a vigencia y condiciones de cada convenio.";
+
+export const plansFooter =
+  "Al agendar, indícanos tu empresa o plan para orientarte sobre requisitos y cobertura.";
 
 export const socialLinks = [
   {
@@ -182,7 +239,7 @@ export const socialLinks = [
 ] as const;
 
 export const medicalDisclaimer =
-  "La información de este sitio es de orientación general y no sustituye la evaluación, el diagnóstico ni el tratamiento que realiza un profesional de la salud bucal en consulta. Cada plan se define de forma individual tras la exploración clínica. En caso de trauma, sangrado intenso o inflamación que comprometa la vía aérea, acude a un servicio de urgencias.";
+  "La información de este sitio es de carácter general e informativo sobre servicios odontológicos de Dent Art. No sustituye la consulta, diagnóstico ni tratamiento profesional. Los resultados varían según cada paciente. Coberturas de seguros y planes empresariales sujetas a vigencia y condiciones del plan. Ante urgencia dental, contacta al consultorio o a servicios de emergencia locales.";
 
 export const mediaOutlets: MediaOutlet[] = [
   { id: "tv", name: "As Seen On TV", caption: "National broadcast features" },
@@ -503,32 +560,38 @@ export const consultationModes: ConsultationModeOption[] = [
 const WEEKDAY_SLOT_TIMES = ["10:00", "11:00", "12:00", "16:00", "17:00", "18:00"] as const;
 const SATURDAY_SLOT_TIMES = ["10:00", "11:00", "12:00"] as const;
 
-function buildSlots(seed: number, times: readonly string[]): TimeSlot[] {
+function buildSlots(seed: number, times: readonly string[], notBeforeHour: number): TimeSlot[] {
   return times.map((time, index) => ({
     id: `slot-${seed}-${index}`,
     time,
-    available: (seed + index) % 5 !== 0,
+    available: (seed + index) % 5 !== 0 && Number(time.slice(0, 2)) > notBeforeHour,
   }));
 }
 
-function formatBookingDate(date: Date, times: readonly string[]): BookingDate {
+/** `notBeforeHour` hides slots that already passed when the date is today. */
+function formatBookingDate(date: Date, times: readonly string[], notBeforeHour: number): BookingDate {
   const iso = date.toISOString().slice(0, 10);
   const weekday = date.toLocaleDateString("es-MX", { weekday: "short" });
   const label = date.toLocaleDateString("es-MX", { day: "numeric", month: "short" });
   const seed = date.getDate() + date.getMonth();
-  return { iso, label, weekday, slots: buildSlots(seed, times) };
+  return { iso, label, weekday, slots: buildSlots(seed, times, notBeforeHour) };
 }
 
 export function getUpcomingBookingDates(count = 10): BookingDate[] {
   const dates: BookingDate[] = [];
-  const cursor = new Date();
+  const now = new Date();
+  const cursor = new Date(now);
   cursor.setHours(12, 0, 0, 0);
 
   while (dates.length < count) {
     const day = cursor.getDay();
     if (day !== 0) {
       const times = day === 6 ? SATURDAY_SLOT_TIMES : WEEKDAY_SLOT_TIMES;
-      dates.push(formatBookingDate(new Date(cursor), times));
+      const isToday = cursor.toDateString() === now.toDateString();
+      const entry = formatBookingDate(new Date(cursor), times, isToday ? now.getHours() : -1);
+      if (entry.slots.some((slot) => slot.available)) {
+        dates.push(entry);
+      }
     }
     cursor.setDate(cursor.getDate() + 1);
   }

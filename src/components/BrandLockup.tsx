@@ -3,6 +3,7 @@
 import type { Ref } from "react";
 import Image from "next/image";
 import { brandMarkAlt } from "@/data/mockData";
+import { brandLockupImage } from "@/lib/brandAssets";
 import { cn } from "@/lib/utils";
 
 export interface BrandLockupProps {
@@ -13,9 +14,12 @@ export interface BrandLockupProps {
   className?: string;
 }
 
+/** The lockup PNG is 1125x422; the butterfly-D occupies its left 38%. */
+const LOCKUP_ASPECT = "aspect-[1125/422]";
+
 const BOX: Record<NonNullable<BrandLockupProps["size"]>, string> = {
-  nav: "h-10 w-[9.25rem] sm:w-[10.5rem]",
-  hero: "h-[4.5rem] w-[min(28rem,88vw)] sm:h-24 sm:w-[min(36rem,90vw)]",
+  nav: "h-10",
+  hero: "h-[4.5rem] sm:h-24",
 };
 
 export function BrandLockup({
@@ -28,8 +32,7 @@ export function BrandLockup({
   return (
     <span
       ref={lockupRef}
-      className={cn("relative inline-block shrink-0 bg-transparent", BOX[size], className)}
-      style={{ backgroundColor: "transparent" }}
+      className={cn("relative inline-block shrink-0 bg-transparent", LOCKUP_ASPECT, BOX[size], className)}
     >
       <span
         ref={dockRef}
@@ -37,18 +40,19 @@ export function BrandLockup({
         data-lockup-d=""
         aria-hidden="true"
       />
-      {showLockup ? (
-        <Image
-          src="/brand/dent-art-lockup.png"
-          alt={brandMarkAlt}
-          fill
-          unoptimized
-          className="bg-transparent object-contain object-left"
-          style={{ backgroundColor: "transparent" }}
-          sizes={size === "hero" ? "(min-width: 640px) 36rem, 88vw" : "192px"}
-          priority
-        />
-      ) : null}
+      {/* Always mounted so the heading keeps its accessible name and the PNG is
+          preloaded while the butterfly is still in flight. */}
+      <Image
+        src={brandLockupImage}
+        alt={brandMarkAlt}
+        fill
+        className={cn(
+          "bg-transparent object-contain object-left motion-safe:transition-opacity motion-safe:duration-300",
+          showLockup ? "opacity-100" : "opacity-0",
+        )}
+        sizes={size === "hero" ? "(min-width: 640px) 256px, 192px" : "107px"}
+        priority
+      />
     </span>
   );
 }

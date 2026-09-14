@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, Playfair_Display } from "next/font/google";
+import { JsonLd } from "@/components/JsonLd";
 import { LocationProvider } from "@/components/LocationProvider";
 import { clinicInfo } from "@/data/mockData";
 import "./globals.css";
@@ -38,6 +39,7 @@ export default function RootLayout({
   return (
     <html lang="es-MX" className={`${playfair.variable} ${dmSans.variable}`}>
       <body className="min-h-screen bg-white font-sans text-ink-900">
+        <JsonLd />
         <a className="skip-link" href="#main-content">
           Ir al contenido principal
         </a>

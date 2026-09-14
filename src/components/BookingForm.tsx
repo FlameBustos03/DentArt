@@ -58,13 +58,16 @@ export function BookingForm() {
     setForm((prev) => (prev.locationId === locationId ? prev : { ...prev, locationId }));
   }, [locationId]);
 
-  const isFirstStepFocus = useRef(true);
+  // Track the last step we focused for instead of a "skip first run" flag:
+  // StrictMode re-runs mount effects, and the flag variant focused (and scrolled
+  // the page to) the booking heading on initial load.
+  const focusedStep = useRef(step);
 
   useEffect(() => {
-    if (isFirstStepFocus.current) {
-      isFirstStepFocus.current = false;
+    if (focusedStep.current === step) {
       return;
     }
+    focusedStep.current = step;
     headingRef.current?.focus();
   }, [step]);
 
@@ -129,7 +132,7 @@ export function BookingForm() {
   };
 
   return (
-    <section id="booking" aria-labelledby="booking-heading" className="scroll-mt-24 bg-ink-900 py-20 text-white">
+    <section id="booking" aria-labelledby="booking-heading" className="bg-ink-900 py-20 text-white">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <p className="text-xs uppercase tracking-[0.24em] text-lime-400">Agenda</p>
         <h2 id="booking-heading" className="mt-3 font-serif text-3xl sm:text-5xl">
@@ -145,7 +148,7 @@ export function BookingForm() {
           </p>
         </div>
 
-        <ol className="mt-8 flex flex-wrap gap-3 text-sm" aria-label="Booking progress">
+        <ol className="mt-8 flex flex-wrap gap-3 text-sm" aria-label="Progreso de la cita">
           {STEP_LABELS.map((label, index) => {
             const value = index + 1;
             const current = value === step;
@@ -282,6 +285,7 @@ export function BookingForm() {
                       <button
                         key={date.iso}
                         type="button"
+                        aria-pressed={selected}
                         onClick={() => {
                           setForm((prev) => ({ ...prev, dateIso: date.iso, slotId: "" }));
                           setErrors((prev) => ({ ...prev, dateIso: undefined, slotId: undefined }));
@@ -313,6 +317,7 @@ export function BookingForm() {
                     <button
                       key={slot.id}
                       type="button"
+                      aria-pressed={form.slotId === slot.id}
                       disabled={!slot.available}
                       onClick={() => {
                         setForm((prev) => ({ ...prev, slotId: slot.id }));
@@ -452,7 +457,9 @@ export function BookingForm() {
               <strong>Modalidad:</strong> {selectedMode?.label}
             </li>
             <li>
-              <strong>Cuando:</strong> {form.dateIso} {selectedSlot ? `· ${selectedSlot.time}` : ""}
+              <strong>Cuándo:</strong>{" "}
+              {selectedDate ? `${selectedDate.weekday} ${selectedDate.label}` : form.dateIso}
+              {selectedSlot ? ` · ${selectedSlot.time}` : ""}
             </li>
             <li>
               <strong>Paciente:</strong> {form.fullName}

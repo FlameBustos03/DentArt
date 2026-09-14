@@ -2,7 +2,6 @@ import { Clock, Mail, MapPin, MessageCircle, Phone, Scale } from "lucide-react";
 import { BrandLockup } from "@/components/BrandLockup";
 import { SocialLinks } from "@/components/SocialLinks";
 import {
-  clinicHoursLabel,
   clinicHoursNote,
   clinicInfo,
   conciergePrefillMessage,
@@ -15,7 +14,7 @@ export function Footer() {
   const whatsappHref = buildWhatsAppUrl(clinicInfo.whatsappNumber, conciergePrefillMessage);
 
   return (
-    <footer id="contact" className="scroll-mt-24 bg-ink-900 text-white">
+    <footer id="contact" className="bg-ink-900 text-white">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-4">
         <div>
           <BrandLockup size="nav" />
@@ -48,21 +47,18 @@ export function Footer() {
 
         <div>
           <h2 className="text-xs uppercase tracking-[0.22em] text-lime-400">Horario</h2>
-          <p className="mt-4 flex items-start gap-2 text-sm">
-            <Clock className="mt-0.5 h-4 w-4 text-lime-500" aria-hidden="true" />
-            <span>
-              <span className="block text-white">{clinicHoursLabel}</span>
-              <span className="text-white/75">{clinicHoursNote}</span>
-            </span>
-          </p>
           <ul className="mt-4 space-y-3 text-sm">
             {clinicInfo.hours.map((row) => (
-              <li key={row.days} className="text-white/80">
-                <span className="block text-white">{row.days}</span>
-                {row.hours}
+              <li key={row.days} className="flex items-start gap-2 text-white/80">
+                <Clock className="mt-0.5 h-4 w-4 shrink-0 text-lime-500" aria-hidden="true" />
+                <span>
+                  <span className="block text-white">{row.days}</span>
+                  {row.hours}
+                </span>
               </li>
             ))}
           </ul>
+          <p className="mt-4 text-sm text-white/75">{clinicHoursNote}</p>
         </div>
 
         <div>
