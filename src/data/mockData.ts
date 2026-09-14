@@ -25,9 +25,12 @@ import type {
   TreatmentOption,
   TrustBadge,
   VisualizerCase,
+  Weekday,
 } from "@/types";
 
 export const DEFAULT_LOCATION_ID: LocationId = "poza-rica";
+
+const weekdays: Weekday[] = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
 export const clinicHoursLabel =
   "Lun–Vie 10:00–13:00 y 16:00–19:00 · Sáb 10:00–13:00";
@@ -73,6 +76,11 @@ export const clinicInfo: ClinicInfo = {
   hours: [
     { days: "Lun–Vie", hours: "10:00–13:00 y 16:00–19:00" },
     { days: "Sáb", hours: "10:00–13:00" },
+  ],
+  schedule: [
+    { days: weekdays, opens: "10:00", closes: "13:00" },
+    { days: weekdays, opens: "16:00", closes: "19:00" },
+    { days: ["Saturday"], opens: "10:00", closes: "13:00" },
   ],
 };
 
