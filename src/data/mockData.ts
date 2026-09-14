@@ -199,11 +199,13 @@ export const insurers: Insurer[] = [
     id: "dentegra",
     name: "Dentegra",
     caption: "Dentegra (incluye odontopediatría)",
+    logoSrc: "/partners/dentegra.png",
   },
   {
     id: "dentalia",
     name: "Dentalia",
     caption: "Dentalia",
+    logoSrc: "/partners/dentalia.png",
   },
 ];
 
@@ -221,13 +223,15 @@ export const corporatePlans: CorporatePlan[] = [
     id: "home-depot",
     name: "Home Depot",
     note: "Home Depot — según convenio vigente",
-    variant: "placeholder",
+    variant: "logo",
+    logoSrc: "/partners/home-depot.png",
   },
   {
     id: "liverpool",
     name: "Liverpool",
     note: "Liverpool — según convenio vigente",
-    variant: "placeholder",
+    variant: "logo",
+    logoSrc: "/partners/liverpool.png",
   },
   {
     id: "sector-petrolero",
