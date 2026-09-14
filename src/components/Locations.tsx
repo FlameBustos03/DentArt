@@ -40,7 +40,7 @@ export function Locations() {
                       : "border-black/10 bg-white hover:border-lime-800/40",
                   )}
                 >
-                  <div className="flex items-start justify-between gap-3">
+                  <div className="flex flex-wrap items-start justify-between gap-3">
                     <p className="text-xs uppercase tracking-[0.16em] text-lime-800">
                       {selected ? "Sede seleccionada" : "Sede"}
                     </p>
