@@ -5,6 +5,7 @@ import {
   clinicHoursNote,
   clinicInfo,
   conciergePrefillMessage,
+  footerSitemap,
   locations,
   medicalDisclaimer,
 } from "@/data/mockData";
@@ -62,8 +63,16 @@ export function Footer() {
         </div>
 
         <div>
-          {/* Dental Box — reserved shop column. Empty until merch IA lands. */}
-          <h2 className="text-xs uppercase tracking-[0.22em] text-lime-400">Tienda</h2>
+          <h2 className="text-xs uppercase tracking-[0.22em] text-lime-400">Mapa del sitio</h2>
+          <ul className="mt-4 space-y-3 text-sm">
+            {footerSitemap.map((link) => (
+              <li key={link.id}>
+                <a href={link.href} className="hover:text-lime-400">
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
 
         <div>
@@ -87,6 +96,15 @@ export function Footer() {
       </div>
       <div className="border-t border-white/10">
         <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-6 text-xs text-white/70 sm:px-6">
+          <p>
+            <a href={`tel:${clinicInfo.phoneTel}`} className="hover:text-lime-400">
+              {clinicInfo.phoneDisplay}
+            </a>
+            {" · "}
+            <a href={`mailto:${clinicInfo.email}`} className="hover:text-lime-400">
+              {clinicInfo.email}
+            </a>
+          </p>
           <p>© {new Date().getFullYear()} Dent Art. Todos los derechos reservados.</p>
           <p className="flex max-w-4xl items-start gap-2">
             <Scale className="mt-0.5 h-3.5 w-3.5 shrink-0 text-lime-500" aria-hidden="true" />
