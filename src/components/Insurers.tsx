@@ -58,10 +58,7 @@ export function PartnerRow() {
                 </span>
               </div>
             ) : (
-              <div
-                className="flex h-20 w-40 items-center justify-center rounded-2xl border border-dashed border-black/25 bg-mist px-3 text-center"
-                aria-label={plan.name}
-              >
+              <div className="flex h-20 w-40 items-center justify-center rounded-2xl border border-dashed border-black/25 bg-mist px-3 text-center">
                 <span className="text-sm font-semibold tracking-wide text-ink-900">{plan.name}</span>
               </div>
             )}
