@@ -76,12 +76,12 @@ export function Navbar({ className }: NavbarProps) {
   return (
     <header className={cn("sticky top-0 z-40", className)}>
       <div className="glass-nav">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6 2xl:max-w-7xl">
           <a href="#main-content" className="group min-w-0">
             <BrandLockup size="nav" />
           </a>
 
-          <nav aria-label="Primary" className="hidden items-center gap-6 xl:flex">
+          <nav aria-label="Principal" className="hidden items-center gap-6 xl:flex">
             {navLinks.map((link) => (
               <a
                 key={link.id}
@@ -94,16 +94,21 @@ export function Navbar({ className }: NavbarProps) {
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
-            <SocialLinks className="hidden xl:flex" tone="light" />
+            <SocialLinks className="hidden 2xl:flex" tone="light" compact />
             <a
               href={`tel:${clinicInfo.phoneTel}`}
-              className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-3.5 py-2 text-sm text-ink-900 hover:border-lime-800"
+              className="inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-black/10 bg-white px-3.5 py-2 text-sm text-ink-900 hover:border-lime-800"
             >
               <Phone className="h-4 w-4 text-lime-800" aria-hidden="true" />
               <span className="font-medium">Llamar</span>
               <span className="hidden text-black/60 xl:inline">{clinicInfo.phoneDisplay}</span>
             </a>
-            <Button variant="primary" size="sm" onClick={() => scrollToId("booking")}>
+            <Button
+              variant="primary"
+              size="sm"
+              className="whitespace-nowrap"
+              onClick={() => scrollToId("booking")}
+            >
               Agendar cita
             </Button>
           </div>
@@ -128,7 +133,7 @@ export function Navbar({ className }: NavbarProps) {
           <div className="fixed inset-0 z-50 xl:hidden">
             <motion.button
               type="button"
-              aria-label="Close navigation overlay"
+              aria-label="Cerrar menú"
               className="absolute inset-0 bg-ink-900/50"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -139,7 +144,7 @@ export function Navbar({ className }: NavbarProps) {
               id={drawerId}
               role="dialog"
               aria-modal="true"
-              aria-label="Mobile navigation"
+              aria-label="Navegación móvil"
               className="absolute right-0 top-0 flex h-full w-[min(22rem,92vw)] flex-col bg-white px-6 py-5 shadow-lift"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
@@ -147,7 +152,7 @@ export function Navbar({ className }: NavbarProps) {
               transition={{ type: "tween", duration: 0.28 }}
             >
               <div className="mb-8 flex items-center justify-between">
-                <p className="text-2xl font-semibold text-ink-900">Menu</p>
+                <p className="text-2xl font-semibold text-ink-900">Menú</p>
                 <Button
                   ref={closeButtonRef}
                   variant="ghost"
@@ -159,7 +164,7 @@ export function Navbar({ className }: NavbarProps) {
                   <span className="sr-only">Cerrar menú</span>
                 </Button>
               </div>
-              <nav aria-label="Mobile primary" className="flex flex-col gap-4">
+              <nav aria-label="Principal móvil" className="flex flex-col gap-4">
                 {navLinks.map((link) => (
                   <a
                     key={link.id}
