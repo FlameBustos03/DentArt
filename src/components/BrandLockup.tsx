@@ -37,7 +37,9 @@ export function BrandLockup({
         "relative inline-block shrink-0",
         LOCKUP_ASPECT,
         BOX[size],
-        plate && "rounded-2xl bg-white",
+        // overflow-hidden: the PNG has its own white background, so without
+        // clipping its square corners paint over the rounded plate.
+        plate && "overflow-hidden rounded-2xl bg-white",
         className,
       )}
     >

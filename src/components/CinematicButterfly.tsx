@@ -208,9 +208,12 @@ export function CinematicButterfly({ targetRef, onSettled }: CinematicButterflyP
     return null;
   }
 
+  // Above the hero copy (z-10): the flyer must stay visible while it crosses
+  // the plate to dock, otherwise it slides underneath and vanishes. The
+  // rounding matches the plate's corners so the docked crop is seamless.
   return (
     <motion.div
-      className="pointer-events-none absolute z-[5]"
+      className="pointer-events-none absolute z-20 overflow-hidden rounded-2xl"
       style={{ width: flight.width, height: flight.height }}
       initial={{ left: flight.start.x, top: flight.start.y, opacity: 1 }}
       animate={{
