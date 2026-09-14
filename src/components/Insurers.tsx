@@ -52,16 +52,13 @@ export function PartnerRow() {
         {corporatePlans.map((plan) => (
           <li key={plan.id} className="min-w-[10rem]">
             {plan.variant === "badge" ? (
-              <div className="flex h-20 items-center">
+              <div className="flex h-20 items-center" aria-hidden="true">
                 <span className="inline-flex rounded-full border border-lime-800/30 bg-lime-500/20 px-4 py-2 text-sm font-medium text-ink-900">
                   {plan.name}
                 </span>
               </div>
             ) : (
-              <div
-                className="flex h-20 w-40 items-center justify-center rounded-2xl border border-dashed border-black/25 bg-mist px-3 text-center"
-                aria-label={plan.name}
-              >
+              <div className="flex h-20 w-40 items-center justify-center rounded-2xl border border-dashed border-black/25 bg-mist px-3 text-center" aria-hidden="true">
                 <span className="text-sm font-semibold tracking-wide text-ink-900">{plan.name}</span>
               </div>
             )}

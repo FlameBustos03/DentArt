@@ -10,6 +10,7 @@ import { Locations } from "@/components/Locations";
 import { Navbar } from "@/components/Navbar";
 import { ServicesCatalog } from "@/components/ServicesCatalog";
 import { Team } from "@/components/Team";
+import { Testimonials } from "@/components/Testimonials";
 
 export default function HomePage() {
   return (
@@ -19,6 +20,7 @@ export default function HomePage() {
         <Hero />
         <About />
         <ServicesCatalog />
+        <Testimonials />
         <Team />
         <Insurers />
         <Locations />

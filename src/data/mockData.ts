@@ -86,6 +86,26 @@ export const navLinks: NavLink[] = [
   { id: "booking", label: "Citas", href: "#booking" },
 ];
 
+export const footerSitemap: NavLink[] = [
+  { id: "inicio", label: "Inicio", href: "/" },
+  { id: "servicios", label: "Servicios", href: "#servicios" },
+  { id: "equipo", label: "Equipo", href: "#equipo" },
+  { id: "seguros", label: "Seguros", href: "#seguros" },
+  { id: "sedes", label: "Sedes", href: "#sedes" },
+  { id: "faq", label: "FAQ", href: "#faq" },
+  { id: "booking", label: "Agendar", href: "#booking" },
+];
+
+export const testimonialsEyebrow = "Pacientes Dent Art";
+export const testimonialsHeading = "Lo que dicen quienes ya nos visitaron";
+export const testimonialsIntro =
+  "Historias reales de atención cercana en Poza Rica y Villahermosa. Cada sonrisa empieza con una buena conversación.";
+export const testimonialsStarLabel = "Experiencia en consulta";
+export const testimonialsCtaPrompt = "¿Listo para tu próxima cita?";
+export const testimonialsCtaLabel = "Agendar";
+export const testimonialsDisclaimer =
+  "Las opiniones reflejan experiencias individuales y no garantizan resultados. La información del sitio es general y no sustituye la consulta odontológica profesional. Resultados varían según cada paciente.";
+
 export const trustBadges: TrustBadge[] = [
   {
     id: "trust",
@@ -561,14 +581,18 @@ const WEEKDAY_SLOT_TIMES = ["10:00", "11:00", "12:00", "16:00", "17:00", "18:00"
 const SATURDAY_SLOT_TIMES = ["10:00", "11:00", "12:00"] as const;
 
 function buildSlots(seed: number, times: readonly string[], notBeforeHour: number): TimeSlot[] {
-  return times.map((time, index) => ({
-    id: `slot-${seed}-${index}`,
-    time,
-    available: (seed + index) % 5 !== 0 && Number(time.slice(0, 2)) > notBeforeHour,
-  }));
+  // Slots that already passed today are dropped, not flagged `available: false`:
+  // the form renders unavailable slots as "Ocupado", which is the wrong story
+  // for a time that has simply gone by.
+  return times.flatMap((time, index) => {
+    if (Number(time.slice(0, 2)) <= notBeforeHour) {
+      return [];
+    }
+    return [{ id: `slot-${seed}-${index}`, time, available: (seed + index) % 5 !== 0 }];
+  });
 }
 
-/** `notBeforeHour` hides slots that already passed when the date is today. */
+/** `notBeforeHour` drops slots that already passed when the date is today. */
 function formatBookingDate(date: Date, times: readonly string[], notBeforeHour: number): BookingDate {
   const iso = date.toISOString().slice(0, 10);
   const weekday = date.toLocaleDateString("es-MX", { weekday: "short" });
@@ -601,93 +625,51 @@ export function getUpcomingBookingDates(count = 10): BookingDate[] {
 
 export const testimonials: Testimonial[] = [
   {
-    id: "amelia",
-    name: "Amelia Hart",
-    treatment: "Porcelain Veneers",
+    id: "mr-poza-rica",
+    initials: "M.R.",
+    location: "Poza Rica",
     quote:
-      "I expected a cosmetic clinic. I received a medical brief, a shade story, and a smile that still looks like mine—just finished for camera.",
+      "Me explicaron cada paso con calma. Salí entendiendo mi plan y sin presión para decidir en el momento.",
     rating: 5,
-    verified: true,
-    location: "Poza Rica, Veracruz",
-    kind: "review",
-    image: {
-      src: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80",
-      alt: "Portrait of Amelia Hart",
-      width: 400,
-      height: 400,
-    },
   },
   {
-    id: "talent-a",
-    name: "Confidential talent · film",
-    treatment: "Full Mouth Rehabilitation",
-    quote:
-      "Production could not see a temporary denture. Dent Art staged All-on-4 provisionals between call times. The private screening of my testimonial is available at consultation.",
+    id: "al-villahermosa",
+    initials: "A.L.",
+    location: "Villahermosa",
+    quote: "El trato fue cercano desde la recepción. Me sentí escuchada y eso hizo toda la diferencia.",
     rating: 5,
-    verified: true,
-    location: "Ciudad de México / Poza Rica",
-    kind: "video",
-    duration: "2:14",
-    privacyNote: "Identity withheld by request. Full screening reserved for VIP consultation guests.",
-    image: {
-      src: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=800&q=80",
-      alt: "Soft-focus portrait placeholder for a confidential film talent testimonial",
-      width: 800,
-      height: 800,
-    },
   },
   {
-    id: "theo",
-    name: "Theo Lang",
-    treatment: "All-on-4 Implants",
+    id: "jc-poza-rica",
+    initials: "J.C.",
+    location: "Poza Rica",
     quote:
-      "The guided surgery was quieter than my last filling. I left with teeth that day and a plan I could actually understand.",
+      "Buena organización de horarios y atención clara. Resolvieron mis dudas sobre el tratamiento antes de empezar.",
     rating: 5,
-    verified: true,
-    location: "Tampico, Tamaulipas",
-    kind: "review",
-    image: {
-      src: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
-      alt: "Portrait of Theo Lang",
-      width: 400,
-      height: 400,
-    },
   },
   {
-    id: "talent-b",
-    name: "Confidential talent · television",
-    treatment: "Invisalign + Zoom! Whitening",
+    id: "sp-villahermosa",
+    initials: "S.P.",
+    location: "Villahermosa",
     quote:
-      "No metal, no lectures, no leaked paparazzi dental visits. The virtual consult happened in a hotel suite. The result is quietly expensive-looking.",
+      "Ambiente profesional y amable. Me gustó que hablaran en lenguaje sencillo, sin tecnicismos de más.",
     rating: 5,
-    verified: true,
-    location: "Undisclosed",
-    kind: "video",
-    duration: "1:48",
-    privacyNote: "Broadcast identity withheld. Request a private viewing when you book.",
-    image: {
-      src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
-      alt: "Soft-focus portrait placeholder for a confidential television talent testimonial",
-      width: 800,
-      height: 800,
-    },
   },
   {
-    id: "nola",
-    name: "Nola Reyes",
-    treatment: "VIP Sedation + Veneers",
+    id: "lg-poza-rica",
+    initials: "L.G.",
+    location: "Poza Rica",
     quote:
-      "I have avoided dentists for twelve years. They wrote a comfort plan, named the anesthesiologist, and I woke up to a smile I recognized.",
+      "Llevé a mi hijo y se sintió tranquilo. El equipo fue paciente y muy cuidadoso en todo momento.",
     rating: 5,
-    verified: true,
-    location: "Xalapa, Veracruz",
-    kind: "review",
-    image: {
-      src: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80",
-      alt: "Portrait of Nola Reyes",
-      width: 400,
-      height: 400,
-    },
+  },
+  {
+    id: "rh-villahermosa",
+    initials: "R.H.",
+    location: "Villahermosa",
+    quote:
+      "Agendar por WhatsApp fue fácil. En la cita me orientaron sobre opciones y tiempos de forma realista.",
+    rating: 5,
   },
 ];
 

@@ -156,20 +156,12 @@ export interface BookingFieldErrors {
   contactPreference?: string;
 }
 
-export type TestimonialKind = "review" | "video";
-
 export interface Testimonial {
   id: string;
-  name: string;
-  treatment: string;
+  initials: string;
+  location: string;
   quote: string;
   rating: number;
-  verified: boolean;
-  location: string;
-  image: ImageAsset;
-  kind: TestimonialKind;
-  duration?: string;
-  privacyNote?: string;
 }
 
 export interface FAQItem {

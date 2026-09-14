@@ -1,6 +1,5 @@
 const SITE_ORIGIN = (
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  "https://dentart-git-cursor-dental-clinic-web-platform-7ce1-julian-b1.vercel.app"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://dentart-julian-b1.vercel.app"
 ).replace(/\/$/, "");
 
 const LOCKUP = `${SITE_ORIGIN}/brand/dent-art-lockup.png`;
