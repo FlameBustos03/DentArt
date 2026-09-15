@@ -60,11 +60,28 @@ export function Hero() {
           <h1 id="hero-heading">
             <BrandLockup dockRef={dockRef} showLockup={lockupVisible} size="hero" />
           </h1>
-          <p data-hero-exclude className="mt-6 max-w-xl text-base text-white/85 sm:text-lg">
+          <motion.p
+            data-hero-exclude
+            initial={reducedMotion ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={reducedMotion ? { duration: 0 } : { duration: 0.5, delay: 0.15 }}
+            className="mt-6 max-w-xl text-base text-white/85 sm:text-lg"
+          >
             {heroSubhead}
-          </p>
-          <LocationSwitch tone="hero" className="mt-6 w-full sm:w-auto" />
-          <div data-hero-exclude className="mt-8 flex w-full flex-col gap-3 sm:flex-row">
+          </motion.p>
+          <motion.div
+            initial={reducedMotion ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={reducedMotion ? { duration: 0 } : { duration: 0.5, delay: 0.28 }}
+          >
+            <LocationSwitch tone="hero" className="mt-6 w-full sm:w-auto" />
+          </motion.div>
+          <motion.div
+            data-hero-exclude
+            initial={reducedMotion ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={reducedMotion ? { duration: 0 } : { duration: 0.5, delay: 0.4 }}
+            className="mt-8 flex w-full flex-col gap-3 sm:flex-row">
             <Button
               variant="primary"
               size="lg"
@@ -83,7 +100,7 @@ export function Hero() {
               <MessageCircle className="h-4 w-4" aria-hidden="true" />
               Emergencia por WhatsApp ({clinicInfo.phoneDisplay})
             </a>
-          </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>

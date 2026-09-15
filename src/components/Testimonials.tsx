@@ -14,6 +14,7 @@ import {
   testimonialsStarLabel,
 } from "@/data/mockData";
 import { Button } from "@/components/ui/Button";
+import { Reveal } from "@/components/ui/Reveal";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { cn, scrollToId } from "@/lib/utils";
 
@@ -140,17 +141,19 @@ export function Testimonials() {
   return (
     <section id="resenas" aria-labelledby="reviews-heading" className="bg-ink-900 py-16 text-white md:py-20">
       <div className="section-x">
-        <p className="type-eyebrow-dark">{testimonialsEyebrow}</p>
-        <h2 id="reviews-heading" className="type-section mt-3 text-white">
-          {testimonialsHeading}
-        </h2>
-        <p className="mt-4 max-w-2xl text-base leading-[1.625rem] text-white/85">{testimonialsIntro}</p>
+        <Reveal>
+          <p className="type-eyebrow-dark">{testimonialsEyebrow}</p>
+          <h2 id="reviews-heading" className="type-section mt-3 text-white">
+            {testimonialsHeading}
+          </h2>
+          <p className="mt-4 max-w-2xl text-base leading-[1.625rem] text-white/85">{testimonialsIntro}</p>
+        </Reveal>
 
         <div className="mt-8" aria-describedby={statusId}>
           {reducedMotion ? (
             cards
           ) : (
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={safePage}
                 initial={{ opacity: 0, x: 24 }}

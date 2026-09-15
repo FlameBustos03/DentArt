@@ -5,6 +5,7 @@ import {
   conciergePrefillMessage,
   locationsIntro,
 } from "@/data/mockData";
+import { Reveal } from "@/components/ui/Reveal";
 import { buildWhatsAppUrl } from "@/lib/utils";
 
 export function Hours() {
@@ -17,20 +18,25 @@ export function Hours() {
       className="stack-surface bg-white py-16 md:py-20"
     >
       <div className="section-x">
-        <p className="type-eyebrow">Horarios</p>
-        <h2 id="hours-heading" className="type-section mt-3">
-          Horarios y urgencias
-        </h2>
-        <p className="type-body mt-4 max-w-2xl">{locationsIntro}</p>
+        <Reveal>
+          <p className="type-eyebrow">Horarios</p>
+          <h2 id="hours-heading" className="type-section mt-3">
+            Horarios y urgencias
+          </h2>
+          <p className="type-body mt-4 max-w-2xl">{locationsIntro}</p>
+        </Reveal>
 
         <div className="mt-8 grid gap-6 lg:grid-cols-2">
-          <article className="card-lift rounded-2xl border border-black/10 bg-mist p-6">
+          <Reveal delay={0.08} className="min-w-0">
+          <article className="card-lift h-full rounded-2xl border border-black/10 bg-mist p-6">
             <p className="flex items-start gap-2 text-ink-900">
               <Clock className="mt-0.5 h-4 w-4 shrink-0 text-lime-800" aria-hidden="true" />
               <span className="type-card">{clinicHoursLabel}</span>
             </p>
           </article>
-          <article className="card-lift rounded-2xl border border-black/10 bg-mist p-6">
+          </Reveal>
+          <Reveal delay={0.16} className="min-w-0">
+          <article className="card-lift h-full rounded-2xl border border-black/10 bg-mist p-6">
             <p className="flex items-start gap-2 text-sm text-ink-800">
               <Phone className="mt-0.5 h-4 w-4 shrink-0 text-lime-800" aria-hidden="true" />
               <span>
@@ -56,6 +62,7 @@ export function Hours() {
               </a>
             </p>
           </article>
+          </Reveal>
         </div>
       </div>
     </section>

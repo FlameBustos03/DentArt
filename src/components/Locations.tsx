@@ -5,6 +5,7 @@ import { useClinicLocation } from "@/components/LocationProvider";
 import { LocationSwitch } from "@/components/LocationSwitch";
 import { clinicHoursLabel, clinicInfo, locationsIntro } from "@/data/mockData";
 import type { ClinicLocation } from "@/types";
+import { Reveal } from "@/components/ui/Reveal";
 import { cn } from "@/lib/utils";
 
 export function SedeMap({ location }: { location: ClinicLocation }) {
@@ -32,7 +33,7 @@ export function Locations() {
       className="relative z-0 isolate overflow-x-clip bg-ink-900 py-16 text-white md:py-20"
     >
       <div className="section-x">
-        <div className="flex min-w-0 flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <Reveal className="flex min-w-0 flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="min-w-0">
             <p className="type-eyebrow-dark">Sedes</p>
             <h2 id="locations-heading" className="type-section mt-3 text-white">
@@ -41,13 +42,14 @@ export function Locations() {
             <p className="mt-4 max-w-2xl text-base leading-[1.625rem] text-white/85">{locationsIntro}</p>
           </div>
           <LocationSwitch tone="dark" className="max-w-full shrink sm:max-w-[20rem]" />
-        </div>
+        </Reveal>
 
         <ul className="mt-10 grid gap-6 lg:grid-cols-2">
-          {locations.map((location) => {
+          {locations.map((location, index) => {
             const selected = location.id === locationId;
             return (
               <li key={location.id} className="min-w-0">
+                <Reveal delay={index * 0.1} amount={0.1} className="h-full">
                 <article
                   aria-labelledby={`location-${location.id}`}
                   className={cn(
@@ -105,6 +107,7 @@ export function Locations() {
                   </p>
                   <SedeMap location={location} />
                 </article>
+                </Reveal>
               </li>
             );
           })}

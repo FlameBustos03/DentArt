@@ -1,9 +1,10 @@
 import { clinicHoursLabel, trustBadges } from "@/data/mockData";
+import { Reveal } from "@/components/ui/Reveal";
 
 export function TrustStrip() {
   return (
     <section aria-label="Confianza" className="bg-white py-8 md:py-10">
-      <div className="section-x">
+      <Reveal className="section-x" y={10}>
         <ul className="flex flex-wrap items-center gap-3">
           {trustBadges.map((badge) => (
             <li
@@ -15,7 +16,7 @@ export function TrustStrip() {
           ))}
           <li className="text-sm text-black/70">{clinicHoursLabel}</li>
         </ul>
-      </div>
+      </Reveal>
     </section>
   );
 }

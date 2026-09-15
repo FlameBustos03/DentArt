@@ -10,6 +10,7 @@ import {
   plansIntro,
 } from "@/data/mockData";
 import { partnerLogoById } from "@/lib/partnerAssets";
+import { Reveal } from "@/components/ui/Reveal";
 import { cn } from "@/lib/utils";
 
 /** ~160×80 tiles; native brand colors; no grayscale / lime overlay. */
@@ -50,16 +51,19 @@ function LogoTile({
 export function InsurerGrid() {
   return (
     <div>
-      <p className="type-eyebrow">Seguros</p>
-      <h2 id="insurers-heading" className="type-section mt-3">
-        Seguros dentales
-      </h2>
-      <p className="type-body mt-4 max-w-2xl">{insurersIntro}</p>
+      <Reveal>
+        <p className="type-eyebrow">Seguros</p>
+        <h2 id="insurers-heading" className="type-section mt-3">
+          Seguros dentales
+        </h2>
+        <p className="type-body mt-4 max-w-2xl">{insurersIntro}</p>
+      </Reveal>
       <ul className="mt-10 flex flex-wrap gap-6">
-        {insurers.map((insurer) => {
+        {insurers.map((insurer, index) => {
           const logo = partnerLogoById[insurer.id];
           return (
             <li key={insurer.id} className="max-w-[160px]">
+              <Reveal delay={index * 0.08} y={12}>
               {logo ? (
                 <LogoTile image={logo} />
               ) : (
@@ -71,6 +75,7 @@ export function InsurerGrid() {
                 </div>
               )}
               <p className="mt-3 text-sm text-black/70">{insurer.caption}</p>
+              </Reveal>
             </li>
           );
         })}
@@ -84,15 +89,18 @@ export function InsurerGrid() {
 export function PartnerRow() {
   return (
     <div className="pt-8">
-      <h3 id="planes-heading" className="type-section">
-        Planes empresariales
-      </h3>
-      <p className="type-body mt-3 max-w-2xl">{plansIntro}</p>
+      <Reveal>
+        <h3 id="planes-heading" className="type-section">
+          Planes empresariales
+        </h3>
+        <p className="type-body mt-3 max-w-2xl">{plansIntro}</p>
+      </Reveal>
       <ul className="mt-8 flex flex-wrap items-stretch gap-6">
-        {corporatePlans.map((plan) => {
+        {corporatePlans.map((plan, index) => {
           const logo = partnerLogoById[plan.id];
           return (
             <li key={plan.id} className="min-w-[10rem] max-w-[160px]">
+              <Reveal delay={index * 0.08} y={12}>
               {logo ? (
                 <LogoTile
                   image={logo}
@@ -109,6 +117,7 @@ export function PartnerRow() {
                 </div>
               )}
               <p className="mt-3 max-w-[160px] text-sm text-black/70">{plan.note}</p>
+              </Reveal>
             </li>
           );
         })}

@@ -34,7 +34,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       ref={ref}
       type={type}
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-full font-sans uppercase motion-safe:transition-colors motion-safe:duration-180 motion-reduce:transition-colors disabled:cursor-not-allowed disabled:opacity-50",
+        "inline-flex items-center justify-center gap-2 rounded-full font-sans uppercase motion-safe:transition-[color,background-color,border-color,transform,box-shadow] motion-safe:duration-180 motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 motion-reduce:transition-colors disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0",
         variantClasses[variant],
         sizeClasses[size],
         className,

@@ -1,12 +1,13 @@
 import Image from "next/image";
 import { BadgeCheck, FileCheck2, UserRound } from "lucide-react";
 import { clinicalTeams, leadClinician } from "@/data/mockData";
+import { Reveal } from "@/components/ui/Reveal";
 
 export function ClinicianProfile() {
   return (
     <article className="overflow-hidden rounded-3xl border border-black/10 bg-mist">
       <div className="grid items-start gap-8 p-6 sm:p-8 lg:grid-cols-[360px_minmax(0,1fr)]">
-        <div className="min-w-0">
+        <Reveal className="min-w-0">
           <div className="relative h-[420px] w-full max-w-[360px] overflow-hidden rounded-2xl bg-white">
             <Image
               src={leadClinician.photo.src}
@@ -33,8 +34,8 @@ export function ClinicianProfile() {
               <span className="type-caption block">Cirujano Dentista · SEP — ver documento</span>
             </span>
           </a>
-        </div>
-        <div className="min-w-0">
+        </Reveal>
+        <Reveal delay={0.1} className="min-w-0">
           <p className="type-eyebrow">{leadClinician.eyebrow}</p>
           <h2 id="team-heading" className="type-section mt-2">
             {leadClinician.name}
@@ -56,7 +57,7 @@ export function ClinicianProfile() {
               <p key={index}>{paragraph}</p>
             ))}
           </div>
-        </div>
+        </Reveal>
       </div>
     </article>
   );
@@ -65,15 +66,21 @@ export function ClinicianProfile() {
 export function TeamBySede() {
   return (
     <div className="mt-8">
-      <h3 id="clinical-team-heading" className="type-section text-white">
-        Equipo clínico
-      </h3>
-      <p className="mt-3 max-w-2xl text-base leading-[1.625rem] text-white/85">
-        Atención en dos sedes, con el mismo compromiso de cuidado cercano y profesional.
-      </p>
+      <Reveal>
+        <h3 id="clinical-team-heading" className="type-section text-white">
+          Equipo clínico
+        </h3>
+        <p className="mt-3 max-w-2xl text-base leading-[1.625rem] text-white/85">
+          Atención en dos sedes, con el mismo compromiso de cuidado cercano y profesional.
+        </p>
+      </Reveal>
       <ul className="mt-8 grid gap-6 lg:grid-cols-2">
-        {clinicalTeams.map((team) => (
-          <li key={team.locationId} className="card-lift min-w-0 overflow-hidden rounded-2xl border border-black/10 bg-white p-6">
+        {clinicalTeams.map((team, teamIndex) => (
+          <li key={team.locationId} className="min-w-0">
+            <Reveal
+              delay={teamIndex * 0.1}
+              className="card-lift h-full min-w-0 overflow-hidden rounded-2xl border border-black/10 bg-white p-6"
+            >
             <h4 className="type-card min-w-0 break-words">{team.city}</h4>
             <p className="mt-2 text-sm text-ink-800">{team.summary}</p>
             <p className="mt-1 text-sm text-black/65">{team.address}</p>
@@ -93,6 +100,7 @@ export function TeamBySede() {
                 </li>
               ))}
             </ul>
+            </Reveal>
           </li>
         ))}
       </ul>
