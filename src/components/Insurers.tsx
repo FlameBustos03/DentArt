@@ -10,24 +10,38 @@ import {
   plansIntro,
 } from "@/data/mockData";
 import { partnerLogoById } from "@/lib/partnerAssets";
+import { Reveal } from "@/components/ui/Reveal";
 import { cn } from "@/lib/utils";
 
 /** ~160×80 tiles; native brand colors; no grayscale / lime overlay. */
-function LogoTile({ image }: { image: StaticImageData }) {
+function LogoTile({
+  image,
+  alt = "",
+  fit = "contain",
+  padded = true,
+}: {
+  image: StaticImageData;
+  alt?: string;
+  fit?: "contain" | "cover";
+  padded?: boolean;
+}) {
+  const decorative = alt.length === 0;
   return (
     <div
-      aria-hidden="true"
+      aria-hidden={decorative || undefined}
       className={cn(
         "relative h-20 w-40 overflow-hidden rounded-2xl border border-black/10 bg-white",
-        "motion-safe:transition-transform motion-safe:duration-300 motion-safe:hover:scale-[1.03]",
+        "logo-tile",
         "motion-reduce:transform-none",
       )}
     >
       <Image
         src={image}
-        alt=""
+        alt={alt}
         fill
-        className="object-contain p-2.5"
+        className={
+          fit === "cover" ? "object-cover object-center" : padded ? "object-contain p-2.5" : "object-contain"
+        }
         sizes="160px"
       />
     </div>
@@ -37,16 +51,19 @@ function LogoTile({ image }: { image: StaticImageData }) {
 export function InsurerGrid() {
   return (
     <div>
-      <p className="text-xs uppercase tracking-[0.24em] text-lime-800">Seguros</p>
-      <h2 id="insurers-heading" className="mt-3 font-serif text-3xl text-ink-900 sm:text-5xl">
-        Seguros dentales
-      </h2>
-      <p className="mt-4 max-w-2xl text-black/70">{insurersIntro}</p>
+      <Reveal>
+        <p className="type-eyebrow">Seguros</p>
+        <h2 id="insurers-heading" className="type-section mt-3">
+          Seguros dentales
+        </h2>
+        <p className="type-body mt-4 max-w-2xl">{insurersIntro}</p>
+      </Reveal>
       <ul className="mt-10 flex flex-wrap gap-6">
-        {insurers.map((insurer) => {
+        {insurers.map((insurer, index) => {
           const logo = partnerLogoById[insurer.id];
           return (
             <li key={insurer.id} className="max-w-[160px]">
+              <Reveal delay={index * 0.08} y={12}>
               {logo ? (
                 <LogoTile image={logo} />
               ) : (
@@ -58,36 +75,39 @@ export function InsurerGrid() {
                 </div>
               )}
               <p className="mt-3 text-sm text-black/70">{insurer.caption}</p>
+              </Reveal>
             </li>
           );
         })}
       </ul>
-      <p className="mt-6 max-w-2xl text-sm text-black/70">{insurersMicrocopy}</p>
-      <p className="mt-2 max-w-2xl text-sm text-black/55">{insurersHelper}</p>
+      <p className="type-body mt-6 max-w-2xl">{insurersMicrocopy}</p>
+      <p className="type-caption mt-2 max-w-2xl">{insurersHelper}</p>
     </div>
   );
 }
 
 export function PartnerRow() {
   return (
-    <div className="mt-16">
-      <h3 id="planes-heading" className="font-serif text-3xl text-ink-900 sm:text-4xl">
-        Planes empresariales
-      </h3>
-      <p className="mt-3 max-w-2xl text-black/70">{plansIntro}</p>
+    <div className="pt-8">
+      <Reveal>
+        <h3 id="planes-heading" className="type-section">
+          Planes empresariales
+        </h3>
+        <p className="type-body mt-3 max-w-2xl">{plansIntro}</p>
+      </Reveal>
       <ul className="mt-8 flex flex-wrap items-stretch gap-6">
-        {corporatePlans.map((plan) => {
-          const logo = plan.variant === "logo" ? partnerLogoById[plan.id] : undefined;
+        {corporatePlans.map((plan, index) => {
+          const logo = partnerLogoById[plan.id];
           return (
-            <li key={plan.id} className="min-w-[10rem]">
-              {plan.variant === "badge" ? (
-                <div className="flex h-20 items-center" aria-hidden="true">
-                  <span className="inline-flex rounded-full border border-lime-800/30 bg-lime-500/20 px-4 py-2 text-sm font-medium text-ink-900">
-                    {plan.name}
-                  </span>
-                </div>
-              ) : logo ? (
-                <LogoTile image={logo} />
+            <li key={plan.id} className="min-w-[10rem] max-w-[160px]">
+              <Reveal delay={index * 0.08} y={12}>
+              {logo ? (
+                <LogoTile
+                  image={logo}
+                  alt={plan.id === "sector-petrolero" ? "Logo Sector Petrolero" : ""}
+                  fit={plan.id === "sector-petrolero" ? "cover" : "contain"}
+                  padded={plan.id !== "sector-petrolero"}
+                />
               ) : (
                 <div
                   className="flex h-20 w-40 items-center justify-center rounded-2xl border border-dashed border-black/25 bg-mist px-3 text-center"
@@ -97,19 +117,20 @@ export function PartnerRow() {
                 </div>
               )}
               <p className="mt-3 max-w-[160px] text-sm text-black/70">{plan.note}</p>
+              </Reveal>
             </li>
           );
         })}
       </ul>
-      <p className="mt-6 max-w-2xl text-sm text-black/70">{plansFooter}</p>
+      <p className="type-body mt-6 max-w-2xl">{plansFooter}</p>
     </div>
   );
 }
 
 export function Insurers() {
   return (
-    <section id="seguros" aria-labelledby="insurers-heading" className="bg-mist py-20">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+    <section id="seguros" aria-labelledby="insurers-heading" className="bg-white pb-16 pt-8 md:pb-20">
+      <div className="section-x">
         <InsurerGrid />
         <PartnerRow />
       </div>

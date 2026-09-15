@@ -14,6 +14,7 @@ import {
   testimonialsStarLabel,
 } from "@/data/mockData";
 import { Button } from "@/components/ui/Button";
+import { Reveal } from "@/components/ui/Reveal";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { cn, scrollToId } from "@/lib/utils";
 
@@ -58,16 +59,16 @@ export function Testimonials() {
   };
 
   const cards = (
-    <div className="grid gap-6 md:grid-cols-2">
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
       {visible.map((item) => (
         <article
           key={item.id}
-          className="rounded-3xl border border-black/10 bg-white p-6"
+          className="rounded-2xl border border-black/10 bg-white p-5 shadow-lift md:p-6"
           aria-labelledby={`testimonial-${item.id}`}
         >
-          <h3 id={`testimonial-${item.id}`} className="font-serif text-3xl text-ink-900">
-            {item.initials} · {item.location}
-          </h3>
+          <blockquote className="font-serif text-lg italic leading-7 text-ink-900 md:text-xl">
+            “{item.quote}”
+          </blockquote>
           <div className="mt-4 flex flex-wrap items-center gap-2">
             <div className="flex items-center gap-1" aria-hidden="true">
               {Array.from({ length: item.rating }).map((_, starIndex) => (
@@ -77,58 +78,82 @@ export function Testimonials() {
                 />
               ))}
             </div>
-            <span className="text-xs uppercase tracking-[0.14em] text-lime-800">
-              {testimonialsStarLabel}
-            </span>
+            <span className="type-eyebrow">{testimonialsStarLabel}</span>
           </div>
-          <blockquote className="mt-5 text-lg leading-relaxed text-black/80">
-            “{item.quote}”
-          </blockquote>
+          <p id={`testimonial-${item.id}`} className="mt-3 text-sm font-medium text-ink-900">
+            {item.initials}
+          </p>
+          <p className="type-caption mt-1 min-w-0 break-words">{item.location}</p>
         </article>
       ))}
     </div>
   );
 
+  const controls = (
+    <div className="mt-6 flex flex-col items-center gap-4 md:flex-row md:justify-between">
+      <p id={statusId} className="text-sm text-white/80" aria-live="polite">
+        {safePage + 1} de {pageCount}
+      </p>
+      <div className="flex items-center gap-2">
+        <Button
+          variant="outline"
+          size="sm"
+          className="!h-11 !w-11 !px-0 border-white/30 text-white hover:border-lime-400 hover:text-white"
+          aria-label="Reseñas anteriores"
+          onClick={() => go(-1)}
+        >
+          <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          className="!h-11 !w-11 !px-0 border-white/30 text-white hover:border-lime-400 hover:text-white"
+          aria-label="Reseñas siguientes"
+          onClick={() => go(1)}
+        >
+          <ChevronRight className="h-4 w-4" aria-hidden="true" />
+        </Button>
+      </div>
+      <div className="flex items-center gap-1.5" role="tablist" aria-label="Páginas de reseñas">
+        {Array.from({ length: pageCount }).map((_, itemIndex) => (
+          <button
+            key={`resenas-page-${itemIndex}`}
+            type="button"
+            role="tab"
+            aria-selected={itemIndex === safePage}
+            aria-label={`Mostrar reseñas, página ${itemIndex + 1}`}
+            className="relative h-2 w-2 rounded-full"
+            onClick={() => setPage(itemIndex)}
+          >
+            <span className="absolute -inset-5 min-h-11 min-w-11" aria-hidden="true" />
+            <span
+              className={cn(
+                "block h-2 w-2 rounded-full",
+                itemIndex === safePage ? "bg-lime-500" : "bg-white/20",
+              )}
+            />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+
   return (
-    <section id="resenas" aria-labelledby="reviews-heading" className="bg-mist py-20">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <p className="text-xs uppercase tracking-[0.24em] text-lime-800">{testimonialsEyebrow}</p>
-        <h2 id="reviews-heading" className="mt-3 font-serif text-3xl text-ink-900 sm:text-5xl">
-          {testimonialsHeading}
-        </h2>
-        <p className="mt-4 max-w-2xl text-black/70">{testimonialsIntro}</p>
+    <section id="resenas" aria-labelledby="reviews-heading" className="bg-ink-900 py-16 text-white md:py-20">
+      <div className="section-x">
+        <Reveal>
+          <p className="type-eyebrow-dark">{testimonialsEyebrow}</p>
+          <h2 id="reviews-heading" className="type-section mt-3 text-white">
+            {testimonialsHeading}
+          </h2>
+          <p className="mt-4 max-w-2xl text-base leading-[1.625rem] text-white/85">{testimonialsIntro}</p>
+        </Reveal>
 
-        <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
-          <p id={statusId} className="text-sm text-black/70" aria-live="polite">
-            {safePage + 1} de {pageCount}
-          </p>
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              className="!h-11 !w-11 !px-0"
-              aria-label="Reseñas anteriores"
-              onClick={() => go(-1)}
-            >
-              <ChevronLeft className="h-4 w-4" aria-hidden="true" />
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              className="!h-11 !w-11 !px-0"
-              aria-label="Reseñas siguientes"
-              onClick={() => go(1)}
-            >
-              <ChevronRight className="h-4 w-4" aria-hidden="true" />
-            </Button>
-          </div>
-        </div>
-
-        <div className="mt-6" aria-describedby={statusId}>
+        <div className="mt-8" aria-describedby={statusId}>
           {reducedMotion ? (
             cards
           ) : (
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={safePage}
                 initial={{ opacity: 0, x: 24 }}
@@ -142,35 +167,17 @@ export function Testimonials() {
           )}
         </div>
 
-        <div className="mt-6 flex justify-center gap-2" role="tablist" aria-label="Páginas de reseñas">
-          {Array.from({ length: pageCount }).map((_, itemIndex) => (
-            <button
-              key={`resenas-page-${itemIndex}`}
-              type="button"
-              role="tab"
-              aria-selected={itemIndex === safePage}
-              aria-label={`Mostrar reseñas, página ${itemIndex + 1}`}
-              className={cn(
-                "h-2.5 rounded-full transition-all",
-                itemIndex === safePage ? "w-8 bg-lime-500" : "w-2.5 bg-black/20 hover:bg-black/40",
-              )}
-              onClick={() => setPage(itemIndex)}
-            />
-          ))}
-        </div>
+        {controls}
 
-        <div className="mt-10 flex flex-wrap items-center gap-x-3 gap-y-3">
-          <p className="text-black/75">{testimonialsCtaPrompt}</p>
-          <span className="hidden text-black/40 sm:inline" aria-hidden="true">
-            ·
-          </span>
+        <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-3">
+          <p className="text-white/85">{testimonialsCtaPrompt}</p>
           <Button variant="primary" onClick={() => scrollToId("booking")}>
             {testimonialsCtaLabel}
           </Button>
         </div>
 
-        <p className="mt-8 flex max-w-3xl items-start gap-2 text-sm text-black/65">
-          <Scale className="mt-0.5 h-4 w-4 shrink-0 text-lime-800" aria-hidden="true" />
+        <p className="mt-8 flex max-w-2xl items-start gap-2 text-[13px] leading-5 text-white/70">
+          <Scale className="mt-0.5 h-4 w-4 shrink-0 text-lime-400" aria-hidden="true" />
           <span>{testimonialsDisclaimer}</span>
         </p>
       </div>

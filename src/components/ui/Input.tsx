@@ -32,7 +32,7 @@ export function TextField({ id, label, error, className, tone = "light", ...prop
         aria-invalid={Boolean(error)}
         aria-describedby={error ? errorId : undefined}
         className={cn(
-          "rounded-xl border bg-white px-4 py-3 text-ink-900 shadow-sm transition-colors placeholder:text-black/40",
+          "rounded-xl border bg-white px-4 py-3 text-base text-ink-900 shadow-sm transition-colors placeholder:text-black/40",
           error ? "border-red-500" : "border-black/15 focus:border-lime-800",
           className,
         )}
@@ -69,7 +69,7 @@ export function TextAreaField({
         aria-invalid={Boolean(error)}
         aria-describedby={error ? errorId : undefined}
         className={cn(
-          "min-h-[110px] rounded-xl border bg-white px-4 py-3 text-ink-900 shadow-sm transition-colors placeholder:text-black/40",
+          "min-h-[110px] rounded-xl border bg-white px-4 py-3 text-base text-ink-900 shadow-sm transition-colors placeholder:text-black/40",
           error ? "border-red-500" : "border-black/15 focus:border-lime-800",
           className,
         )}

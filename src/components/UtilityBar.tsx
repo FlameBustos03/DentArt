@@ -9,11 +9,11 @@ export interface UtilityBarProps {
 
 export function UtilityBar({ className }: UtilityBarProps) {
   return (
-    <div className={cn("h-9 overflow-visible border-b border-black/5 bg-mist", className)}>
-      <div className="mx-auto flex h-full max-w-6xl items-center justify-between px-4 sm:px-6">
+    <div className={cn("h-11 overflow-visible border-b border-black/5 bg-mist", className)}>
+      <div className="section-x flex h-full max-w-6xl items-center justify-between">
         <a
           href={`tel:${clinicInfo.phoneTel}`}
-          className="inline-flex items-center gap-2 text-sm text-ink-900 transition-colors hover:text-lime-800"
+          className="type-utility inline-flex min-h-11 items-center gap-2 transition-colors hover:text-lime-800"
         >
           <Phone className="h-3.5 w-3.5" aria-hidden="true" />
           <span>{clinicInfo.phoneDisplay}</span>

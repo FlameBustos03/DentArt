@@ -5,13 +5,14 @@ import { useClinicLocation } from "@/components/LocationProvider";
 import { LocationSwitch } from "@/components/LocationSwitch";
 import { clinicHoursLabel, clinicInfo, locationsIntro } from "@/data/mockData";
 import type { ClinicLocation } from "@/types";
+import { Reveal } from "@/components/ui/Reveal";
 import { cn } from "@/lib/utils";
 
 export function SedeMap({ location }: { location: ClinicLocation }) {
   const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(location.mapQuery)}&z=15&hl=es&output=embed`;
 
   return (
-    <div className="sede-map mt-5 h-52 rounded-2xl border border-black/10 bg-mist">
+    <div className="sede-map mt-5 h-56 rounded-2xl border border-black/10 bg-mist">
       <iframe
         title={`Mapa Dent Art ${location.city}`}
         src={mapSrc}
@@ -29,35 +30,36 @@ export function Locations() {
     <section
       id="sedes"
       aria-labelledby="locations-heading"
-      className="relative z-0 isolate overflow-x-clip bg-white py-20"
+      className="relative z-0 isolate overflow-x-clip bg-ink-900 py-16 text-white md:py-20"
     >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="text-xs uppercase tracking-[0.24em] text-lime-800">Sedes</p>
-            <h2 id="locations-heading" className="mt-3 font-serif text-3xl text-ink-900 sm:text-5xl">
+      <div className="section-x">
+        <Reveal className="flex min-w-0 flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div className="min-w-0">
+            <p className="type-eyebrow-dark">Sedes</p>
+            <h2 id="locations-heading" className="type-section mt-3 text-white">
               Poza Rica y Villahermosa
             </h2>
-            <p className="mt-4 max-w-2xl text-black/70">{locationsIntro}</p>
+            <p className="mt-4 max-w-2xl text-base leading-[1.625rem] text-white/85">{locationsIntro}</p>
           </div>
-          <LocationSwitch />
-        </div>
+          <LocationSwitch tone="dark" className="max-w-full shrink sm:max-w-[20rem]" />
+        </Reveal>
 
         <ul className="mt-10 grid gap-6 lg:grid-cols-2">
-          {locations.map((location) => {
+          {locations.map((location, index) => {
             const selected = location.id === locationId;
             return (
-              <li key={location.id}>
+              <li key={location.id} className="min-w-0">
+                <Reveal delay={index * 0.1} amount={0.1} className="h-full">
                 <article
                   aria-labelledby={`location-${location.id}`}
                   className={cn(
-                    "isolate overflow-hidden rounded-3xl border p-6 transition-colors",
+                    "isolate min-w-0 overflow-hidden rounded-3xl border p-6 transition-colors",
                     selected
-                      ? "border-lime-800 bg-mist shadow-sm"
-                      : "border-black/10 bg-white hover:border-lime-800/40",
+                      ? "border-lime-500 bg-mist shadow-sm"
+                      : "border-white/15 bg-white hover:border-lime-500/50",
                   )}
                 >
-                  <div className="flex flex-wrap items-start justify-between gap-3">
+                  <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                     <p className="text-xs uppercase tracking-[0.16em] text-lime-800">
                       {selected ? "Sede seleccionada" : "Sede"}
                     </p>
@@ -66,7 +68,7 @@ export function Locations() {
                       aria-pressed={selected}
                       onClick={() => setLocationId(location.id)}
                       className={cn(
-                        "shrink-0 whitespace-nowrap rounded-full border px-3 py-1 text-xs uppercase tracking-[0.14em] transition-colors",
+                        "min-h-11 min-w-0 max-w-full break-words rounded-full border px-3 py-2 text-center text-xs uppercase leading-tight tracking-[0.12em] transition-colors",
                         selected
                           ? "border-lime-500 bg-lime-500 text-ink-900"
                           : "border-black/15 text-ink-800 hover:border-lime-800 hover:text-lime-800",
@@ -75,7 +77,10 @@ export function Locations() {
                       Elegir {location.city}
                     </button>
                   </div>
-                  <h3 id={`location-${location.id}`} className="mt-2 font-serif text-3xl text-ink-900">
+                  <h3
+                    id={`location-${location.id}`}
+                    className="type-card mt-2 min-w-0 break-words text-ink-900"
+                  >
                     {location.city}
                   </h3>
                   <p className="mt-3 flex items-start gap-2 text-black/75">
@@ -102,6 +107,7 @@ export function Locations() {
                   </p>
                   <SedeMap location={location} />
                 </article>
+                </Reveal>
               </li>
             );
           })}

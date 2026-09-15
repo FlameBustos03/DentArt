@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState, type CSSProperties, type PointerEvent, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties, type PointerEvent, type ReactNode } from "react";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { cn } from "@/lib/utils";
 
@@ -11,40 +11,51 @@ export interface TiltCardProps {
 }
 
 const RESTING: CSSProperties = {
-  transform: "perspective(920px) rotateX(0deg) rotateY(0deg) translateZ(0)",
+  transform: "translateY(0)",
 };
 
-export function TiltCard({ children, className, maxTilt = 8 }: TiltCardProps) {
+export function TiltCard({ children, className, maxTilt = 0 }: TiltCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const reduced = usePrefersReducedMotion();
+  const [desktop, setDesktop] = useState(false);
   const [transform, setTransform] = useState<CSSProperties>(RESTING);
-  const [glow, setGlow] = useState({ x: 50, y: 50, active: false });
+  const [lit, setLit] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 768px)");
+    const sync = () => setDesktop(media.matches);
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, []);
 
   const onPointerMove = useCallback(
     (event: PointerEvent<HTMLDivElement>) => {
-      if (reduced) {
+      if (reduced || !desktop) {
         return;
       }
       const node = ref.current;
       if (!node) {
         return;
       }
-      const rect = node.getBoundingClientRect();
-      const px = (event.clientX - rect.left) / rect.width;
-      const py = (event.clientY - rect.top) / rect.height;
-      const rotateY = (px - 0.5) * maxTilt * 2;
-      const rotateX = (0.5 - py) * maxTilt * 2;
-      setTransform({
-        transform: `perspective(920px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateZ(10px)`,
-      });
-      setGlow({ x: px * 100, y: py * 100, active: true });
+      if (maxTilt > 0) {
+        const rect = node.getBoundingClientRect();
+        const px = (event.clientX - rect.left) / rect.width;
+        const py = (event.clientY - rect.top) / rect.height;
+        const rotateY = (px - 0.5) * maxTilt * 2;
+        const rotateX = (0.5 - py) * maxTilt * 2;
+        setTransform({
+          transform: `perspective(920px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-4px)`,
+        });
+      }
+      setLit(true);
     },
-    [maxTilt, reduced],
+    [desktop, maxTilt, reduced],
   );
 
   const onPointerLeave = useCallback(() => {
     setTransform(RESTING);
-    setGlow({ x: 50, y: 50, active: false });
+    setLit(false);
   }, []);
 
   return (
@@ -53,22 +64,13 @@ export function TiltCard({ children, className, maxTilt = 8 }: TiltCardProps) {
       onPointerMove={onPointerMove}
       onPointerLeave={onPointerLeave}
       className={cn(
-        "tilt-card relative h-full transition-[transform,box-shadow] duration-200 will-change-transform",
-        glow.active && "tilt-card--lit",
+        "tilt-card card-lift relative h-full will-change-transform",
+        lit && !reduced && "tilt-card--lit",
+        reduced && "border border-transparent hover:border-black/10",
         className,
       )}
-      style={transform}
+      style={reduced || !desktop ? undefined : maxTilt > 0 ? transform : undefined}
     >
-      <span
-        aria-hidden="true"
-        className={cn(
-          "pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-200",
-          glow.active && "opacity-100",
-        )}
-        style={{
-          background: `radial-gradient(circle at ${glow.x}% ${glow.y}%, rgba(46, 204, 113, 0.08), transparent 58%)`,
-        }}
-      />
       <div className="relative h-full">{children}</div>
     </div>
   );
