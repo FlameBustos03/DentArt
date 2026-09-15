@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useMemo, useRef, useState, type FormEvent } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { CheckCircle2, ChevronLeft, ChevronRight, MessageCircle } from "lucide-react";
 import {
   clinicHoursLabel,
@@ -17,6 +18,7 @@ import type { BookingFieldErrors, BookingFormData, ContactPreference } from "@/t
 import { Button } from "@/components/ui/Button";
 import { TextAreaField, TextField } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
+import { Reveal } from "@/components/ui/Reveal";
 import { buildWhatsAppUrl, cn, isValidEmail, isValidPhone } from "@/lib/utils";
 
 const INITIAL_FORM: BookingFormData = {
@@ -42,6 +44,7 @@ const STEP_LABELS = ["Servicio y sede", "Modalidad", "Fecha, hora y contacto"] a
 
 export function BookingForm() {
   const { location, locationId } = useClinicLocation();
+  const reduceMotion = useReducedMotion();
   const [step, setStep] = useState(1);
   const [form, setForm] = useState<BookingFormData>({ ...INITIAL_FORM, locationId });
   const [errors, setErrors] = useState<BookingFieldErrors>({});
@@ -158,14 +161,16 @@ export function BookingForm() {
   return (
     <section id="booking" aria-labelledby="booking-heading" className="bg-ink-900 py-16 text-white md:py-20">
       <div className="section-x">
-        <p className="type-eyebrow-dark">Agenda</p>
-        <h2 id="booking-heading" className="type-section mt-3 text-white">
-          Agendar cita
-        </h2>
-        <p className="mt-4 max-w-2xl text-base leading-[1.625rem] text-white/85">
-          Elige servicio, sede y horario preferido; tu solicitud se envía por WhatsApp y el
-          consultorio confirma la disponibilidad. {clinicHoursLabel}. {clinicHoursNote}
-        </p>
+        <Reveal>
+          <p className="type-eyebrow-dark">Agenda</p>
+          <h2 id="booking-heading" className="type-section mt-3 text-white">
+            Agendar cita
+          </h2>
+          <p className="mt-4 max-w-2xl text-base leading-[1.625rem] text-white/85">
+            Elige servicio, sede y horario preferido; tu solicitud se envía por WhatsApp y el
+            consultorio confirma la disponibilidad. {clinicHoursLabel}. {clinicHoursNote}
+          </p>
+        </Reveal>
         <div className="mt-6 flex min-w-0 flex-col gap-3 sm:flex-row sm:items-center">
           <LocationSwitch tone="dark" className="max-w-full" />
           <p className="min-w-0 break-words text-sm text-white/80">
@@ -210,6 +215,12 @@ export function BookingForm() {
             Paso {step} de 3
           </p>
 
+          <motion.div
+            key={step}
+            initial={reduceMotion ? false : { opacity: 0, x: 12 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.28, ease: "easeOut" }}
+          >
           {step === 1 ? (
             <fieldset className="mt-6">
               <legend className="sr-only">Servicio</legend>
@@ -448,6 +459,7 @@ export function BookingForm() {
               </div>
             </div>
           ) : null}
+          </motion.div>
 
           <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
             <Button
@@ -459,12 +471,15 @@ export function BookingForm() {
               Atrás
             </Button>
             {step < 3 ? (
-              <Button variant="primary" onClick={goNext}>
+              // Distinct keys force a fresh DOM node: if React morphed this button
+              // into the type="submit" one during the same click, the browser would
+              // fire onSubmit and flash step-3 validation errors.
+              <Button key="next-step" variant="primary" onClick={goNext}>
                 Continuar
                 <ChevronRight className="h-4 w-4" aria-hidden="true" />
               </Button>
             ) : (
-              <Button type="submit" variant="primary">
+              <Button key="submit-whatsapp" type="submit" variant="primary">
                 <MessageCircle className="h-4 w-4" aria-hidden="true" />
                 Enviar por WhatsApp
               </Button>
