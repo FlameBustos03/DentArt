@@ -26,10 +26,22 @@ const config: Config = {
         serif: ["var(--font-playfair)", "Georgia", "serif"],
         sans: ["var(--font-dm-sans)", "system-ui", "sans-serif"],
       },
+      borderRadius: {
+        card: "var(--radius-card)",
+        control: "var(--radius-control)",
+      },
       boxShadow: {
         glass: "0 8px 32px rgba(0, 0, 0, 0.08)",
-        lift: "0 18px 40px rgba(0, 0, 0, 0.12)",
+        lift: "var(--shadow-lift)",
+        card: "var(--shadow-sm)",
         lime: "0 8px 24px rgba(46, 204, 113, 0.32)",
+      },
+      transitionDuration: {
+        fast: "180ms",
+        panel: "160ms",
+      },
+      transitionTimingFunction: {
+        out: "cubic-bezier(0, 0, 0.2, 1)",
       },
       backgroundImage: {
         "ink-veil":

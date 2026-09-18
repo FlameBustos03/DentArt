@@ -19,7 +19,7 @@ export function EmergencyFab() {
   // z-30: below the sticky header (z-40) so the mobile drawer, which lives
   // inside the header's stacking context, and the z-50 modals cover the FAB.
   return (
-    <div className="fixed bottom-5 right-5 z-30 flex flex-col items-end gap-3">
+    <div className="fixed bottom-4 right-4 z-30 flex flex-col items-end gap-3 md:bottom-5 md:right-5">
       <AnimatePresence>
         {open ? (
           <motion.div

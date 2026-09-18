@@ -90,14 +90,23 @@ export interface ClinicLocation {
   region: string;
   addressLines: string[];
   mapQuery: string;
+  mapTitle: string;
   teamCapacity: string;
+}
+
+export interface ServiceTreatment {
+  name: string;
+  benefit: string;
+  body: string;
 }
 
 export interface ServiceGroup {
   id: string;
   name: string;
   items: string[];
+  treatments?: ServiceTreatment[];
   note?: string;
+  disclaimer?: string;
 }
 
 export interface Insurer {
@@ -115,13 +124,19 @@ export interface CorporatePlan {
   logoSrc?: string;
 }
 
+export interface TeamMember {
+  name: string;
+  role: string;
+  initials: string;
+  photo?: ImageAsset;
+}
+
 export interface ClinicalTeam {
   locationId: LocationId;
   city: string;
-  summary: string;
-  address: string;
-  unnamedCount: number;
-  unnamedLabel: string;
+  capacity: string;
+  body: string;
+  members: TeamMember[];
 }
 
 export interface LeadClinician {
@@ -256,4 +271,31 @@ export interface ConsultationModeOption {
   label: string;
   description: string;
   durationNote: string;
+}
+
+export type ContactSedePreference = LocationId | "indistinto";
+
+export interface ContactFormData {
+  name: string;
+  phone: string;
+  email: string;
+  sede: ContactSedePreference | "";
+  motivo: string;
+  seguro: string;
+  mensaje: string;
+}
+
+export interface ContactFieldErrors {
+  name?: string;
+  phone?: string;
+  email?: string;
+  sede?: string;
+  motivo?: string;
+  mensaje?: string;
+}
+
+export interface PageCta {
+  label: string;
+  href: string;
+  external?: boolean;
 }
