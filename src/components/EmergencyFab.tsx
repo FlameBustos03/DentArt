@@ -19,7 +19,7 @@ export function EmergencyFab() {
   // z-30: below the sticky header (z-40) so the mobile drawer, which lives
   // inside the header's stacking context, and the z-50 modals cover the FAB.
   return (
-    <div className="fixed bottom-5 right-5 z-30 flex flex-col items-end gap-3">
+    <div className="fixed bottom-4 right-4 z-30 flex flex-col items-end gap-3">
       <AnimatePresence>
         {open ? (
           <motion.div
@@ -59,7 +59,7 @@ export function EmergencyFab() {
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen((value) => !value)}
-        className="inline-flex h-14 items-center gap-2 rounded-full bg-lime-500 px-5 text-sm uppercase tracking-[0.14em] text-ink-900 shadow-lime"
+        className="inline-flex h-14 w-14 items-center justify-center gap-0 rounded-full bg-lime-500 text-sm uppercase tracking-[0.12em] text-ink-900 sm:w-auto sm:gap-2 sm:px-5"
       >
         <Siren className="h-5 w-5 text-ink-900" aria-hidden="true" />
         <span className="hidden sm:inline">Urgencia</span>

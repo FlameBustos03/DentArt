@@ -27,9 +27,13 @@ const config: Config = {
         sans: ["var(--font-dm-sans)", "system-ui", "sans-serif"],
       },
       boxShadow: {
+        sm: "0 8px 24px rgba(0, 0, 0, 0.06)",
         glass: "0 8px 32px rgba(0, 0, 0, 0.08)",
         lift: "0 18px 40px rgba(0, 0, 0, 0.12)",
         lime: "0 8px 24px rgba(46, 204, 113, 0.32)",
+      },
+      transitionDuration: {
+        180: "180ms",
       },
       backgroundImage: {
         "ink-veil":

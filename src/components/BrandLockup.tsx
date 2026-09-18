@@ -19,7 +19,7 @@ const LOCKUP_ASPECT = "aspect-[1125/422]";
 
 const BOX: Record<NonNullable<BrandLockupProps["size"]>, string> = {
   nav: "h-10",
-  hero: "h-[4.5rem] sm:h-24",
+  hero: "h-9 md:h-[4.5rem] lg:h-24 xl:h-[7.5rem]",
 };
 
 export function BrandLockup({
@@ -53,7 +53,7 @@ export function BrandLockup({
           // the server-rendered lockup must not wait for hydration to show up.
           showLockup ? "opacity-100" : "opacity-0 max-lg:opacity-100 motion-reduce:opacity-100",
         )}
-        sizes={size === "hero" ? "(min-width: 640px) 256px, 192px" : "107px"}
+        sizes={size === "hero" ? "(min-width: 1280px) 320px, (min-width: 1024px) 256px, (min-width: 768px) 192px, 144px" : "107px"}
         priority
       />
     </span>

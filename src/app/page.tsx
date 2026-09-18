@@ -11,6 +11,7 @@ import { Navbar } from "@/components/Navbar";
 import { ServicesCatalog } from "@/components/ServicesCatalog";
 import { Team } from "@/components/Team";
 import { Testimonials } from "@/components/Testimonials";
+import { TrustStrip } from "@/components/TrustStrip";
 
 export default function HomePage() {
   return (
@@ -18,13 +19,14 @@ export default function HomePage() {
       <Navbar />
       <main id="main-content">
         <Hero />
+        <TrustStrip />
         <About />
         <ServicesCatalog />
-        <Testimonials />
         <Team />
         <Insurers />
         <Locations />
         <Hours />
+        <Testimonials />
         <FAQ />
         <BookingForm />
       </main>

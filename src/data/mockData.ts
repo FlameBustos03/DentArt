@@ -44,7 +44,7 @@ export const locations: ClinicLocation[] = [
     region: "Veracruz",
     addressLines: ["Cipres #204, Col. Chapultepec", "Poza Rica, Veracruz"],
     mapQuery: "Cipres 204 Colonia Chapultepec, Poza Rica, Veracruz, Mexico",
-    teamCapacity: "Equipo de dos doctores",
+    teamCapacity: "2 unidades dentales · RX individual y panorámico",
   },
   {
     id: "villahermosa",
@@ -52,7 +52,7 @@ export const locations: ClinicLocation[] = [
     region: "Tabasco",
     addressLines: ["Ermitaño 9, mz 22, Valle del Jaguar", "Villahermosa, Tabasco"],
     mapQuery: "Ermitaño 9 manzana 22 Valle del Jaguar, Villahermosa, Tabasco, Mexico",
-    teamCapacity: "Un doctor",
+    teamCapacity: "Solo Dra. Claudia Solís · ~1 año · láser terapéutico · servicios completos",
   },
 ];
 
@@ -119,22 +119,46 @@ export const brandMarkAlt = "Dent Art — Atrévete a Sonreír";
 export const heroSubhead =
   "Atención dental cercana y profesional en Poza Rica y Villahermosa. Más de 16 años acompañando sonrisas con estética, prevención y tratamientos personalizados, siempre definidos en consulta.";
 
+const claudiaTeamPhoto = {
+  src: "/team/dra-claudia-solis.webp",
+  alt: "Dra. Claudia Solís, odontóloga de Dent Art, enfoque en estética dental y diseño de sonrisa.",
+  width: 360,
+  height: 420,
+} as const;
+
 export const clinicalTeams: ClinicalTeam[] = [
   {
-    locationId: "poza-rica" as const,
-    city: "Poza Rica",
-    summary: "2 unidades · 2 doctores · RX individual y panorámico",
-    address: "Cipres #204, Col. Chapultepec",
-    unnamedCount: 2,
-    unnamedLabel: "Doctor",
+    locationId: "poza-rica",
+    city: "Poza Rica, Veracruz",
+    capacity: "2 unidades dentales · RX individual y panorámico",
+    body: "Nuestro consultorio de origen. Además de la Dra. Claudia Solís, en Poza Rica también te atiende la Dra. Arlette Aquino en odontología general, con dos unidades dentales e imagen diagnóstica en sitio cuando hace falta.",
+    members: [
+      {
+        name: "Dra. Claudia Solís",
+        role: "estética dental y diseño de sonrisa",
+        initials: "CS",
+        photo: claudiaTeamPhoto,
+      },
+      {
+        name: "Dra. Arlette Aquino",
+        role: "odontología general",
+        initials: "AA",
+      },
+    ],
   },
   {
-    locationId: "villahermosa" as const,
+    locationId: "villahermosa",
     city: "Villahermosa",
-    summary: "1 unidad · 1 doctor",
-    address: "Ermitaño 9, mz 22, Valle del Jaguar",
-    unnamedCount: 1,
-    unnamedLabel: "Doctor",
+    capacity: "Solo Dra. Claudia Solís · ~1 año · láser terapéutico · servicios completos",
+    body: "Sede reciente · equipo de vanguardia · láser terapéutico",
+    members: [
+      {
+        name: "Dra. Claudia Solís",
+        role: "estética dental y diseño de sonrisa",
+        initials: "CS",
+        photo: claudiaTeamPhoto,
+      },
+    ],
   },
 ];
 
@@ -154,20 +178,29 @@ export const serviceModalRows = [
 ] as const;
 
 export const leadClinician: LeadClinician = {
-  name: "Dra. Claudia Solis",
+  name: "Dra. Claudia Solís",
   eyebrow: "Quién te atiende",
-  role: "Estética dental y diseño de sonrisa · Dent Art",
+  role: "Cirujana dentista · Estética dental y diseño de sonrisa · Dent Art",
   blurb: [
-    "La Dra. Claudia Solis lidera Dent Art con un enfoque cercano en estética dental y diseño de sonrisa. En cada consulta prioriza escucharte, explicar opciones con claridad y construir un plan realista según tu salud bucal y lo que buscas lograr.",
-    "Con más de 16 años de trayectoria de Dent Art acompañando a familias en Poza Rica y Villahermosa, su práctica combina criterio clínico, prevención y tratamientos personalizados — siempre sin promesas vacías. El objetivo es que te sientas informado, seguro y acompañado en cada paso.",
+    "La Dra. Claudia Solís es egresada de la Facultad de Odontología de la Universidad Veracruzana, Campus Poza Rica–Tuxpan, titulada por CENEVAL con promedio de 9.8. Su formación continua incluye diversos cursos clínicos y dos diplomados: Ortopedia Maxilar y Diseño de Sonrisa. Actualmente está por ingresar a la especialidad de Ortodoncia en la Universidad Juárez Autónoma de Tabasco (UJAT).",
+    "Dirige las dos sedes de Dent Art. En Poza Rica atiende en el consultorio de origen; la sede de Villahermosa, abierta hace un año, cuenta con equipo de vanguardia y todos los servicios, incluido el láser terapéutico.",
     "Si es tu primera visita, espera una conversación sobre tu motivo de consulta, una revisión cuidadosa y recomendaciones claras. Los resultados varían de persona a persona; el plan se define después de la evaluación profesional.",
   ],
-  photo: {
-    src: "/team/dra-claudia-solis.webp",
-    alt: "Dra. Claudia Solis, odontóloga de Dent Art, enfoque en estética dental y diseño de sonrisa.",
-    width: 360,
-    height: 420,
+  credentials: [
+    "Universidad Veracruzana · Campus Poza Rica–Tuxpan",
+    "Titulación CENEVAL · promedio 9.8",
+    "Diplomado en Ortopedia Maxilar",
+    "Diplomado en Diseño de Sonrisa",
+    "Próximo ingreso: Especialidad en Ortodoncia · UJAT",
+  ],
+  cedula: {
+    src: "/team/cedula-claudia-solis.webp",
+    alt: "Cédula profesional electrónica 3820236 de Claudia Gabriela Solís Mezquida, Licenciatura como Cirujano Dentista, Universidad Veracruzana, expedida por la Dirección General de Profesiones de la SEP.",
+    width: 1163,
+    height: 1480,
+    number: "3820236",
   },
+  photo: claudiaTeamPhoto,
 };
 
 export const serviceGroups: ServiceGroup[] = [
@@ -237,7 +270,8 @@ export const corporatePlans: CorporatePlan[] = [
     id: "sector-petrolero",
     name: "Sector Petrolero",
     note: "Sector Petrolero — según convenio vigente",
-    variant: "badge",
+    variant: "logo",
+    logoSrc: "/partners/sector-petrolero.webp",
   },
 ];
 
@@ -585,14 +619,14 @@ const WEEKDAY_SLOT_TIMES = ["10:00", "11:00", "12:00", "16:00", "17:00", "18:00"
 const SATURDAY_SLOT_TIMES = ["10:00", "11:00", "12:00"] as const;
 
 function buildSlots(seed: number, times: readonly string[], notBeforeHour: number): TimeSlot[] {
-  // Slots that already passed today are dropped, not flagged `available: false`:
-  // the form renders unavailable slots as "Ocupado", which is the wrong story
-  // for a time that has simply gone by.
+  // Slots that already passed today are dropped. Every listed time is a
+  // *preferred* time: the clinic confirms real availability by WhatsApp,
+  // so nothing is faked as "Ocupado".
   return times.flatMap((time, index) => {
     if (Number(time.slice(0, 2)) <= notBeforeHour) {
       return [];
     }
-    return [{ id: `slot-${seed}-${index}`, time, available: (seed + index) % 5 !== 0 }];
+    return [{ id: `slot-${seed}-${index}`, time, available: true }];
   });
 }
 
