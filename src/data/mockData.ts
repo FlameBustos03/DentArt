@@ -45,7 +45,7 @@ export const locations: ClinicLocation[] = [
     addressLines: ["Cipres #204, Col. Chapultepec", "Poza Rica, Veracruz"],
     mapQuery: "Cipres 204 Colonia Chapultepec, Poza Rica, Veracruz, Mexico",
     mapTitle: "Mapa: Poza Rica — Dent Art",
-    teamCapacity: "Equipo de dos doctores",
+    teamCapacity: "2 unidades dentales · RX individual y panorámico",
   },
   {
     id: "villahermosa",
@@ -54,7 +54,7 @@ export const locations: ClinicLocation[] = [
     addressLines: ["Ermitaño 9, mz 22, Valle del Jaguar", "Villahermosa, Tabasco"],
     mapQuery: "Ermitaño 9 manzana 22 Valle del Jaguar, Villahermosa, Tabasco, Mexico",
     mapTitle: "Mapa: Villahermosa — Dent Art",
-    teamCapacity: "Un doctor",
+    teamCapacity: "Solo Dra. Claudia Solís · ~1 año · láser terapéutico · servicios completos",
   },
 ];
 
@@ -136,22 +136,46 @@ export const brandMarkAlt = "Dent Art — Atrévete a Sonreír";
 export const heroSubhead =
   "Atención dental cercana y profesional en Poza Rica y Villahermosa. Más de 16 años acompañando sonrisas con estética, prevención y tratamientos personalizados, siempre definidos en consulta.";
 
+const claudiaTeamPhoto = {
+  src: "/team/dra-claudia-solis.webp",
+  alt: "Dra. Claudia Solís, odontóloga de Dent Art, enfoque en estética dental y diseño de sonrisa.",
+  width: 360,
+  height: 420,
+} as const;
+
 export const clinicalTeams: ClinicalTeam[] = [
   {
-    locationId: "poza-rica" as const,
-    city: "Poza Rica",
-    summary: "2 unidades · 2 doctores · RX individual y panorámico",
-    address: "Cipres #204, Col. Chapultepec",
-    unnamedCount: 2,
-    unnamedLabel: "Doctor",
+    locationId: "poza-rica",
+    city: "Poza Rica, Veracruz",
+    capacity: "2 unidades dentales · RX individual y panorámico",
+    body: "Nuestro consultorio de origen. Además de la Dra. Claudia Solís, en Poza Rica también te atiende la Dra. Arlette Aquino en odontología general, con dos unidades dentales e imagen diagnóstica en sitio cuando hace falta.",
+    members: [
+      {
+        name: "Dra. Claudia Solís",
+        role: "estética dental y diseño de sonrisa",
+        initials: "CS",
+        photo: claudiaTeamPhoto,
+      },
+      {
+        name: "Dra. Arlette Aquino",
+        role: "odontología general",
+        initials: "AA",
+      },
+    ],
   },
   {
-    locationId: "villahermosa" as const,
+    locationId: "villahermosa",
     city: "Villahermosa",
-    summary: "1 unidad · 1 doctor",
-    address: "Ermitaño 9, mz 22, Valle del Jaguar",
-    unnamedCount: 1,
-    unnamedLabel: "Doctor",
+    capacity: "Solo Dra. Claudia Solís · ~1 año · láser terapéutico · servicios completos",
+    body: "Sede reciente · equipo de vanguardia · láser terapéutico",
+    members: [
+      {
+        name: "Dra. Claudia Solís",
+        role: "estética dental y diseño de sonrisa",
+        initials: "CS",
+        photo: claudiaTeamPhoto,
+      },
+    ],
   },
 ];
 
@@ -171,20 +195,15 @@ export const serviceModalRows = [
 ] as const;
 
 export const leadClinician: LeadClinician = {
-  name: "Dra. Claudia Solis",
+  name: "Dra. Claudia Solís",
   eyebrow: "Quién te atiende",
   role: "Estética dental y diseño de sonrisa · Dent Art",
   blurb: [
-    "La Dra. Claudia Solis lidera Dent Art con un enfoque cercano en estética dental y diseño de sonrisa. En cada consulta prioriza escucharte, explicar opciones con claridad y construir un plan realista según tu salud bucal y lo que buscas lograr.",
+    "La Dra. Claudia Solís lidera Dent Art con un enfoque cercano en estética dental y diseño de sonrisa. En cada consulta prioriza escucharte, explicar opciones con claridad y construir un plan realista según tu salud bucal y lo que buscas lograr.",
     "Con más de 16 años de trayectoria de Dent Art acompañando a familias en Poza Rica y Villahermosa, su práctica combina criterio clínico, prevención y tratamientos personalizados — siempre sin promesas vacías. El objetivo es que te sientas informado, seguro y acompañado en cada paso.",
     "Si es tu primera visita, espera una conversación sobre tu motivo de consulta, una revisión cuidadosa y recomendaciones claras. Los resultados varían de persona a persona; el plan se define después de la evaluación profesional.",
   ],
-  photo: {
-    src: "/team/dra-claudia-solis.webp",
-    alt: "Dra. Claudia Solis, odontóloga de Dent Art, enfoque en estética dental y diseño de sonrisa.",
-    width: 360,
-    height: 420,
-  },
+  photo: claudiaTeamPhoto,
 };
 
 export const serviceGroups: ServiceGroup[] = [

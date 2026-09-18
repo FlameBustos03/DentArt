@@ -17,16 +17,16 @@ export const nosotrosCopy = {
   sedes: [
     {
       city: "Poza Rica",
-      detail: "Cipres #204, Col. Chapultepec · 2 unidades · 2 doctores · RX individual y panorámico",
+      detail: "Cipres #204, Col. Chapultepec · 2 unidades dentales · RX individual y panorámico",
     },
     {
       city: "Villahermosa",
-      detail: "Ermitaño 9, mz 22, Valle del Jaguar · 1 unidad · 1 doctor",
+      detail: "Ermitaño 9, mz 22, Valle del Jaguar · Solo Dra. Claudia Solís · ~1 año · láser terapéutico · servicios completos",
     },
   ],
   clinicianH2: "Quién te atiende",
   clinicianBlurb: [
-    "La Dra. Claudia Solis lidera Dent Art con un enfoque cercano en estética dental y diseño de sonrisa. Prioriza escucharte, explicar opciones con claridad y construir un plan realista según tu salud bucal. Los resultados varían de persona a persona; el plan se define después de la evaluación profesional.",
+    "La Dra. Claudia Solís lidera Dent Art con un enfoque cercano en estética dental y diseño de sonrisa. Prioriza escucharte, explicar opciones con claridad y construir un plan realista según tu salud bucal. Los resultados varían de persona a persona; el plan se define después de la evaluación profesional.",
   ],
   primaryCta: { label: "Agendar cita", href: BOOKING_HREF } satisfies PageCta,
   secondaryCta: { label: "Ver sedes", href: "/contacto#sedes" } satisfies PageCta,
@@ -234,13 +234,13 @@ export const contactoCopy = {
       id: "poza-rica" as const,
       heading: "Poza Rica, Veracruz",
       address: "Cipres #204, Col. Chapultepec, Poza Rica",
-      capacity: "2 unidades dentales · 2 doctores · RX individual y panorámico",
+      capacity: "2 unidades dentales · RX individual y panorámico",
     },
     {
       id: "villahermosa" as const,
       heading: "Villahermosa, Tabasco",
       address: "Ermitaño 9, mz 22, Valle del Jaguar, Villahermosa",
-      capacity: "1 unidad dental · 1 doctor",
+      capacity: "Solo Dra. Claudia Solís · ~1 año · láser terapéutico · servicios completos",
     },
   ],
   formTitle: "Escríbenos",

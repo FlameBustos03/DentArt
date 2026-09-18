@@ -124,13 +124,19 @@ export interface CorporatePlan {
   logoSrc?: string;
 }
 
+export interface TeamMember {
+  name: string;
+  role: string;
+  initials: string;
+  photo?: ImageAsset;
+}
+
 export interface ClinicalTeam {
   locationId: LocationId;
   city: string;
-  summary: string;
-  address: string;
-  unnamedCount: number;
-  unnamedLabel: string;
+  capacity: string;
+  body: string;
+  members: TeamMember[];
 }
 
 export interface LeadClinician {

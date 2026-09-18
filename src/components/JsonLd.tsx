@@ -89,7 +89,7 @@ const graph = {
     {
       "@type": ["Dentist", "Physician"],
       "@id": CLAUDIA_ID,
-      name: "Dra. Claudia Solis",
+      name: "Dra. Claudia Solís",
       jobTitle: "Estética dental y diseño de sonrisa",
       worksFor: { "@id": ORG_ID },
       image: CLAUDIA_PHOTO,
