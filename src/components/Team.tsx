@@ -1,7 +1,37 @@
 import Image from "next/image";
-import { BadgeCheck, FileCheck2, UserRound } from "lucide-react";
+import { BadgeCheck, FileCheck2 } from "lucide-react";
 import { clinicalTeams, leadClinician } from "@/data/mockData";
 import { Reveal } from "@/components/ui/Reveal";
+import type { TeamMember } from "@/types";
+
+function ClinicianRow({ member }: { member: TeamMember }) {
+  return (
+    <li className="flex items-center gap-3">
+      {member.photo ? (
+        <div className="relative h-20 w-16 shrink-0 overflow-hidden rounded-xl bg-mist">
+          <Image
+            src={member.photo.src}
+            alt={member.photo.alt}
+            fill
+            className="object-cover object-top"
+            sizes="64px"
+          />
+        </div>
+      ) : (
+        <div
+          className="flex h-20 w-16 shrink-0 items-center justify-center rounded-xl bg-mist"
+          aria-hidden="true"
+        >
+          <span className="font-serif text-lg leading-none text-ink-900">{member.initials}</span>
+        </div>
+      )}
+      <span className="min-w-0">
+        <span className="block font-serif text-lg leading-snug text-ink-900">{member.name}</span>
+        <span className="type-caption break-words">{member.role}</span>
+      </span>
+    </li>
+  );
+}
 
 export function ClinicianProfile() {
   return (
@@ -74,32 +104,21 @@ export function TeamBySede() {
           Atención en dos sedes, con el mismo compromiso de cuidado cercano y profesional.
         </p>
       </Reveal>
-      <ul className="mt-8 grid gap-6 lg:grid-cols-2">
+      <ul className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
         {clinicalTeams.map((team, teamIndex) => (
           <li key={team.locationId} className="min-w-0">
             <Reveal
               delay={teamIndex * 0.1}
               className="card-lift h-full min-w-0 overflow-hidden rounded-2xl border border-black/10 bg-white p-6"
             >
-            <h4 className="type-card min-w-0 break-words">{team.city}</h4>
-            <p className="mt-2 text-sm text-ink-800">{team.summary}</p>
-            <p className="mt-1 text-sm text-black/65">{team.address}</p>
-            <ul className="mt-5 grid gap-3">
-              {team.members.map((member) => (
-                <li
-                  key={`${team.locationId}-${member.name}`}
-                  className="flex items-center gap-3 rounded-2xl border border-black/10 bg-mist px-4 py-3"
-                >
-                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-lime-800">
-                    <UserRound className="h-6 w-6" aria-hidden="true" />
-                  </span>
-                  <span className="min-w-0">
-                    <span className="block font-serif text-lg leading-snug text-ink-900">{member.name}</span>
-                    <span className="type-caption break-words">{member.role}</span>
-                  </span>
-                </li>
-              ))}
-            </ul>
+              <p className="type-eyebrow min-w-0 break-words">{team.city}</p>
+              <p className="mt-2 text-sm text-ink-800">{team.capacity}</p>
+              <p className="type-body mt-3">{team.body}</p>
+              <ul className="mt-5 grid gap-3">
+                {team.members.map((member) => (
+                  <ClinicianRow key={`${team.locationId}-${member.name}`} member={member} />
+                ))}
+              </ul>
             </Reveal>
           </li>
         ))}

@@ -8,6 +8,7 @@ const ORG_ID = `${SITE_ORIGIN}/#organization`;
 const POZA_RICA_ID = `${SITE_ORIGIN}/#poza-rica`;
 const VILLAHERMOSA_ID = `${SITE_ORIGIN}/#villahermosa`;
 const CLAUDIA_ID = `${SITE_ORIGIN}/#claudia`;
+const ARLETTE_ID = `${SITE_ORIGIN}/#arlette`;
 
 const TELEPHONE = "+52-782-210-8172";
 const EMAIL = "DentArt@gmail.com";
@@ -50,7 +51,7 @@ const graph = {
       openingHoursSpecification,
       department: [{ "@id": POZA_RICA_ID }, { "@id": VILLAHERMOSA_ID }],
       location: [{ "@id": POZA_RICA_ID }, { "@id": VILLAHERMOSA_ID }],
-      employee: [{ "@id": CLAUDIA_ID }],
+      employee: [{ "@id": CLAUDIA_ID }, { "@id": ARLETTE_ID }],
     },
     {
       "@type": "DentalClinic",
@@ -68,6 +69,7 @@ const graph = {
       email: EMAIL,
       openingHoursSpecification,
       image: LOCKUP,
+      employee: [{ "@id": CLAUDIA_ID }, { "@id": ARLETTE_ID }],
     },
     {
       "@type": "DentalClinic",
@@ -85,6 +87,7 @@ const graph = {
       email: EMAIL,
       openingHoursSpecification,
       image: LOCKUP,
+      employee: [{ "@id": CLAUDIA_ID }],
     },
     {
       "@type": ["Dentist", "Physician"],
@@ -103,6 +106,14 @@ const graph = {
         propertyID: "Cédula profesional (SEP)",
         value: "3820236",
       },
+    },
+    {
+      "@type": ["Dentist", "Physician"],
+      "@id": ARLETTE_ID,
+      name: "Dra. Arlette Aquino",
+      jobTitle: "Odontología general",
+      worksFor: { "@id": POZA_RICA_ID },
+      url: `${SITE_ORIGIN}/#equipo`,
     },
   ],
 };

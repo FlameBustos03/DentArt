@@ -118,13 +118,15 @@ export interface CorporatePlan {
 export interface TeamMember {
   name: string;
   role: string;
+  initials: string;
+  photo?: ImageAsset;
 }
 
 export interface ClinicalTeam {
   locationId: LocationId;
   city: string;
-  summary: string;
-  address: string;
+  capacity: string;
+  body: string;
   members: TeamMember[];
 }
 

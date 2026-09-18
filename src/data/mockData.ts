@@ -44,7 +44,7 @@ export const locations: ClinicLocation[] = [
     region: "Veracruz",
     addressLines: ["Cipres #204, Col. Chapultepec", "Poza Rica, Veracruz"],
     mapQuery: "Cipres 204 Colonia Chapultepec, Poza Rica, Veracruz, Mexico",
-    teamCapacity: "Equipo multidisciplinario",
+    teamCapacity: "2 unidades dentales · RX individual y panorámico",
   },
   {
     id: "villahermosa",
@@ -52,7 +52,7 @@ export const locations: ClinicLocation[] = [
     region: "Tabasco",
     addressLines: ["Ermitaño 9, mz 22, Valle del Jaguar", "Villahermosa, Tabasco"],
     mapQuery: "Ermitaño 9 manzana 22 Valle del Jaguar, Villahermosa, Tabasco, Mexico",
-    teamCapacity: "Dra. Claudia Solís",
+    teamCapacity: "Solo Dra. Claudia Solís · ~1 año · láser terapéutico · servicios completos",
   },
 ];
 
@@ -119,26 +119,46 @@ export const brandMarkAlt = "Dent Art — Atrévete a Sonreír";
 export const heroSubhead =
   "Atención dental cercana y profesional en Poza Rica y Villahermosa. Más de 16 años acompañando sonrisas con estética, prevención y tratamientos personalizados, siempre definidos en consulta.";
 
+const claudiaTeamPhoto = {
+  src: "/team/dra-claudia-solis.webp",
+  alt: "Dra. Claudia Solís, odontóloga de Dent Art, enfoque en estética dental y diseño de sonrisa.",
+  width: 360,
+  height: 420,
+} as const;
+
 export const clinicalTeams: ClinicalTeam[] = [
   {
-    locationId: "poza-rica" as const,
-    city: "Poza Rica",
-    summary: "2 unidades · RX individual y panorámico · equipo multidisciplinario",
-    address: "Cipres #204, Col. Chapultepec",
+    locationId: "poza-rica",
+    city: "Poza Rica, Veracruz",
+    capacity: "2 unidades dentales · RX individual y panorámico",
+    body: "Nuestro consultorio de origen. Además de la Dra. Claudia Solís, en Poza Rica también te atiende la Dra. Arlette Aquino en odontología general, con dos unidades dentales e imagen diagnóstica en sitio cuando hace falta.",
     members: [
-      { name: "Dra. Claudia Solís", role: "Cirujana dentista · Directora" },
-      { name: "Dr. Efrén Soto Santiago", role: "Cirujano maxilofacial" },
-      { name: "Dr. Jorge García", role: "Odontopediatra" },
-      { name: "Dra. Arlette Aquino", role: "Odontología general" },
-      { name: "Dra. Blanca Cotero", role: "Odontología general" },
+      {
+        name: "Dra. Claudia Solís",
+        role: "estética dental y diseño de sonrisa",
+        initials: "CS",
+        photo: claudiaTeamPhoto,
+      },
+      {
+        name: "Dra. Arlette Aquino",
+        role: "odontología general",
+        initials: "AA",
+      },
     ],
   },
   {
-    locationId: "villahermosa" as const,
+    locationId: "villahermosa",
     city: "Villahermosa",
-    summary: "Sede reciente · equipo de vanguardia · láser terapéutico",
-    address: "Ermitaño 9, mz 22, Valle del Jaguar",
-    members: [{ name: "Dra. Claudia Solís", role: "Cirujana dentista · Directora" }],
+    capacity: "Solo Dra. Claudia Solís · ~1 año · láser terapéutico · servicios completos",
+    body: "Sede reciente · equipo de vanguardia · láser terapéutico",
+    members: [
+      {
+        name: "Dra. Claudia Solís",
+        role: "estética dental y diseño de sonrisa",
+        initials: "CS",
+        photo: claudiaTeamPhoto,
+      },
+    ],
   },
 ];
 
@@ -163,7 +183,7 @@ export const leadClinician: LeadClinician = {
   role: "Cirujana dentista · Estética dental y diseño de sonrisa · Dent Art",
   blurb: [
     "La Dra. Claudia Solís es egresada de la Facultad de Odontología de la Universidad Veracruzana, Campus Poza Rica–Tuxpan, titulada por CENEVAL con promedio de 9.8. Su formación continua incluye diversos cursos clínicos y dos diplomados: Ortopedia Maxilar y Diseño de Sonrisa. Actualmente está por ingresar a la especialidad de Ortodoncia en la Universidad Juárez Autónoma de Tabasco (UJAT).",
-    "Dirige las dos sedes de Dent Art. En Poza Rica encabeza un equipo multidisciplinario con cirujano maxilofacial, odontopediatra y odontólogas generales; la sede de Villahermosa, abierta hace un año, cuenta con equipo de vanguardia y todos los servicios, incluido el láser terapéutico.",
+    "Dirige las dos sedes de Dent Art. En Poza Rica atiende en el consultorio de origen; la sede de Villahermosa, abierta hace un año, cuenta con equipo de vanguardia y todos los servicios, incluido el láser terapéutico.",
     "Si es tu primera visita, espera una conversación sobre tu motivo de consulta, una revisión cuidadosa y recomendaciones claras. Los resultados varían de persona a persona; el plan se define después de la evaluación profesional.",
   ],
   credentials: [
@@ -180,12 +200,7 @@ export const leadClinician: LeadClinician = {
     height: 1480,
     number: "3820236",
   },
-  photo: {
-    src: "/team/dra-claudia-solis.webp",
-    alt: "Dra. Claudia Solís, odontóloga de Dent Art, enfoque en estética dental y diseño de sonrisa.",
-    width: 360,
-    height: 420,
-  },
+  photo: claudiaTeamPhoto,
 };
 
 export const serviceGroups: ServiceGroup[] = [
