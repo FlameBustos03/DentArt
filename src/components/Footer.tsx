@@ -10,6 +10,7 @@ import {
   locations,
   medicalDisclaimer,
 } from "@/data/mockData";
+import { clinicYear } from "@/lib/clinicTime";
 import { buildWhatsAppUrl, withSiteHash } from "@/lib/utils";
 
 export function Footer() {
@@ -104,7 +105,7 @@ export function Footer() {
       <div className="border-t border-white/10">
         <div className="section-x flex flex-col gap-3 py-6 text-xs text-white/70">
           <p className="flex flex-wrap items-center gap-x-2">
-            <span>© {new Date().getFullYear()} Dent Art · Todos los derechos reservados</span>
+            <span>© {clinicYear()} Dent Art · Todos los derechos reservados</span>
             <span aria-hidden="true">·</span>
             <PrivacyNoticeLink className="text-link-dark inline-flex min-h-11 items-center">
               Aviso de Privacidad
