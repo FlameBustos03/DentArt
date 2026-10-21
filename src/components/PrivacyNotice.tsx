@@ -150,7 +150,7 @@ export function PrivacyNotice({ level = 1 }: PrivacyNoticeProps) {
         <p>
           Para operar usamos proveedores que tratan datos por nuestra cuenta (<strong>encargados</strong>):
         </p>
-        <div className="overflow-x-auto">
+        <div className="min-w-0 overflow-x-auto">
           <table className="w-full min-w-[36rem] border-collapse text-left text-sm">
             <thead>
               <tr className="bg-mist">

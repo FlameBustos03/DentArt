@@ -173,7 +173,7 @@ export function SmileQuiz() {
                 </h3>
 
                 {step === 1 ? (
-                  <fieldset className="mt-6">
+                  <fieldset className="mt-6 min-w-0">
                     <legend className="sr-only">Improvement focus</legend>
                     <div className="grid gap-3 sm:grid-cols-2">
                       {quizImprovements.map((choice) => {
@@ -208,7 +208,7 @@ export function SmileQuiz() {
                 ) : null}
 
                 {step === 2 ? (
-                  <fieldset className="mt-6">
+                  <fieldset className="mt-6 min-w-0">
                     <legend className="sr-only">Primary goal</legend>
                     <div className="grid gap-3">
                       {quizGoals.map((choice) => {

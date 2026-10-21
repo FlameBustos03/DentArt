@@ -62,6 +62,9 @@ export function BookingForm() {
   const [acceptPrivacy, setAcceptPrivacy] = useState(false);
   const [acceptHealth, setAcceptHealth] = useState(false);
   const [acceptMarketing, setAcceptMarketing] = useState(false);
+  const [privacyTouched, setPrivacyTouched] = useState(false);
+  const [healthTouched, setHealthTouched] = useState(false);
+  const [consentAttempted, setConsentAttempted] = useState(false);
   const [noticeOpen, setNoticeOpen] = useState(false);
   const [noticeFocusNonce, setNoticeFocusNonce] = useState(0);
   const [launchedWhatsappUrl, setLaunchedWhatsappUrl] = useState("");
@@ -188,6 +191,8 @@ export function BookingForm() {
 
   const notesFilled = form.notes.trim().length > 0;
   const consentReady = acceptPrivacy && (!notesFilled || acceptHealth);
+  const showPrivacyError = !acceptPrivacy && (privacyTouched || consentAttempted);
+  const showHealthError = notesFilled && !acceptHealth && (healthTouched || consentAttempted);
 
   const buildBookingMessage = (consentedAt: Date) => {
     const lines = [
@@ -215,6 +220,7 @@ export function BookingForm() {
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setConsentAttempted(true);
     const nextErrors = validateStep(3);
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0 || !consentReady) {
@@ -233,6 +239,9 @@ export function BookingForm() {
     setAcceptPrivacy(false);
     setAcceptHealth(false);
     setAcceptMarketing(false);
+    setPrivacyTouched(false);
+    setHealthTouched(false);
+    setConsentAttempted(false);
     setNoticeOpen(false);
     setLaunchedWhatsappUrl("");
     setStep(1);
@@ -282,9 +291,14 @@ export function BookingForm() {
         </ol>
 
         <form
-          className="mt-8 rounded-2xl border border-black/10 bg-mist p-5 text-ink-900 sm:p-8"
+          className="mt-8 min-w-0 rounded-2xl border border-black/10 bg-mist p-5 text-ink-900 sm:p-8"
           onSubmit={onSubmit}
           noValidate
+          onKeyDown={(event) => {
+            if (event.key !== "Enter" || event.shiftKey) return;
+            if (!(event.target instanceof HTMLInputElement)) return;
+            setConsentAttempted(true);
+          }}
         >
           <h3 ref={headingRef} tabIndex={-1} className="type-card outline-none">
             {step === 1 && "Paso 1 · Servicio"}
@@ -306,7 +320,7 @@ export function BookingForm() {
             transition={reduceMotion ? { duration: 0 } : { duration: 0.28, ease: "easeOut" }}
           >
           {step === 1 ? (
-            <fieldset className="mt-6">
+            <fieldset className="mt-6 min-w-0">
               <legend className="type-eyebrow mb-3">
                 Servicio
                 <RequiredMark />
@@ -356,7 +370,7 @@ export function BookingForm() {
           ) : null}
 
           {step === 2 ? (
-            <fieldset className="mt-6">
+            <fieldset className="mt-6 min-w-0">
               <legend className="type-eyebrow mb-3">
                 Modalidad
                 <RequiredMark />
@@ -404,12 +418,12 @@ export function BookingForm() {
 
           {step === 3 ? (
             <div className="mt-6 space-y-6">
-              <fieldset>
+              <fieldset className="min-w-0">
                 <legend className="type-eyebrow">
                   Fecha
                   <RequiredMark />
                 </legend>
-                <div className="mt-3 flex gap-2 overflow-x-auto pb-2">
+                <div className="mt-3 flex min-w-0 gap-2 overflow-x-auto pb-2">
                   {dates.map((date) => {
                     const selected = form.dateIso === date.iso;
                     return (
@@ -439,7 +453,7 @@ export function BookingForm() {
                 ) : null}
               </fieldset>
 
-              <fieldset>
+              <fieldset className="min-w-0">
                 <legend className="type-eyebrow">
                   Hora preferida
                   <RequiredMark />
@@ -519,7 +533,7 @@ export function BookingForm() {
                     setErrors((prev) => ({ ...prev, phone: undefined }));
                   }}
                 />
-                <fieldset className="flex flex-col gap-1.5">
+                <fieldset className="flex min-w-0 flex-col gap-1.5">
                   <legend className="type-eyebrow">
                     Cómo te contactamos
                     <RequiredMark />
@@ -574,6 +588,10 @@ export function BookingForm() {
               onAcceptMarketing={setAcceptMarketing}
               onToggleNotice={() => setNoticeOpen((open) => !open)}
               onOpenNotice={() => setNoticeOpen(true)}
+              showPrivacyError={showPrivacyError}
+              showHealthError={showHealthError}
+              onPrivacyTouched={() => setPrivacyTouched(true)}
+              onHealthTouched={() => setHealthTouched(true)}
             />
           ) : null}
 
@@ -600,7 +618,7 @@ export function BookingForm() {
                 type="submit"
                 variant="primary"
                 disabled={!consentReady}
-                aria-describedby={consentDescribedBy(acceptPrivacy, notesFilled, acceptHealth)}
+                aria-describedby={consentDescribedBy(showPrivacyError, showHealthError)}
               >
                 <MessageCircle className="h-4 w-4" aria-hidden="true" />
                 Enviar por WhatsApp

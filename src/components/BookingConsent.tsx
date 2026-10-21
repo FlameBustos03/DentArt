@@ -11,10 +11,10 @@ import {
 export const PRIVACY_CONSENT_ERROR_ID = "consent-privacy-error";
 export const HEALTH_CONSENT_ERROR_ID = "consent-health-error";
 
-export function consentDescribedBy(acceptPrivacy: boolean, healthRequired: boolean, acceptHealth: boolean) {
+export function consentDescribedBy(showPrivacyError: boolean, showHealthError: boolean) {
   const ids = [
-    acceptPrivacy ? null : PRIVACY_CONSENT_ERROR_ID,
-    healthRequired && !acceptHealth ? HEALTH_CONSENT_ERROR_ID : null,
+    showPrivacyError ? PRIVACY_CONSENT_ERROR_ID : null,
+    showHealthError ? HEALTH_CONSENT_ERROR_ID : null,
   ].filter((id): id is string => Boolean(id));
   return ids.length > 0 ? ids.join(" ") : undefined;
 }
@@ -31,6 +31,12 @@ export interface BookingConsentProps {
   onAcceptMarketing: (value: boolean) => void;
   onToggleNotice: () => void;
   onOpenNotice: () => void;
+  /** Privacy error is visible only after blur, toggle, or a submit attempt. */
+  showPrivacyError: boolean;
+  /** Health-data error follows the same touch-or-submit rule. */
+  showHealthError: boolean;
+  onPrivacyTouched: () => void;
+  onHealthTouched: () => void;
 }
 
 function RequiredMark() {
@@ -54,15 +60,18 @@ export function BookingConsent({
   onAcceptMarketing,
   onToggleNotice,
   onOpenNotice,
+  showPrivacyError,
+  showHealthError,
+  onPrivacyTouched,
+  onHealthTouched,
 }: BookingConsentProps) {
   const healthRequired = notesFilled;
-  const privacyError = acceptPrivacy
-    ? undefined
-    : "Acepta el Aviso de Privacidad para enviar tu solicitud.";
-  const healthError =
-    healthRequired && !acceptHealth
-      ? "Autoriza el tratamiento de los datos de salud que incluyas en tus notas para enviar tu solicitud."
-      : undefined;
+  const privacyError = showPrivacyError
+    ? "Acepta el Aviso de Privacidad para enviar tu solicitud."
+    : undefined;
+  const healthError = showHealthError
+    ? "Autoriza el tratamiento de los datos de salud que incluyas en tus notas para enviar tu solicitud."
+    : undefined;
 
   const openNoticeFromLabel = () => {
     onOpenNotice();
@@ -98,7 +107,7 @@ export function BookingConsent({
         <PrivacyNotice level={4} />
       </div>
 
-      <fieldset className="space-y-3">
+      <fieldset className="min-w-0 space-y-3">
         <legend className="sr-only">Consentimientos para enviar la solicitud</legend>
 
         <div>
@@ -112,7 +121,11 @@ export function BookingConsent({
               aria-label="He leído y acepto el Aviso de Privacidad. Obligatorio"
               aria-invalid={privacyError ? true : undefined}
               aria-describedby={privacyError ? PRIVACY_CONSENT_ERROR_ID : undefined}
-              onChange={(event) => onAcceptPrivacy(event.target.checked)}
+              onBlur={onPrivacyTouched}
+              onChange={(event) => {
+                onPrivacyTouched();
+                onAcceptPrivacy(event.target.checked);
+              }}
               className="h-11 w-11 shrink-0 accent-[#1B7A45]"
             />
             <p className="text-sm leading-6 text-ink-900">
@@ -147,7 +160,11 @@ export function BookingConsent({
               aria-required={healthRequired ? "true" : undefined}
               aria-invalid={healthError ? true : undefined}
               aria-describedby={healthError ? HEALTH_CONSENT_ERROR_ID : undefined}
-              onChange={(event) => onAcceptHealth(event.target.checked)}
+              onBlur={onHealthTouched}
+              onChange={(event) => {
+                onHealthTouched();
+                onAcceptHealth(event.target.checked);
+              }}
               className="h-11 w-11 shrink-0 accent-[#1B7A45]"
             />
             <span>
