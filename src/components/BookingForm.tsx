@@ -12,13 +12,15 @@ import {
   getUpcomingBookingDates,
   treatmentOptions,
 } from "@/data/mockData";
+import { BookingConsent, consentDescribedBy } from "@/components/BookingConsent";
 import { LocationSwitch } from "@/components/LocationSwitch";
 import { useClinicLocation } from "@/components/LocationProvider";
 import type { BookingFieldErrors, BookingFormData, ContactPreference } from "@/types";
 import { Button } from "@/components/ui/Button";
-import { TextAreaField, TextField } from "@/components/ui/Input";
+import { RequiredMark, TextAreaField, TextField } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
 import { Reveal } from "@/components/ui/Reveal";
+import { formatConsentStamp, PRIVACY_NOTICE_VERSION } from "@/lib/privacyNotice";
 import { buildWhatsAppUrl, cn, isValidEmail, isValidPhone } from "@/lib/utils";
 
 const INITIAL_FORM: BookingFormData = {
@@ -42,6 +44,12 @@ const CONTACT_OPTIONS: Array<{ value: ContactPreference; label: string }> = [
 
 const STEP_LABELS = ["Servicio y sede", "Modalidad", "Fecha, hora y contacto"] as const;
 
+const chipIdle =
+  "border-2 border-ink-900/70 bg-white text-ink-900 hover:border-ink-900 hover:bg-mist";
+const chipSelected = "border-2 border-lime-500 bg-lime-500 text-ink-900";
+const chipDisabled =
+  "cursor-not-allowed border-2 border-ink-900/50 bg-mist text-ink-900 disabled:opacity-100";
+
 export function BookingForm() {
   const { location, locationId } = useClinicLocation();
   const reduceMotion = useReducedMotion();
@@ -49,7 +57,16 @@ export function BookingForm() {
   const [form, setForm] = useState<BookingFormData>({ ...INITIAL_FORM, locationId });
   const [errors, setErrors] = useState<BookingFieldErrors>({});
   const [successOpen, setSuccessOpen] = useState(false);
+  const [acceptPrivacy, setAcceptPrivacy] = useState(false);
+  const [acceptHealth, setAcceptHealth] = useState(false);
+  const [acceptMarketing, setAcceptMarketing] = useState(false);
+  const [noticeOpen, setNoticeOpen] = useState(false);
+  const [noticeFocusNonce, setNoticeFocusNonce] = useState(0);
+  const [launchedWhatsappUrl, setLaunchedWhatsappUrl] = useState("");
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const noticeButtonRef = useRef<HTMLButtonElement>(null);
+  const ignoreHeadingFocus = useRef(false);
+  const handledNoticeFocus = useRef(0);
   const statusId = useId();
   const dates = useMemo(() => getUpcomingBookingDates(10), []);
   const selectedDate = dates.find((date) => date.iso === form.dateIso);
@@ -71,8 +88,48 @@ export function BookingForm() {
       return;
     }
     focusedStep.current = step;
+    if (ignoreHeadingFocus.current) {
+      ignoreHeadingFocus.current = false;
+      return;
+    }
     headingRef.current?.focus();
   }, [step]);
+
+  useEffect(() => {
+    const openFromHash = () => {
+      if (window.location.hash !== "#aviso-privacidad") {
+        return;
+      }
+      setStep((current) => {
+        if (current !== 3) {
+          ignoreHeadingFocus.current = true;
+        }
+        return 3;
+      });
+      setNoticeOpen(true);
+      setNoticeFocusNonce((value) => value + 1);
+    };
+
+    openFromHash();
+    window.addEventListener("hashchange", openFromHash);
+    return () => window.removeEventListener("hashchange", openFromHash);
+  }, []);
+
+  useEffect(() => {
+    if (noticeFocusNonce === 0 || step !== 3 || !noticeOpen) {
+      return;
+    }
+    if (handledNoticeFocus.current === noticeFocusNonce) {
+      return;
+    }
+    const nonce = noticeFocusNonce;
+    const frame = window.requestAnimationFrame(() => {
+      handledNoticeFocus.current = nonce;
+      noticeButtonRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      noticeButtonRef.current?.focus();
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [noticeFocusNonce, step, noticeOpen]);
 
   const validateStep = (current: number): BookingFieldErrors => {
     const nextErrors: BookingFieldErrors = {};
@@ -95,7 +152,7 @@ export function BookingForm() {
       if (form.fullName.trim().length < 2) {
         nextErrors.fullName = "Escribe tu nombre completo.";
       }
-      if (!isValidEmail(form.email)) {
+      if (form.email.trim() && !isValidEmail(form.email)) {
         nextErrors.email = "Escribe un correo válido.";
       }
       if (!isValidPhone(form.phone)) {
@@ -103,6 +160,13 @@ export function BookingForm() {
       }
       if (!form.contactPreference) {
         nextErrors.contactPreference = "Elige cómo te contactamos.";
+      }
+      if (!acceptPrivacy) {
+        nextErrors.acceptPrivacy = "Acepta el Aviso de Privacidad para enviar tu solicitud.";
+      }
+      if (form.notes.trim() && !acceptHealth) {
+        nextErrors.acceptHealth =
+          "Autoriza el tratamiento de los datos de salud que incluyas en tus notas para enviar tu solicitud.";
       }
     }
 
@@ -120,7 +184,10 @@ export function BookingForm() {
   const contactLabel =
     CONTACT_OPTIONS.find((option) => option.value === form.contactPreference)?.label ?? "";
 
-  const whatsappUrl = useMemo(() => {
+  const notesFilled = form.notes.trim().length > 0;
+  const consentReady = acceptPrivacy && (!notesFilled || acceptHealth);
+
+  const buildBookingMessage = (consentedAt: Date) => {
     const lines = [
       "Hola Dent Art, quiero agendar una cita.",
       selectedTreatment
@@ -133,21 +200,27 @@ export function BookingForm() {
         : "",
       `Nombre: ${form.fullName.trim()}`,
       `Teléfono: ${form.phone.trim()}`,
-      `Correo: ${form.email.trim()}`,
+      form.email.trim() ? `Correo: ${form.email.trim()}` : "",
       contactLabel ? `Prefiero que me contacten por: ${contactLabel}` : "",
       form.notes.trim() ? `Notas: ${form.notes.trim()}` : "",
+      `Consentimiento: ${formatConsentStamp(consentedAt)}`,
+      `Versión del aviso: ${PRIVACY_NOTICE_VERSION}`,
+      `Datos de salud: ${acceptHealth ? "sí" : "no"}`,
+      `Recordatorios y promociones: ${acceptMarketing ? "sí" : "no"}`,
     ].filter(Boolean);
-    return buildWhatsAppUrl(clinicInfo.whatsappNumber, lines.join("\n"));
-  }, [selectedTreatment, selectedMode, selectedDate, selectedSlot, location, form, contactLabel]);
+    return lines.join("\n");
+  };
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const nextErrors = validateStep(3);
     setErrors(nextErrors);
-    if (Object.keys(nextErrors).length > 0) {
+    if (Object.keys(nextErrors).length > 0 || !consentReady) {
       return;
     }
-    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+    const url = buildWhatsAppUrl(clinicInfo.whatsappNumber, buildBookingMessage(new Date()));
+    setLaunchedWhatsappUrl(url);
+    window.open(url, "_blank", "noopener,noreferrer");
     setSuccessOpen(true);
   };
 
@@ -155,6 +228,11 @@ export function BookingForm() {
     setSuccessOpen(false);
     setForm({ ...INITIAL_FORM, locationId });
     setErrors({});
+    setAcceptPrivacy(false);
+    setAcceptHealth(false);
+    setAcceptMarketing(false);
+    setNoticeOpen(false);
+    setLaunchedWhatsappUrl("");
     setStep(1);
   };
 
@@ -202,7 +280,7 @@ export function BookingForm() {
         </ol>
 
         <form
-          className="mt-8 rounded-2xl border border-black/10 bg-mist p-5 sm:p-8"
+          className="mt-8 rounded-2xl border border-black/10 bg-mist p-5 text-ink-900 sm:p-8"
           onSubmit={onSubmit}
           noValidate
         >
@@ -211,6 +289,10 @@ export function BookingForm() {
             {step === 2 && "Paso 2 · Modalidad"}
             {step === 3 && "Paso 3 · Fecha, hora y contacto"}
           </h3>
+          <p className="mt-2 text-sm text-black/70">
+            Los campos marcados con asterisco (<span aria-hidden="true">*</span>
+            <span className="sr-only">asterisco</span>) son obligatorios. El correo es opcional.
+          </p>
           <p id={statusId} className="sr-only" aria-live="polite">
             Paso {step} de 3
           </p>
@@ -223,7 +305,10 @@ export function BookingForm() {
           >
           {step === 1 ? (
             <fieldset className="mt-6">
-              <legend className="sr-only">Servicio</legend>
+              <legend className="type-eyebrow mb-3">
+                Servicio
+                <RequiredMark />
+              </legend>
               <div className="grid gap-3 sm:grid-cols-2">
                 {treatmentOptions.map((option) => {
                   const selected = form.treatmentId === option.id;
@@ -269,7 +354,10 @@ export function BookingForm() {
 
           {step === 2 ? (
             <fieldset className="mt-6">
-              <legend className="sr-only">Modalidad de consulta</legend>
+              <legend className="type-eyebrow mb-3">
+                Modalidad
+                <RequiredMark />
+              </legend>
               <div className="grid gap-4 md:grid-cols-2">
                 {consultationModes.map((option) => {
                   const selected = form.consultationMode === option.id;
@@ -313,7 +401,10 @@ export function BookingForm() {
           {step === 3 ? (
             <div className="mt-6 space-y-6">
               <fieldset>
-                <legend className="type-eyebrow">Fecha</legend>
+                <legend className="type-eyebrow">
+                  Fecha
+                  <RequiredMark />
+                </legend>
                 <div className="mt-3 flex gap-2 overflow-x-auto pb-2">
                   {dates.map((date) => {
                     const selected = form.dateIso === date.iso;
@@ -327,10 +418,8 @@ export function BookingForm() {
                           setErrors((prev) => ({ ...prev, dateIso: undefined, slotId: undefined }));
                         }}
                         className={cn(
-                          "min-h-11 min-w-[4.75rem] rounded-2xl border px-3 py-3 text-center",
-                          selected
-                            ? "border-lime-500 bg-lime-500 text-ink-900"
-                            : "border-black/10 bg-white hover:border-black/20",
+                          "min-h-11 min-w-[4.75rem] rounded-2xl px-3 py-3 text-center",
+                          selected ? chipSelected : chipIdle,
                         )}
                       >
                         <span className="block text-xs uppercase">{date.weekday}</span>
@@ -347,27 +436,32 @@ export function BookingForm() {
               </fieldset>
 
               <fieldset>
-                <legend className="type-eyebrow">Hora preferida</legend>
+                <legend className="type-eyebrow">
+                  Hora preferida
+                  <RequiredMark />
+                </legend>
                 <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
-                  {(selectedDate?.slots ?? []).map((slot) => (
-                    <button
-                      key={slot.id}
-                      type="button"
-                      aria-pressed={form.slotId === slot.id}
-                      onClick={() => {
-                        setForm((prev) => ({ ...prev, slotId: slot.id }));
-                        setErrors((prev) => ({ ...prev, slotId: undefined }));
-                      }}
-                      className={cn(
-                        "min-h-11 rounded-xl border px-3 py-3 text-sm",
-                        form.slotId === slot.id
-                          ? "border-lime-500 bg-lime-500 text-ink-900"
-                          : "border-black/10 bg-white hover:border-black/20",
-                      )}
-                    >
-                      {slot.time}
-                    </button>
-                  ))}
+                  {(selectedDate?.slots ?? []).map((slot) => {
+                    const selected = form.slotId === slot.id;
+                    return (
+                      <button
+                        key={slot.id}
+                        type="button"
+                        disabled={!slot.available}
+                        aria-pressed={selected}
+                        onClick={() => {
+                          setForm((prev) => ({ ...prev, slotId: slot.id }));
+                          setErrors((prev) => ({ ...prev, slotId: undefined }));
+                        }}
+                        className={cn(
+                          "min-h-11 rounded-xl px-3 py-3 text-sm",
+                          !slot.available ? chipDisabled : selected ? chipSelected : chipIdle,
+                        )}
+                      >
+                        {slot.time}
+                      </button>
+                    );
+                  })}
                 </div>
                 {!selectedDate ? (
                   <p className="mt-3 text-sm text-black/70">Elige una fecha para ver horarios.</p>
@@ -388,6 +482,7 @@ export function BookingForm() {
                   id="fullName"
                   label="Nombre completo"
                   autoComplete="name"
+                  requiredMark
                   value={form.fullName}
                   error={errors.fullName}
                   onChange={(event) => {
@@ -397,7 +492,7 @@ export function BookingForm() {
                 />
                 <TextField
                   id="email"
-                  label="Correo"
+                  label="Correo (opcional)"
                   type="email"
                   autoComplete="email"
                   value={form.email}
@@ -412,6 +507,7 @@ export function BookingForm() {
                   label="Teléfono"
                   type="tel"
                   autoComplete="tel"
+                  requiredMark
                   value={form.phone}
                   error={errors.phone}
                   onChange={(event) => {
@@ -422,16 +518,15 @@ export function BookingForm() {
                 <fieldset className="flex flex-col gap-1.5">
                   <legend className="type-eyebrow">
                     Cómo te contactamos
+                    <RequiredMark />
                   </legend>
                   <div className="flex flex-wrap gap-2 pt-2">
                     {CONTACT_OPTIONS.map((option) => (
                       <label
                         key={option.value}
                         className={cn(
-                          "cursor-pointer rounded-full border px-4 py-2 text-sm min-h-11 inline-flex items-center",
-                          form.contactPreference === option.value
-                            ? "border-lime-500 bg-lime-500 text-ink-900"
-                            : "border-black/15 bg-white",
+                          "inline-flex min-h-11 cursor-pointer items-center rounded-full px-4 py-2 text-sm",
+                          form.contactPreference === option.value ? chipSelected : chipIdle,
                         )}
                       >
                         <input
@@ -461,6 +556,22 @@ export function BookingForm() {
           ) : null}
           </motion.div>
 
+          {step === 3 ? (
+            <BookingConsent
+              notesFilled={notesFilled}
+              acceptPrivacy={acceptPrivacy}
+              acceptHealth={acceptHealth}
+              acceptMarketing={acceptMarketing}
+              noticeOpen={noticeOpen}
+              noticeButtonRef={noticeButtonRef}
+              onAcceptPrivacy={setAcceptPrivacy}
+              onAcceptHealth={setAcceptHealth}
+              onAcceptMarketing={setAcceptMarketing}
+              onToggleNotice={() => setNoticeOpen((open) => !open)}
+              onOpenNotice={() => setNoticeOpen(true)}
+            />
+          ) : null}
+
           <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
             <Button
               variant="ghost"
@@ -479,7 +590,13 @@ export function BookingForm() {
                 <ChevronRight className="h-4 w-4" aria-hidden="true" />
               </Button>
             ) : (
-              <Button key="submit-whatsapp" type="submit" variant="primary">
+              <Button
+                key="submit-whatsapp"
+                type="submit"
+                variant="primary"
+                disabled={!consentReady}
+                aria-describedby={consentDescribedBy(acceptPrivacy, notesFilled, acceptHealth)}
+              >
                 <MessageCircle className="h-4 w-4" aria-hidden="true" />
                 Enviar por WhatsApp
               </Button>
@@ -519,7 +636,7 @@ export function BookingForm() {
           </p>
           <div className="flex flex-wrap gap-3">
             <a
-              href={whatsappUrl}
+              href={launchedWhatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex min-h-11 items-center gap-2 rounded-full bg-lime-500 px-5 text-sm font-medium text-ink-900 transition-colors hover:bg-lime-400"

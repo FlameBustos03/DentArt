@@ -1,5 +1,6 @@
 import { Clock, Mail, MapPin, MessageCircle, Phone, Scale } from "lucide-react";
 import { BrandLockup } from "@/components/BrandLockup";
+import { PrivacyNoticeLink } from "@/components/PrivacyNoticeLink";
 import { SocialLinks } from "@/components/SocialLinks";
 import {
   clinicHoursNote,
@@ -9,7 +10,7 @@ import {
   locations,
   medicalDisclaimer,
 } from "@/data/mockData";
-import { buildWhatsAppUrl } from "@/lib/utils";
+import { buildWhatsAppUrl, withSiteHash } from "@/lib/utils";
 
 export function Footer() {
   const whatsappHref = buildWhatsAppUrl(clinicInfo.whatsappNumber, conciergePrefillMessage);
@@ -67,9 +68,15 @@ export function Footer() {
           <ul className="mt-4 space-y-3 text-sm">
             {footerSitemap.map((link) => (
               <li key={link.id}>
-                <a href={link.href} className="text-link-dark inline-flex min-h-11 items-center">
-                  {link.label}
-                </a>
+                {link.id === "aviso-privacidad" ? (
+                  <PrivacyNoticeLink className="text-link-dark inline-flex min-h-11 items-center">
+                    {link.label}
+                  </PrivacyNoticeLink>
+                ) : (
+                  <a href={withSiteHash(link.href)} className="text-link-dark inline-flex min-h-11 items-center">
+                    {link.label}
+                  </a>
+                )}
               </li>
             ))}
           </ul>
@@ -96,8 +103,12 @@ export function Footer() {
       </div>
       <div className="border-t border-white/10">
         <div className="section-x flex flex-col gap-3 py-6 text-xs text-white/70">
-          <p>
-            © {new Date().getFullYear()} Dent Art · Todos los derechos reservados
+          <p className="flex flex-wrap items-center gap-x-2">
+            <span>© {new Date().getFullYear()} Dent Art · Todos los derechos reservados</span>
+            <span aria-hidden="true">·</span>
+            <PrivacyNoticeLink className="text-link-dark inline-flex min-h-11 items-center">
+              Aviso de Privacidad
+            </PrivacyNoticeLink>
           </p>
           <p className="flex max-w-4xl items-start gap-2">
             <Scale className="mt-0.5 h-3.5 w-3.5 shrink-0 text-lime-400" aria-hidden="true" />

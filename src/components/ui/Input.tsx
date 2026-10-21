@@ -3,11 +3,21 @@
 import type { InputHTMLAttributes, TextareaHTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
 
+export function RequiredMark() {
+  return (
+    <>
+      <span aria-hidden="true"> *</span>
+      <span className="sr-only"> Obligatorio</span>
+    </>
+  );
+}
+
 export interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string;
   label: string;
   error?: string;
   tone?: "light" | "dark";
+  requiredMark?: boolean;
 }
 
 export interface TextAreaFieldProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -17,7 +27,15 @@ export interface TextAreaFieldProps extends TextareaHTMLAttributes<HTMLTextAreaE
   tone?: "light" | "dark";
 }
 
-export function TextField({ id, label, error, className, tone = "light", ...props }: TextFieldProps) {
+export function TextField({
+  id,
+  label,
+  error,
+  className,
+  tone = "light",
+  requiredMark = false,
+  ...props
+}: TextFieldProps) {
   const errorId = `${id}-error`;
   const labelClass = tone === "dark" ? "text-lime-500" : "text-black/60";
   const errorClass = tone === "dark" ? "text-red-300" : "text-red-700";
@@ -26,9 +44,11 @@ export function TextField({ id, label, error, className, tone = "light", ...prop
     <div className="flex flex-col gap-1.5">
       <label htmlFor={id} className={`text-xs uppercase tracking-[0.16em] ${labelClass}`}>
         {label}
+        {requiredMark ? <RequiredMark /> : null}
       </label>
       <input
         id={id}
+        aria-required={requiredMark || undefined}
         aria-invalid={Boolean(error)}
         aria-describedby={error ? errorId : undefined}
         className={cn(

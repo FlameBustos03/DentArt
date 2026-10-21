@@ -94,6 +94,7 @@ export const footerSitemap: NavLink[] = [
   { id: "sedes", label: "Sedes", href: "#sedes" },
   { id: "faq", label: "FAQ", href: "#faq" },
   { id: "booking", label: "Agendar", href: "#booking" },
+  { id: "aviso-privacidad", label: "Aviso de Privacidad", href: "/#aviso-privacidad" },
 ];
 
 export const testimonialsEyebrow = "Pacientes Dent Art";
