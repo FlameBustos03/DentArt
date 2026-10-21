@@ -163,6 +163,8 @@ export interface BookingFieldErrors {
   email?: string;
   phone?: string;
   contactPreference?: string;
+  acceptPrivacy?: string;
+  acceptHealth?: string;
 }
 
 export interface Testimonial {

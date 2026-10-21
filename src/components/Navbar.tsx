@@ -1,19 +1,22 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { BrandLockup } from "@/components/BrandLockup";
 import { UtilityBar } from "@/components/UtilityBar";
 import { navLinks } from "@/data/mockData";
 import { Button } from "@/components/ui/Button";
-import { cn, scrollToId } from "@/lib/utils";
+import { cn, scrollToId, withSiteHash } from "@/lib/utils";
 
 export interface NavbarProps {
   className?: string;
 }
 
 export function Navbar({ className }: NavbarProps) {
+  const pathname = usePathname();
+  const homeHref = pathname === "/" ? "#main-content" : "/#main-content";
   const [open, setOpen] = useState(false);
   const drawerId = useId();
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -79,7 +82,7 @@ export function Navbar({ className }: NavbarProps) {
 
       <div className="glass-nav">
         <div className="section-x flex h-16 items-center justify-between gap-3">
-          <a href="#main-content" className="group min-w-0">
+          <a href={homeHref} className="group min-w-0">
             <BrandLockup size="nav" />
           </a>
 
@@ -87,7 +90,7 @@ export function Navbar({ className }: NavbarProps) {
             {navLinks.map((link) => (
               <a
                 key={link.id}
-                href={link.href}
+                href={withSiteHash(link.href)}
                 className="type-nav underline-offset-4 hover:text-lime-800 motion-safe:hover:underline"
               >
                 {link.label}
@@ -100,7 +103,13 @@ export function Navbar({ className }: NavbarProps) {
               variant="primary"
               size="sm"
               className="whitespace-nowrap"
-              onClick={() => scrollToId("booking")}
+              onClick={() => {
+                if (document.getElementById("booking")) {
+                  scrollToId("booking");
+                  return;
+                }
+                window.location.assign("/#booking");
+              }}
             >
               Agendar cita
             </Button>
@@ -160,7 +169,7 @@ export function Navbar({ className }: NavbarProps) {
                 {navLinks.map((link) => (
                   <a
                     key={link.id}
-                    href={link.href}
+                    href={withSiteHash(link.href)}
                     className="flex min-h-11 items-center border-b border-black/10 pb-3 font-serif text-2xl text-ink-900 hover:text-lime-800"
                     onClick={() => setOpen(false)}
                   >
@@ -173,7 +182,11 @@ export function Navbar({ className }: NavbarProps) {
                 className="mt-6"
                 onClick={() => {
                   setOpen(false);
-                  scrollToId("booking");
+                  if (document.getElementById("booking")) {
+                    scrollToId("booking");
+                    return;
+                  }
+                  window.location.assign("/#booking");
                 }}
               >
                 Agendar cita

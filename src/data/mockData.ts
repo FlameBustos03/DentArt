@@ -1,3 +1,11 @@
+import {
+  addCalendarDays,
+  calendarWeekdayIndex,
+  clinicCalendar,
+  clinicNoon,
+  CLINIC_TIME_ZONE,
+  pad2,
+} from "@/lib/clinicTime";
 import type {
   BookingDate,
   Certification,
@@ -94,6 +102,7 @@ export const footerSitemap: NavLink[] = [
   { id: "sedes", label: "Sedes", href: "#sedes" },
   { id: "faq", label: "FAQ", href: "#faq" },
   { id: "booking", label: "Agendar", href: "#booking" },
+  { id: "aviso-privacidad", label: "Aviso de Privacidad", href: "/#aviso-privacidad" },
 ];
 
 export const testimonialsEyebrow = "Pacientes Dent Art";
@@ -618,44 +627,63 @@ export const consultationModes: ConsultationModeOption[] = [
 const WEEKDAY_SLOT_TIMES = ["10:00", "11:00", "12:00", "16:00", "17:00", "18:00"] as const;
 const SATURDAY_SLOT_TIMES = ["10:00", "11:00", "12:00"] as const;
 
-function buildSlots(seed: number, times: readonly string[], notBeforeHour: number): TimeSlot[] {
-  // Slots that already passed today are dropped. Every listed time is a
-  // *preferred* time: the clinic confirms real availability by WhatsApp,
-  // so nothing is faked as "Ocupado".
+function buildSlots(iso: string, times: readonly string[], notBeforeHour: number): TimeSlot[] {
+  // Slots that already passed today (clinic time) are dropped. Every listed
+  // time is a *preferred* time: the clinic confirms real availability by
+  // WhatsApp, so nothing is faked as "Ocupado".
   return times.flatMap((time, index) => {
     if (Number(time.slice(0, 2)) <= notBeforeHour) {
       return [];
     }
-    return [{ id: `slot-${seed}-${index}`, time, available: true }];
+    return [{ id: `slot-${iso}-${index}`, time, available: true }];
   });
 }
 
 /** `notBeforeHour` drops slots that already passed when the date is today. */
-function formatBookingDate(date: Date, times: readonly string[], notBeforeHour: number): BookingDate {
-  const iso = date.toISOString().slice(0, 10);
-  const weekday = date.toLocaleDateString("es-MX", { weekday: "short" });
-  const label = date.toLocaleDateString("es-MX", { day: "numeric", month: "short" });
-  const seed = date.getDate() + date.getMonth();
-  return { iso, label, weekday, slots: buildSlots(seed, times, notBeforeHour) };
+function formatBookingDate(
+  year: number,
+  month: number,
+  day: number,
+  times: readonly string[],
+  notBeforeHour: number,
+): BookingDate {
+  const iso = `${year}-${pad2(month)}-${pad2(day)}`;
+  const instant = clinicNoon(year, month, day);
+  const weekday = instant.toLocaleDateString("es-MX", {
+    weekday: "short",
+    timeZone: CLINIC_TIME_ZONE,
+  });
+  const label = instant.toLocaleDateString("es-MX", {
+    day: "numeric",
+    month: "short",
+    timeZone: CLINIC_TIME_ZONE,
+  });
+  return { iso, label, weekday, slots: buildSlots(iso, times, notBeforeHour) };
 }
 
-export function getUpcomingBookingDates(count = 10): BookingDate[] {
+/** Upcoming preferred dates in America/Mexico_City, Sundays skipped. */
+export function getUpcomingBookingDates(count = 10, now: Date = new Date()): BookingDate[] {
   const dates: BookingDate[] = [];
-  const now = new Date();
-  const cursor = new Date(now);
-  cursor.setHours(12, 0, 0, 0);
+  const today = clinicCalendar(now);
+  let offset = 0;
 
-  while (dates.length < count) {
-    const day = cursor.getDay();
-    if (day !== 0) {
-      const times = day === 6 ? SATURDAY_SLOT_TIMES : WEEKDAY_SLOT_TIMES;
-      const isToday = cursor.toDateString() === now.toDateString();
-      const entry = formatBookingDate(new Date(cursor), times, isToday ? now.getHours() : -1);
-      if (entry.slots.some((slot) => slot.available)) {
+  while (dates.length < count && offset < count + 14) {
+    const cursor = addCalendarDays(today.year, today.month, today.day, offset);
+    const weekdayIndex = calendarWeekdayIndex(cursor.year, cursor.month, cursor.day);
+    if (weekdayIndex !== 0) {
+      const times = weekdayIndex === 6 ? SATURDAY_SLOT_TIMES : WEEKDAY_SLOT_TIMES;
+      const entry = formatBookingDate(
+        cursor.year,
+        cursor.month,
+        cursor.day,
+        times,
+        offset === 0 ? today.hour : -1,
+      );
+      if (entry.slots.length > 0) {
         dates.push(entry);
       }
     }
-    cursor.setDate(cursor.getDate() + 1);
+    offset += 1;
   }
 
   return dates;

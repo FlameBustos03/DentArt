@@ -6,6 +6,11 @@ export function scrollToId(id: string): void {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+/** Hash links work from inner routes such as /aviso-de-privacidad. */
+export function withSiteHash(href: string): string {
+  return href.startsWith("#") ? `/${href}` : href;
+}
+
 export function buildWhatsAppUrl(phoneDigits: string, message: string): string {
   const encoded = encodeURIComponent(message);
   return `https://wa.me/${phoneDigits}?text=${encoded}`;
