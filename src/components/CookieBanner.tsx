@@ -19,14 +19,17 @@ export function CookieBanner() {
   const regionRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
+    const root = document.documentElement;
     const region = regionRef.current;
     if (!bannerVisible || !region) {
-      document.documentElement.style.removeProperty(COOKIE_BANNER_OFFSET_PROPERTY);
+      root.style.setProperty(COOKIE_BANNER_OFFSET_PROPERTY, "0px");
       return;
     }
 
     const apply = () => {
-      document.documentElement.style.setProperty(COOKIE_BANNER_OFFSET_PROPERTY, `${region.offsetHeight}px`);
+      // offsetHeight includes the banner's safe-area padding, so the page
+      // inset matches the covered strip without adding that inset twice.
+      root.style.setProperty(COOKIE_BANNER_OFFSET_PROPERTY, `${region.offsetHeight}px`);
     };
 
     apply();
@@ -34,7 +37,7 @@ export function CookieBanner() {
     observer.observe(region);
     return () => {
       observer.disconnect();
-      document.documentElement.style.removeProperty(COOKIE_BANNER_OFFSET_PROPERTY);
+      root.style.setProperty(COOKIE_BANNER_OFFSET_PROPERTY, "0px");
     };
   }, [bannerVisible]);
 
@@ -56,8 +59,9 @@ export function CookieBanner() {
     >
       <div className="mx-auto flex w-full min-w-0 max-w-6xl flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
         <p className="min-w-0 text-sm leading-6 text-ink-900">
-          Este sitio solo usa cookies técnicas para funcionar. No hay analítica ni píxeles. Aceptar o
-          rechazar guarda tu elección sobre cookies opcionales.{" "}
+          Este sitio solo usa cookies técnicas para funcionar. Usamos solo cookies necesarias. Si aceptas,
+          podríamos usar medición anónima en el futuro. Aceptar o rechazar guarda tu elección sobre cookies
+          opcionales.{" "}
           <PrivacyNoticeLink className="inline-flex min-h-11 items-center font-medium text-lime-800 underline decoration-2 underline-offset-4">
             Aviso de Privacidad
           </PrivacyNoticeLink>
