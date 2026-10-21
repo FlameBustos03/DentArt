@@ -16,10 +16,17 @@ export function EmergencyFab() {
     `${emergencyPrefillMessage} ${location.city}.`,
   );
 
-  // z-30: below the sticky header (z-40) so the mobile drawer, which lives
-  // inside the header's stacking context, and the z-50 modals cover the FAB.
+  // z-30: above the cookie banner (z-20) and below the sticky header (z-40),
+  // so the mobile drawer and the z-50 modals cover the chip. The banner sets
+  // --cookie-banner-offset; without it the chip keeps a safe-area inset.
   return (
-    <div className="fixed bottom-4 right-4 z-30 flex flex-col items-end gap-3">
+    <div
+      className="fixed z-30 flex flex-col items-end gap-3"
+      style={{
+        right: "max(1rem, env(safe-area-inset-right, 0px))",
+        bottom: "calc(1rem + var(--cookie-banner-offset, env(safe-area-inset-bottom, 0px)))",
+      }}
+    >
       <AnimatePresence>
         {open ? (
           <motion.div

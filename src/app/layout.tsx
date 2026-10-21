@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans, Playfair_Display } from "next/font/google";
+import { CookieBanner } from "@/components/CookieBanner";
+import { CookieConsentProvider } from "@/components/CookieConsentProvider";
 import { JsonLd } from "@/components/JsonLd";
 import { LocationProvider } from "@/components/LocationProvider";
 import { clinicInfo } from "@/data/mockData";
@@ -43,12 +45,16 @@ export default function RootLayout({
         <a className="skip-link" href="#main-content">
           Ir al contenido principal
         </a>
-        <LocationProvider>
-          {children}
-          <p className="sr-only">
-            {clinicInfo.name} · {clinicInfo.phoneDisplay}
-          </p>
-        </LocationProvider>
+        <CookieConsentProvider>
+          <LocationProvider>
+            {children}
+            <p className="sr-only">
+              {clinicInfo.name} · {clinicInfo.phoneDisplay}
+            </p>
+            {/* Optional tags belong in ConsentGate category="analytics". None are mounted. */}
+            <CookieBanner />
+          </LocationProvider>
+        </CookieConsentProvider>
       </body>
     </html>
   );
