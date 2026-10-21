@@ -49,6 +49,8 @@ const chipIdle =
 const chipSelected = "border-2 border-lime-500 bg-lime-500 text-ink-900";
 const chipDisabled =
   "cursor-not-allowed border-2 border-ink-900/50 bg-mist text-ink-900 disabled:opacity-100";
+const radioFocus =
+  "has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-[3px] has-[:focus-visible]:outline-ink-800";
 
 export function BookingForm() {
   const { location, locationId } = useClinicLocation();
@@ -317,6 +319,7 @@ export function BookingForm() {
                       key={option.id}
                       className={cn(
                         "cursor-pointer rounded-2xl border p-4 transition-colors",
+                        radioFocus,
                         selected
                           ? "border-lime-800 bg-white shadow-sm"
                           : "border-black/10 bg-white hover:border-black/20",
@@ -366,6 +369,7 @@ export function BookingForm() {
                       key={option.id}
                       className={cn(
                         "cursor-pointer rounded-2xl border p-5 transition-colors",
+                        radioFocus,
                         selected
                           ? "border-lime-800 bg-white shadow-sm"
                           : "border-black/10 bg-white hover:border-black/20",
@@ -526,6 +530,7 @@ export function BookingForm() {
                         key={option.value}
                         className={cn(
                           "inline-flex min-h-11 cursor-pointer items-center rounded-full px-4 py-2 text-sm",
+                          radioFocus,
                           form.contactPreference === option.value ? chipSelected : chipIdle,
                         )}
                       >

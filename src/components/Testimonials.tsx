@@ -70,11 +70,12 @@ export function Testimonials() {
             “{item.quote}”
           </blockquote>
           <div className="mt-4 flex flex-wrap items-center gap-2">
-            <div className="flex items-center gap-1" aria-hidden="true">
+            <div className="flex items-center gap-1" role="img" aria-label={`${item.rating} de 5`}>
               {Array.from({ length: item.rating }).map((_, starIndex) => (
                 <Star
                   key={`${item.id}-star-${starIndex}`}
-                  className="h-4 w-4 fill-lime-500 text-lime-500"
+                  className="h-4 w-4 fill-lime-800 text-lime-800"
+                  aria-hidden="true"
                 />
               ))}
             </div>
@@ -114,7 +115,7 @@ export function Testimonials() {
           <ChevronRight className="h-4 w-4" aria-hidden="true" />
         </Button>
       </div>
-      <div className="flex items-center gap-1.5" role="tablist" aria-label="Páginas de reseñas">
+      <div className="flex items-center gap-0" role="tablist" aria-label="Páginas de reseñas">
         {Array.from({ length: pageCount }).map((_, itemIndex) => (
           <button
             key={`resenas-page-${itemIndex}`}
@@ -122,14 +123,13 @@ export function Testimonials() {
             role="tab"
             aria-selected={itemIndex === safePage}
             aria-label={`Mostrar reseñas, página ${itemIndex + 1}`}
-            className="relative h-2 w-2 rounded-full"
+            className="flex h-11 w-11 items-center justify-center rounded-full"
             onClick={() => setPage(itemIndex)}
           >
-            <span className="absolute -inset-5 min-h-11 min-w-11" aria-hidden="true" />
             <span
               className={cn(
                 "block h-2 w-2 rounded-full",
-                itemIndex === safePage ? "bg-lime-500" : "bg-white/20",
+                itemIndex === safePage ? "bg-lime-500" : "bg-white/60",
               )}
             />
           </button>

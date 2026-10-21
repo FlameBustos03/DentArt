@@ -93,7 +93,7 @@ export function ServicesCatalog() {
         <ol className="divide-y divide-black/10 text-sm">
           {serviceModalRows.map((row, index) => (
             <li key={`${row.group}-${row.name}`} className="flex items-baseline gap-3 py-2.5">
-              <span className="w-6 shrink-0 text-black/40">{index + 1}</span>
+              <span className="w-6 shrink-0 text-black/70">{index + 1}</span>
               <span className="flex min-w-0 flex-1 flex-col gap-0.5 sm:flex-row sm:items-baseline sm:gap-3">
                 <span className="type-eyebrow sm:w-56 sm:shrink-0">{row.group}</span>
                 <span className="text-ink-900">{row.name}</span>

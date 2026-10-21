@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { BrandLockup } from "@/components/BrandLockup";
@@ -14,6 +15,8 @@ export interface NavbarProps {
 }
 
 export function Navbar({ className }: NavbarProps) {
+  const pathname = usePathname();
+  const homeHref = pathname === "/" ? "#main-content" : "/#main-content";
   const [open, setOpen] = useState(false);
   const drawerId = useId();
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -79,7 +82,7 @@ export function Navbar({ className }: NavbarProps) {
 
       <div className="glass-nav">
         <div className="section-x flex h-16 items-center justify-between gap-3">
-          <a href="#main-content" className="group min-w-0">
+          <a href={homeHref} className="group min-w-0">
             <BrandLockup size="nav" />
           </a>
 
