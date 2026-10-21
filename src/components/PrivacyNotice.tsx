@@ -265,6 +265,12 @@ export function PrivacyNotice({ level = 1 }: PrivacyNoticeProps) {
           <strong>Opción A — sin analítica:</strong> nuestro sitio solo usa las cookies técnicas
           indispensables para funcionar. No usamos cookies de publicidad ni de seguimiento.
         </p>
+        <p>
+          Un aviso fijo en la parte inferior de la página permite aceptar o rechazar cookies
+          opcionales. La elección se guarda en este navegador junto con la versión de este aviso.
+          Hoy no hay herramientas de analítica ni de publicidad instaladas, así que ninguna de las
+          dos opciones carga un servicio adicional.
+        </p>
       </section>
 
       <section className="space-y-3">

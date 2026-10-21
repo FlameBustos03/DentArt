@@ -92,6 +92,7 @@ export function Hero() {
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Button>
             <a
+              id="hero-emergency"
               href={whatsappHref}
               target="_blank"
               rel="noreferrer"
